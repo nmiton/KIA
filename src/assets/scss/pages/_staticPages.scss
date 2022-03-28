@@ -1,0 +1,136 @@
+#presentationEquipe {
+    .grille {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        @include respond(md) {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .item{
+            .contenu-item {
+                
+                @include respond(md) {
+                    width: 10rem;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .prenom {
+                    margin: calc(3rem / 2) 0;
+                    @include respond(md) {
+                        margin: calc(3rem / 2) 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#mentionsLegales{
+    h2{
+        margin: 0.5rem;
+    }
+    p{
+        margin: 1rem;
+    }
+}
+
+#reglesDuJeu{
+    .prank{
+        margin: 1rem;
+        font-style: italic;
+        font-weight: 500;
+        color : $color-bg-alt;
+    }
+    p{
+        margin: 1rem;
+        line-height: 1.5rem;
+
+
+        span{
+            font-weight: bold;
+        }
+    }
+
+    #descriptionRules{
+        border: 0.25rem outset;
+        border-color: $color-bg-altmenu;
+        margin: 2rem auto;
+        padding: 1rem;
+    }
+
+    #contraintesStats,#contraintesActions,#contraintesInventaire{
+        border: 0.25rem outset;
+        border-color: $color-bg-altmenu;
+        margin: 2rem auto;
+        padding: 1rem;
+
+        section{
+            margin: 2rem auto;
+        }
+        
+        ul{
+            margin: 0.5rem 2rem;
+            list-style: none;
+            text-align: center;
+            color: $color-orange;
+    
+            @include respond(md) {
+                margin: 1rem 2rem;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+    
+            li{
+                margin : 1rem
+            }
+        }
+
+        .important{
+            font-weight: 450;
+            color:$color-bg-altmenu;
+        }
+
+        .exemple{
+            font-weight: 400;
+            color:$color-orange;
+        }
+
+        
+        .info{
+            font-weight: 400;
+            color:$color-orange;
+        }
+
+    }
+}
+
+#pageAccueil{
+    display: flex;
+    flex-direction: column;
+    
+    img{
+        margin: 0rem auto;
+    }
+    p{
+        margin: 1rem;
+    }
+    a{
+        margin: 2rem auto;
+    }
+    #btn_jouer{
+        display: block;
+        width: 50%;
+        border: none;
+        background-color: $color-bg-alt;
+        color : white;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+    }
+    
+}

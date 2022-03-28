@@ -1,0 +1,63 @@
+#profile_user{
+
+    section{
+        margin: 3rem auto;
+
+        form{
+            margin : 1rem;
+            ul{
+                list-style: none;
+                margin: 1rem;
+                li{
+                    color :$color-bg-altmenu; 
+                }
+            }
+            label{
+                margin: 0.5rem;
+            }
+    
+            input{
+                margin: 0.25rem;
+            }
+        }
+        button {
+            margin: 1rem;
+            background-color: $color-bg-altmenu;
+            color: white;
+        }
+    }
+
+    #verif_my_mail{
+        margin: 3rem auto;
+        border: 0.25rem outset;
+        border-color: $color-bg-altmenu;
+        margin: 2rem auto;
+        padding: 1rem;
+    }
+}
+
+#changePseudo{
+    form{
+        margin : 1rem;
+        ul{
+            list-style: none;
+            margin: 1rem;
+            li{
+                color :$color-bg-altmenu; 
+            }
+        }
+        label{
+            margin: 0.5rem;
+        }
+
+        input{
+            margin: 0.25rem;
+        }
+    }
+    button {
+        margin: 1rem;
+        background-color: $color-bg-altmenu;
+        color: white;
+    }
+    
+}

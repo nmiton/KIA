@@ -1,0 +1,254 @@
+.app_header {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+    min-height: 4rem;
+    color: $color-bg-secondary;
+    background-color: $color-bg-alt;
+    box-shadow: 0 $box-shadow-y $box-shadow-radius $box-shadow-color;
+    
+    .app_logo {
+        display: block;
+        text-decoration: none;
+
+        img {
+            display: block;
+            height: 2.5rem;
+            filter: drop-shadow($box-shadow-x $box-shadow-y $box-shadow-radius $box-shadow-color);
+        }
+    }
+
+    .app_navigation_toggle {
+        position: relative;
+        display: none;
+        user-select: none;
+        cursor: pointer;
+
+        &:checked {
+            & ~ .app_navigation_toggle_icon {
+                background: transparent;
+
+                &:before {
+                    transform: rotate(-45deg);
+                }
+
+                &:after {
+                    transform: rotate(45deg);
+                }
+            }
+
+            &:not(.steps) {
+                & ~ .app_navigation_toggle_icon {
+                    &:before,
+                    &:after {
+                        top: 0;
+                    }
+                }
+            }
+
+            & ~ .app_navigation {
+                max-height: calc(100vh - 3rem);
+            }
+        }
+    }
+
+    .app_navigation_toggle_icon {
+        position: relative;
+        display: block;
+        height: 0.25rem;
+        width: 1.25rem;
+        background-color: $color-bg-secondary;
+        transition: background .2s ease-out;
+
+        @include respond(sm) {
+            display: none;
+        }
+
+        &:before,
+        &:after {
+            background-color: $color-bg-secondary;
+            content: '';
+            display: block;
+            height: 100%;
+            position: absolute;
+            transition: all .2s ease-out;
+            width: 100%;
+        }
+
+        &:before {
+            top: 0.5rem;
+        }
+
+        &:after {
+            top: -0.5rem;
+        }
+    }
+
+    .app_navigation {
+        position: fixed;
+        top: 3rem;
+        left: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        background-color: $color-bg-alt;
+        box-shadow: 0 $box-shadow-y $box-shadow-radius $box-shadow-color;
+        transition: max-height 0.3s ease-in-out;
+
+        @include respond(sm) {
+            position: initial;
+            display: block;
+            width: auto;
+            max-height: none;
+            overflow: visible;
+            box-shadow: none;
+        }
+
+        & > ul {
+            margin: 0;
+            padding: 1rem;
+            width: calc(100% - 2rem);
+
+            @include respond(sm) {
+                display: flex;
+                padding: 0;
+                align-items: center;
+            }
+
+            & > li {
+                @include respond(sm) {
+                    margin: 0;
+                }
+
+                & > a {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    padding: 0.75rem 0;
+                    font-family: $font-family-secondary;
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                    letter-spacing: 1px;
+                    text-decoration: none;
+                    text-align: left;
+                    white-space: nowrap;
+                    color: $color-bg-primary;
+
+                    @include respond(sm) {
+                        margin: 0 0.5rem;
+                        padding: 1.25rem 0;
+                    }
+
+                    @include respond(md) {
+                        margin: 0 1.5rem;
+                    }
+
+                    &:hover,
+                    &.active {
+                        color: $color-orange;
+                    }
+
+                    &.app_button {
+                        &.cta {
+                            padding: 0.5rem 1rem;
+                            color: $color-bg-primary;
+                            border-color: $color-orange;
+                            background-color: $color-orange;
+
+                            &.active,
+                            &:hover {
+                                color: $color-bg-primary;
+                                border-color: $color-blue;
+                                background-color: $color-blue;
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+                    & > a {
+                        color: $color-orange;
+                    }
+
+                    & > .app_navigation_dropdown {
+                        transform: scaleY(1);
+                    }
+                }
+
+                & > .app_navigation_dropdown {
+                    padding: 1rem;
+                    font-size: 0.9rem;
+                    white-space: nowrap;
+                    background-color: $color-bg-altmenu;
+                    border-radius: $border-radius-default;
+                    box-shadow: inset $box-shadow-x $box-shadow-y $box-shadow-radius $box-shadow-color;
+
+                    li {
+                        a {
+                            display: block;
+                            margin-bottom: 0.25rem;
+                            padding: 0.25rem 0;
+                            font-family: $font-family-secondary;
+                            font-size: 1rem;
+                            font-weight: 600;
+                            letter-spacing: 1px;
+                            text-decoration: none;
+                            text-align: left;
+                            white-space: nowrap;
+                            color: $color-bg-primary;
+
+                            @include respond(md) {
+                                margin-bottom: 1.5rem;
+                            }
+
+                            &:hover,
+                            &.active {
+                                color: $color-orange;
+                            }
+                        }
+
+                        &:last-child {
+                            a {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+
+                    @include respond(sm) {
+                        position: absolute;
+                        right: 0;
+                        top: 3.75rem;
+                        z-index: 9998;
+                        display: block;
+                        padding-right: 3rem;
+                        transform: scaleY(0);
+                        transform-origin: top;
+                        background-color: $color-bg-secondary;
+                        border: 2px solid $color-bg-altmenu;
+                        border-top: none;
+                        border-right: none;
+                        border-radius: 0;
+                        border-bottom-left-radius: 0.5rem;
+                        box-shadow: calc(#{$box-shadow-x} * -1) $box-shadow-y $box-shadow-radius $box-shadow-color;
+                        transition: transform 0.3s ease-in-out;
+
+                        li {
+                            a {
+                                font-size: 1rem;
+                                color: $color-fg-primary;
+
+                                &:hover {
+                                    color: $color-orange;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

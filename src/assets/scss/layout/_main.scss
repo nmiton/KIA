@@ -1,0 +1,27 @@
+main{
+    margin: 2rem auto;
+    min-height: 41rem;
+
+    @include respond(md){
+        min-height: 46rem;
+    }
+    
+    @import '../sections/_overlay.scss';
+
+    #console{
+
+        p{
+            margin: 1rem;
+        }
+
+        #console_input{
+            margin-top: 1rem;
+            width: 100%;
+            height: 10rem;
+        }
+    }   
+
+    @import '../sections/_actions.scss';
+
+}
+
