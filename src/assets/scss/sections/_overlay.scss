@@ -1,0 +1,47 @@
+#overlay{
+    display: flex;
+    flex-direction: column;
+
+    p{
+        margin: 0.5rem;
+    }
+
+    #infosChienJoeur{
+        display: flex;
+        justify-content: space-between;
+
+            #mon_portefeuille{
+                display: flex;
+                flex-direction: row;
+
+                label{
+                    margin: auto 1rem;
+                }
+                
+                input{
+                    width: auto;
+                }
+            }
+    }
+
+    #stats{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @include respond(lg) {
+            display: grid;
+            grid-template-columns: 7fr 3fr;
+        }
+
+        #stats_animal{
+            @import '_stats.scss';
+        } 
+    }
+
+    #img_animal{
+        width: 50%;
+        margin: auto;
+    }
+}
+

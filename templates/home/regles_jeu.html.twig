@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+{% block main_id %}reglesDuJeu{% endblock %}
+
+{% block body %}
+<h1 class="h3 mb-3 font-weight-normal">Règles du jeu :</h1>
+<section id="descriptionRules">
+    <p class="h4 text-center prank">
+        Tout est dans le nom... 
+    </p>
+    <p>
+        Non plus sérieusement, le but du jeu est de garder son animal en vie <span> le plus longtemps possible </span>.
+    </p>
+    <p>
+        Pour cela il vous faudra satisfaire tous les besoins vitaux de votre animal.
+    </p>
+
+</section>
+
+<section id="contraintesStats">
+    <h2 class="h4 mb-3 font-weight-normal text-center">Partie Statistiques :</h2>
+        <p>
+        Votre nouveau meilleur ami possède différentes statistiques qui sont les suivantes :
+    </p>
+    <ul>
+        <li>Vie</li>
+        <li>Nourriture</li>
+        <li>Hydratation</li>
+        <li>Bonheur</li>
+        <li>Énergie</li>
+    </ul>
+    <p>
+        Une fois avoir créer votre animal, il faudra vous en occuper avec différentes actions qui seront disponibles au fur et à mesure du temps.<br>
+        Vous devrez veiller à garder les statistiques de votre animal le plus haut possible.
+    </p>
+    <p>
+        La statistique de <span>vie</span> correspond à la santé de l'animal.<br>
+        <span class="important">Si par malheur la vie de votre animal attend la valeur de zéro, votre animal va subitement vous quitter.<span>
+        <span class="important">Et la partie sera malheureusement terminée.<span>
+    </p>
+    <p>
+        La statistique <span>nourriture</span> correspond à la faim de votre animal.<br>
+        Lorsque sa faim approche de zéro, cela signifiera que votre animal à vraiment faim.
+    </p>
+    <p>
+        La statistique <span>hydratation</span> correspond à la soif de votre animal.<br>
+        Lorsque son hydratation approche de zéro, cela signifiera que votre animal à vraiment soif.
+    </p>
+    <p>
+        La statistique <span>bonheur</span> permet de savoir comment se sent votre animal en votre compagnie.<br> 
+        <span class="important">Si son bonheur attend la valeur de zéro, votre animal mourra de tristesse.<span>
+    </p>
+    <p>
+        La statistique <span>énergie</span> est la seule statistique qui ne peut être modifiée directement par une action.<br>
+        L'énergie est calculé grâce aux statistiques de nourriture et d'hydratation.<br>
+        <span class="important">Si l'énergie de votre animal est inférieur à 10, vous ne pourrez plus le sortir ou jouer avec.
+        Il vous faudra faire le nécessaire pour faire remonter cette statistique.<span>
+        <span class="important">Si l'énergie de votre animal attend la valeur de zéro, votre animal vous quittera subitement.<span>
+    </p>
+</section>
+<section id="contraintesActions">
+    <h2 class="h4 mb-3 font-weight-normal text-center">Partie Actions :</h2>
+    <p>
+        Chaque type d'animal peut effectuer différentes actions propres ou non à leur type.<br>
+        Chacune des actions effectuée affectera une ou plusieurs statistiques de votre animal.
+    </p>
+    <p>
+        Voici la liste des différents types d'actions que vous pourrez effectuer avec votre animal:
+    </p>
+    <ul>
+        <li>Sortir</li>
+        <li>S'occuper</li>
+        <li>Donner à manger</li>
+        <li>Donner à boire</li>
+    </ul>
+    <p>
+        Le type <span>sortir</span> correspond à toutes les actions de promenades/sorties que vous pourrez effectuer avec votre animal.<br>
+        <span class="exemple">Par exemple "Sortir Roxy au parc".</span><br>
+        Ce type d'action affectera en particulier les statistiques de nourriture, d'hydratation et de bonheur.<br>
+        <span class="important">Attention, vous devrez vous assurez que votre animal possède assez d'énergie pour sortir.</span>
+    </p>
+    <p>
+        Le type <span>s'occuper</span> correspond à toutes les actions de jeu que vous pourrez effectuer avec votre animal.<br>
+        <span class="exemple">Par exemple "Jouer à la baller avec Roxy".</span><br>
+        Il affectera en particulier les statistiques de nourriture, d'hydratation et de bonheur.<br>
+        <span class="important">Attention, vous devrez vous assurez que votre animal possède assez d'énergie pour jouer.</span>    
+    </p>
+    <p>
+        Le type <span>donner à manger</span> correspond à toutes les actions permettant de nourrir votre animal.<br>
+        Il affectera la statistique de nourriture.<br>
+    </p>
+    <p>
+        Le type <span>donner à boire</span> correspond à toutes les actions permettant d'hydrater votre animal.<br>
+        Il affectera la statistique de d'hydratation.<br>
+    </p>
+    <p class="info">
+        A noter : que vous pourrez avoir accès à de nouvelles actions en vous procurant différents <span>objets</span>.
+    </p>
+</section>
+<section id="contraintesInventaire">
+    <h2 class="h4 mb-3 font-weight-normal text-center">Partie Inventaire :</h2>
+    <p>
+        Chaque joueur possède un <span>Inventaire</span> qu'il pourra garnir grâce au <span>Magasin</span>.<br>
+        Il possède également un <span>porte-monnaie</span>, qui lui permettra de pouvoir acheter des objets dans le Magasin<br>
+        Ce porte-monnaie sera approvisionner une fois par jour, d'un quelconque montant lors de la connexion du joueur.
+    </p>
+    <p>
+        En accédant à son <span>Inventaire</span>, le joueur pourra trouver la liste des objets qu'il a en sa possession ainsi que leur quantité.
+    </p>
+    <p>
+        Dans l'onglet <span>Magasin</span> vous trouverez tous les différents objets disponibles à l'achat pour satisfaire votre animal.<br>
+        <span class="exemple">Par exemple "Acheter croquettes nutritives".</span>
+    </p>
+    <p>
+        Une fois l'objet acheté, il sera ajouté à votre inventaire et vous pourrez alors profiter de la nouvelle action associée à cet objet.
+    </p>
+</section>
+<p class="prank text-center h4">
+    Bonne Chance !
+</p>
+{% endblock %}

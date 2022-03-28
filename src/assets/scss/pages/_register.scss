@@ -1,0 +1,41 @@
+#register{
+    form{
+        margin : 1rem;
+        ul{
+            list-style: none;
+            margin: 1rem;
+            li{
+                color :$color-bg-altmenu; 
+            }
+        }
+        label{
+            margin: 0.5rem;
+        }
+
+        input{
+            margin: 0.25rem;
+        }
+    }
+    button {
+        margin: 1rem;
+        background-color: $color-bg-altmenu;
+        color: white;
+    }
+}
+#verifEmail{
+    form{
+        margin : 5rem auto;
+        p{
+            margin: 1rem auto;
+        }
+        button {
+            margin: 5rem auto;
+            background-color: $color-bg-altmenu;
+            color: white;
+        }
+    }
+
+    p{
+        margin: 1rem auto;
+    }
+}

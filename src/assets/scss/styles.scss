@@ -1,0 +1,26 @@
+@import 'base/_reset.scss';
+@import 'abstracts/_variables.scss';
+@import 'mixins/_responsive.scss';
+
+@import 'layout/_main.scss';
+@import 'animaux/_chien.scss';
+@import 'animaux/_chat.scss';
+@import 'animaux/_husky.scss';
+@import 'sections/_magasin.scss';
+@import 'sections/_inventaire.scss';
+
+
+@import 'layout/_header.scss';
+@import 'pages/_staticPages.scss';
+@import 'layout/_footer.scss';
+
+@import 'pages/_login.scss';
+@import 'pages/_register.scss';
+@import 'pages/_resetPassword.scss';
+@import 'pages/_leaderboard.scss';
+@import 'pages/_profileUser.scss';
+
+
+
+@import 'components/_tables.scss';
+@import 'components/_tags.scss';

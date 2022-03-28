@@ -1,0 +1,33 @@
+
+
+/** Fonts **/
+$font-size-default: 16px;
+$font-family-primary: 'Open Sans', sans-serif;
+$font-family-secondary: 'PT Sans', sans-serif;
+$font-family-third: 'Galdeano', sans-serif;
+
+/** Colors **/
+$color-bg-primary: #fffaeb;
+$color-bg-secondary: #F1FAEE;
+$color-bg-alt: #E63946;
+$color-bg-altmenu: #E63946;
+$color-fg-primary: #000000;
+$color-blue-one : #457B9D;
+$color-blue-two : #1D3557;
+
+$color-black: #222222;
+$color-blue: #155166;
+$color-orange: #ed771d;
+$color-red: #d43b0c;
+$color-darkred : darkred;
+$color-violet: rgb(60,0,40);
+$color-black: #000000;
+$color-white : #FFFFFF;
+
+/** Decorations **/
+$border-radius-default: 0.5rem;
+$box-shadow-x: 2px;
+$box-shadow-y: 2px;
+$box-shadow-radius: 4px;
+$box-shadow-color: rgba($color-fg-primary, 0.75);
+$box-shadow-color-alt: rgba($color-bg-primary, 0.75);

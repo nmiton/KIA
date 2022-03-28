@@ -1,0 +1,14 @@
+#inventaire{
+
+    #inventaire_magasin{
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        p{
+            margin : 1rem;
+        }
+    }
+    
+}

@@ -1,0 +1,20 @@
+#footer{
+    position:relative;
+    margin: 3rem auto;
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include respond(sm) {     
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        li {
+            text-align: center;
+            margin-top: 1rem;
+        }
+    }
+}

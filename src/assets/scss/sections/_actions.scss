@@ -1,0 +1,35 @@
+#action{
+    p{
+        margin: 1rem;
+    }
+
+    #actions_buttons{
+
+        display: flex;
+        flex-direction: column;
+
+        @include respond(lg) {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            grid-gap : 1rem
+        }
+        
+        button{
+            border-radius: 5%;
+            padding: 0.25rem 0.5rem;
+            margin: auto;
+            margin-bottom: 1rem;
+            width: 50%;
+            
+            @include respond(lg) {
+                width: auto;
+            }
+        }
+    }
+
+    #actions_list {            
+        button {
+            border-radius: 5%;
+        }
+    }
+}
