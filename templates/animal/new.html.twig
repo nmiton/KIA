@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Animal{% endblock %}
+{% block title %}Nouveau animal{% endblock %}
+
+{% block main_id %}animal{% endblock %}
 
 {% block body %}
-    <h1>Create new Animal</h1>
+    <h1>Créer un nouvel animal</h1>
 
     {{ include('animal/_form.html.twig') }}
 
-    <a href="{{ path('app_animal_index') }}">back to list</a>
+    <a href="{{ path('app_animal_index') }}">Retour</a>
+
 {% endblock %}
