@@ -18,6 +18,7 @@ class PlayController extends AbstractController
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
                 return $this->render('play/main.html.twig');
+
             }
         }else{
             return $this->render('security/login.html.twig', ['last_username' => null, 'error' => null]);

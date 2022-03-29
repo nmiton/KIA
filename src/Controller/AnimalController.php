@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\AnimalCaracteristicRepository;
 
 #[Route('/animal')]
 class AnimalController extends AbstractController
@@ -45,10 +46,12 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_animal_show', methods: ['GET'])]
-    public function show(Animal $animal): Response
+    public function show(Animal $animal, AnimalCaracteristicRepository $repo): Response
     {
+        $stats = $repo->findAllStatsByAnimalId($animal->getId());
         return $this->render('animal/show.html.twig', [
             'animal' => $animal,
+            'stats' => $stats 
         ]);
     }
 

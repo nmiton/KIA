@@ -37,6 +37,11 @@
                 <th>Date de naissance</th>
                 <td>{{ animal.createdAt ? animal.createdAt|date('d/m/Y') : '' }}</td>
             </tr>
+            <tr>
+                <th>{{ stats[0].name  }}</th>
+                
+                <td>{{ stats[0].value  }}</td>
+            </tr>
         </tbody>
     </table>
 

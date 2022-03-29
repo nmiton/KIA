@@ -21,9 +21,13 @@ class Caracteristic
     #[ORM\Column(type: 'integer')]
     private $lostByHour;
 
+    #[ORM\OneToMany(mappedBy: 'caracteristic', targetEntity: AnimalCaracteristic::class)]
+    private $animalCaracteristics;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
+        $this->animalCaracteristics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,6 +55,36 @@ class Caracteristic
     public function setLostByHour(int $lostByHour): self
     {
         $this->lostByHour = $lostByHour;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalCaracteristic>
+     */
+    public function getAnimalCaracteristics(): Collection
+    {
+        return $this->animalCaracteristics;
+    }
+
+    public function addAnimalCaracteristic(AnimalCaracteristic $animalCaracteristic): self
+    {
+        if (!$this->animalCaracteristics->contains($animalCaracteristic)) {
+            $this->animalCaracteristics[] = $animalCaracteristic;
+            $animalCaracteristic->setCaracteristic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalCaracteristic(AnimalCaracteristic $animalCaracteristic): self
+    {
+        if ($this->animalCaracteristics->removeElement($animalCaracteristic)) {
+            // set the owning side to null (unless already changed)
+            if ($animalCaracteristic->getCaracteristic() === $this) {
+                $animalCaracteristic->setCaracteristic(null);
+            }
+        }
 
         return $this;
     }
