@@ -61,7 +61,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('keepitalive87@gmail.com', 'Keep It Alive'))
                     ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Veuillez confirmer votre adresse mail')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
@@ -89,12 +89,41 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_home');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
 
         return $this->redirectToRoute('app_register');
+    }
+
+    #[Route('/verifyMyEmail', name: 'app_verify_my_email')]
+    public function newVerificationEmail(Request $request): Response
+    {
+        if($this->getUser()->getIsVerified()){
+            return $this->render('home/home.html.twig');
+            $this->addFlash('success', 'Votre adresse email a bien été vérifiée.');
+        }else{
+            return $this->render('registration/verify_my_email.html.twig');
+        }
+    }
+
+    #[Route('/newVerificationEmailUser', name: 'app_new_verification_email_user')]
+    public function sendNewVerificationEmail(Request $request): Response
+    {
+        if($this->getUser() && !$this->getUser()->isVerified()){
+            $user = $this->getUser();
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address('keepitalive87@gmail.com', 'Keep It Alive'))
+                ->to($user->getEmail())
+                ->subject('Veuillez confirmer votre adresse mail')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+            return $this->render('registration/check_email.html.twig');
+        }else{
+            return $this->redirectToRoute('app_register');
+        }
     }
 }

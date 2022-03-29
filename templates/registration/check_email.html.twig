@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérifier email{% endblock %}
+{% block main_id %}verifEmail{% endblock %}
+
+{% block body %}
+    <p>
+        Un email de confirmation du compte vient d'être envoyé à votre adresse mail.
+        Veuillez suivre les instructions indiquées.
+    </p>
+    <p>Si vous n'avez pas reçu de mail, veuillez <a href="{{ path('app_new_verification_email_user') }}">cliquer ici</a>.</p>
+{% endblock %}
