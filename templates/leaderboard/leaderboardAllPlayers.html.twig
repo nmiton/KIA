@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classement général{% endblock %}
+{% block main_id %}leaderboard{% endblock %}
+
+{% block body %}
+<h1 class="h3 mb-3 font-weight-normal">Classement général :</h1>
+{# {{ dump(users)}} #}
+{% if (users == []) %}
+    <table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">#</th>
+        <th scope="col">Joueur</th>
+        <th scope="col">Animal</th>
+        <th scope="col">Score</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td data-label="Place" colspan="4">Aucun classement n'est disponible</td>
+        </tr>
+    <tbody>
+</table>  
+{% else %}
+
+{{ dump(users)}} 
+<table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">#</th>
+        <th scope="col">Joueur</th>
+        <th scope="col">Animal</th>
+        <th scope="col">Score</th>
+    </thead>
+    <tbody>
+        {% set i = 1 %}
+        {% for user in users %}
+            <tr>
+                <td data-label="Place">{{ i }}</td>
+                <td data-label="Joueur">{{ user.pseudo }}</td>
+                <td data-label="Animal">{{"Roxy"}}</td>
+                <td data-label="Score">{{ user.score }}</td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}
+    <tbody>
+</table>  
+
+{% endif %}
+
+{% endblock %}

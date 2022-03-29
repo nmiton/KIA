@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classement général{% endblock %}
+{% block main_id %}leaderboard{% endblock %}
+
+{% block body %}
+<h1 class="h3 mb-3 font-weight-normal">Choisir un classement :</h1>
+<section>
+    <form action="{{ path('app_leaderboard_by_players') }}">
+        <div class="text-center">
+            <button class="btn btn-lg" type="submit">
+                Classement général
+            </button>   
+        </div>
+    </form>
+
+    <form action="{{ path('app_leaderboard_by_types') }}">
+        <div class="text-center">
+            <button class="btn btn-lg" type="submit">
+                Classement par type d'animaux
+            </button>   
+        </div>
+    </form>
+<section>
+{% endblock %}

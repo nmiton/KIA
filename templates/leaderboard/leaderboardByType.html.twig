@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Classement par types{% endblock %}
+{% block main_id %}leaderboard{% endblock %}
+
+{% block body %}
+<section>
+    <h1 class="h3 mb-3 font-weight-normal">Classement par types :</h1>
+
+    <select class="form-select form-select-sm" aria-label="Default select example">
+        <option selected>Sélectionner un type d'animal</option>
+        <option value="Chien">Chien</option>
+        <option value="Chat">Chat</option>
+        <option value="Dragon">Dragon</option>
+    </select>
+</section>
+<h2 class="h4 m-3 font-weight-normal">Type : {{"Chien"}}</h2>
+
+<table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">Place</th>
+        <th scope="col">Joueur</th>
+        <th scope="col">Animal</th>
+        <th scope="col">Score</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td data-label="Place">1</td>
+            <td data-label="Joueur">Nico</td>
+            <td data-label="Animal">Roxy</td>
+            <td data-label="Score">150</td>
+        </tr>
+    <tbody>
+</table>  
+
+{% endblock %}
