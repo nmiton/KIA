@@ -20,11 +20,17 @@ class AnimalFixtures extends Fixture implements OrderedFixtureInterface
         $animal->setCreatedAt($date);
         $animal->setUser($this->getReference('user1'));
         $animal->setAnimalType($this->getReference('type_animal_chien'));
-        $manager->persist($animal);
+        // $animal->addStat($this->getReference('Vie'));
+        // $animal->addStat($this->getReference('Nourriture'));
+        // $animal->addStat($this->getReference('Hydratation'));
+        // $animal->addStat($this->getReference('Humeur'));
+        // $animal->addStat($this->getReference('Énergie'));
+                $manager->persist($animal);
+        $this->addReference('animal1', $animal);
         $manager->flush();
     }
 
     public function getOrder(){         
-        return 4;     
+        return 5;     
     }
 }
