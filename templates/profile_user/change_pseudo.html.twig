@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Changer son pseudo{% endblock %}
+{% block main_id %}changePseudo{% endblock %}
+
+{% block body %}
+    {% for error in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+    {% endfor %}
+    <h1 class="h3 mb-3 font-weight-normal">Changer son pseudo :</h1>
+    {{ form_start(changePseudo) }}
+        {{ form_row(changePseudo.pseudo) }}
+        <div class="text-center">
+            <button class="btn" type="submit">Changer mon pseudo</button>
+        </div>
+    {{ form_end(changePseudo) }}
+{% endblock %}
