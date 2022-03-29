@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/animal/type')]
-class AnimalController extends AbstractController
+class AnimalTypeController extends AbstractController
 {
     #[Route('/', name: 'app_animal_type_index', methods: ['GET'])]
     public function index(AnimalTypeRepository $animalTypeRepository): Response
