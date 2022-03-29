@@ -2,11 +2,12 @@
 
 {% block title %}Nouveau type d'animaux{% endblock %}
 {% block main_id %}animal_type{% endblock %}
+{% block main_class %}new{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un type d'animaux</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Ajouter un type d'animaux</h1>
 
     {{ include('animal_type/_form.html.twig') }}
 
-    <a href="{{ path('app_animal_type_index') }}">Retour</a>
+    <a class="btn" href="{{ path('app_animal_type_index') }}">Retour</a>
 {% endblock %}

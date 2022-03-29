@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Animal;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,10 @@ class AnimalController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $today = new DateTime();
+            $animal->setIsAlive(1);
+            $animal->setCreatedAt($today);
+            $animal->setLastActive($today);
             $animalRepository->add($animal);
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
         }

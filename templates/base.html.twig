@@ -17,7 +17,7 @@
 <body>
     {% include 'layout/header.html.twig' %}
     
-    <main id="{% block main_id %}{% endblock %}"class="container">
+    <main id="{% block main_id %}{% endblock %}"class="container {% block main_class %}{% endblock %}">
         {% block body %}
 
         {% endblock %}

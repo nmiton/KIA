@@ -1,0 +1,24 @@
+.edit,.show,.new,.index{
+    form{
+        margin : 1rem;
+        ul{
+            list-style: none;
+            margin: 1rem;
+            li{
+                color :$color-bg-altmenu; 
+            }
+        }
+        label{
+            margin: 0.5rem;
+        }
+
+        input{
+            margin: 0.25rem;
+        }
+    }
+    button{
+        margin: 1rem;
+        background-color: $color-bg-altmenu;
+        color: white;
+    }    
+}

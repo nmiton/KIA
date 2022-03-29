@@ -2,9 +2,10 @@
 
 {% block title %}Animal{% endblock %}
 {% block main_id %}animal{% endblock %}
+{% block main_class %}show{% endblock %}
 
 {% block body %}
-    <h1>Animal</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Animal</h1>
 
     <table class="table">
         <tbody>
@@ -13,8 +14,16 @@
                 <td>{{ animal.id }}</td>
             </tr> #}
             <tr>
+                <th>Espèce</th>
+                <td>{{ animal.AnimalType.getName() }}</td>
+            </tr>
+            <tr>
                 <th>Nom</th>
                 <td>{{ animal.name }}</td>
+            </tr>
+            <tr>
+                <th>Propriétaire</th>
+                <td>{{ animal.user.getPseudo() }}</td>
             </tr>
             <tr>
                 <th>En vie</th>
@@ -31,9 +40,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_animal_index') }}">Retour</a>
+    <a class="btn" href="{{ path('app_animal_edit', {'id': animal.id}) }}">Éditer</a>
 
-    <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">Éditer</a>
+    <a class="btn float-right"  href="{{ path('app_animal_index') }}">Retour</a>
 
     {{ include('animal/_delete_form.html.twig') }}
 {% endblock %}
