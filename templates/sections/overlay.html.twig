@@ -1,0 +1,20 @@
+<section id="overlay">
+    <section id="infosChienJoeur">
+        <div id="id_animal">
+            <p>Nom de votre animal: {{"Roxy"}}</p>
+            <p>Espèce: {{"CHIEN"}}</p>
+        </div>
+        <div id="mon_portefeuille">
+            <label>Mon portefeuille :</label>
+            <input class="form-control" type="text" id="money" disabled value="{{'550 pesos'}}" name="money" required size="10">
+        </div>
+    </section>
+    <section id="stats">
+        <div id="stats_animal" class="">
+            {% include 'sections/stats.html.twig' %}
+        </div>
+        <div id="img_animal" class="">
+            {% include "animaux/chien.html.twig" %}
+        </div>
+    </section>
+</section>
