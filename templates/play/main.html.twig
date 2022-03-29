@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block main_id %}game{% endblock %}
+{% block body %}
+<main>
+    {% include "sections/overlay.html.twig" %}
+    {% include "sections/console.html.twig" %}
+    {% include "sections/action.html.twig" %}
+    {% include "sections/inventaire.html.twig" %}
+    {% include "sections/magasin.html.twig" %}
+</main>   
+
+{% endblock %}
