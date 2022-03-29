@@ -1,30 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Liste des animaux{% endblock %}
+{% block main_id %}animal{% endblock %}
+{% block main_class %}index{% endblock %}
 
 {% block body %}
-    <h1>Liste des animaux</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Liste des animaux</h1>
 
     <table class="table">
         <thead>
             <tr>
                 {# <th>Id</th> #}
-                <th>Nom</th>
-                <th>En vie</th>
-                <th>Dernière activité</th>
-                <th>Date de naissance</th>
-                <th>Actions</th>
+                <th scope="col">Espèce</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Propriétaire</th>
+                <th scope="col">En vie</th>
+                <th scope="col">Dernière activité</th>
+                <th scope="col">Date de naissance</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for animal in animals %}
             <tr>
                 {# <td>{{ animal.id }}</td> #}
-                <td>{{ animal.name }}</td>
-                <td>{{ animal.isAlive ? 'Oui' : 'Non' }}</td>
-                <td>{{ animal.lastActive ? animal.lastActive|date('d/m/Y H:i:s') : '' }}</td>
-                <td>{{ animal.createdAt ? animal.createdAt|date('d/m/Y') : '' }}</td>
-                <td>
+                <td data-label="Espèce">{{ animal.AnimalType.getName() }}</td>
+                <td data-label="Nom">{{ animal.name }}</td>
+                <td data-label="Propriétaire">{{ animal.user.getPseudo() }}</td>
+                <td data-label="En vie">{{ animal.isAlive ? 'Oui' : 'Non' }}</td>
+                <td data-label="Dernière activité">{{ animal.lastActive ? animal.lastActive|date('d/m/Y H:i:s') : '' }}</td>
+                <td data-label="Date de naissance">{{ animal.createdAt ? animal.createdAt|date('d/m/Y') : '' }}</td>
+                <td data-label="Actions">
                     <a href="{{ path('app_animal_show', {'id': animal.id}) }}">Voir</a>
                     <a href="{{ path('app_animal_edit', {'id': animal.id}) }}">Éditer</a>
                 </td>
@@ -36,6 +42,7 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_animal_new') }}">Créer nouvel animal</a>
+    <div class="text-center">
+        <a class="btn" href="{{ path('app_animal_new') }}">Créer nouvel animal</a>
+    </div>
 {% endblock %}

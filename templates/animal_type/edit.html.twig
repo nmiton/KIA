@@ -2,13 +2,16 @@
 
 {% block title %}Édition des types d'animaux{% endblock %}
 {% block main_id %}animal_type{% endblock %}
+{% block main_class %}edit{% endblock %}
 
 {% block body %}
-    <h1>Édition des types d'animaux</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Édition des types d'animaux</h1>
 
     {{ include('animal_type/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_animal_type_index') }}">Retour</a>
-
     {{ include('animal_type/_delete_form.html.twig') }}
+
+    <div class="text-center">
+        <a class="btn" href="{{ path('app_animal_type_index') }}">Retour</a>
+    </div>
 {% endblock %}

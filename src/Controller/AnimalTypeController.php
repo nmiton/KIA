@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/animal/type')]
+
+#[Route('/animal-type')]
 class AnimalTypeController extends AbstractController
 {
     #[Route('/', name: 'app_animal_type_index', methods: ['GET'])]
@@ -27,7 +28,6 @@ class AnimalTypeController extends AbstractController
         $animalType = new AnimalType();
         $form = $this->createForm(AnimalTypeType::class, $animalType);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $animalTypeRepository->add($animalType);
             return $this->redirectToRoute('app_animal_type_index', [], Response::HTTP_SEE_OTHER);
