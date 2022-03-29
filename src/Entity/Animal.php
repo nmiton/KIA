@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
@@ -32,6 +34,16 @@ class Animal
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
+
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: AnimalCaracteristic::class)]
+    private $animalCaracteristics;
+
+
+    public function __construct()
+    {
+        $this->stats = new ArrayCollection();
+        $this->animalCaracteristics = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -109,4 +121,36 @@ class Animal
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, AnimalCaracteristic>
+     */
+    public function getAnimalCaracteristics(): Collection
+    {
+        return $this->animalCaracteristics;
+    }
+
+    public function addAnimalCaracteristic(AnimalCaracteristic $animalCaracteristic): self
+    {
+        if (!$this->animalCaracteristics->contains($animalCaracteristic)) {
+            $this->animalCaracteristics[] = $animalCaracteristic;
+            $animalCaracteristic->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalCaracteristic(AnimalCaracteristic $animalCaracteristic): self
+    {
+        if ($this->animalCaracteristics->removeElement($animalCaracteristic)) {
+            // set the owning side to null (unless already changed)
+            if ($animalCaracteristic->getAnimal() === $this) {
+                $animalCaracteristic->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 }
