@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+{% block main_id %}profile_user{% endblock %}
+
+{% block body %}
+    {% for success in app.flashes('success') %}
+        <div class="alert alert-success" role="alert">{{ success }}</div>
+    {% endfor %}
+    {# {{dump(app.user)}} #}
+    <h1 class="h3 mb-3 font-weight-normal">Mon profil :</h1>
+    <section id="change_password">
+        <form action="{{path("app_forgot_password_request")}}">
+            {# <div class="form-group">
+                <label for="inputMoney">
+                    Porte-monnaie :
+                </label>
+                <input type="text" disabled value="{{ app.user.money }}">
+            </div> #}
+            <div class="form-group">
+                <p class="mb-3 font-weight-normal">Vous voulez votre mot de passe ?</p>
+                <div class="text-center">
+                    <button class="btn btn-lg" type="submit">
+                        Changer mon mot de passe
+                    </button>   
+                </div>
+            </div>
+        </form>
+    <section>
+    <section id="change_pseudo">
+        <form action="{{path('app_profile_user_change_pseudo')}}">
+            {# <div class="form-group">
+                <label for="inputMoney">
+                    Porte-monnaie :
+                </label>
+                <input type="text" disabled value="{{ app.user.money }}">
+            </div> #}
+            <div class="form-group">
+                <p class="mb-3 font-weight-normal">Vous voulez votre pseudo ?</p>
+                <div class="text-center">
+                    <button class="btn btn-lg" type="submit">
+                        Changer mon pseudo
+                    </button>   
+                </div>
+            </div>
+        </form>
+    <section>
+    {% if (app.user.isVerified == 0) %}
+    <section id="verif_my_mail">
+        <form action="{{ path('app_new_verification_email_user') }}">
+            <div class="form-group">
+                <p class="mb-3 font-weight-normal">Nous avons constaté que votre adresse email n'est toujours pas vérifiée, veuillez faire le nécéssaire afin de pouvoir commencer à jouer</p>
+                <div class="text-center">
+                    <button class="btn btn-lg" type="submit">
+                        Vérifier mon adresse email
+                    </button>   
+                </div>
+            </div>
+        </form>
+    </section>
+    {% endif %}
+
+{% endblock %}
