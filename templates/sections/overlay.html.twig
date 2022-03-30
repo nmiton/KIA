@@ -6,14 +6,17 @@
         </div>
         <div id="mon_portefeuille">
             <label>Mon portefeuille :</label>
-            <input class="form-control" type="text" id="money" disabled value="{{animal.user.money}} pesos" name="money" required size="10">
+            <div id="grp_input_money">
+                <input class="form-control" type="text" id="money" disabled value="{{animal.user.money}}" name="money" required size="10">
+                <label>pesos</label>
+            <div>
         </div>
     </section>
     <section id="stats">
-        <div id="stats_animal" class="">
+        <div id="stats_animal">
             {% include 'sections/stats.html.twig' %}
         </div>
-        <div id="img_animal" class="">
+        <div id="img_animal">
             {% include "animaux/chien.html.twig" %}
         </div>
     </section>
