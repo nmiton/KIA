@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ObjetRepository::class)]
-class Objet
+class Objects
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,12 +24,12 @@ class Objet
     #[ORM\Column(type: 'integer')]
     private $lossPercentage;
 
-    #[ORM\OneToMany(mappedBy: 'idObjet', targetEntity: Possede::class)]
-    private $possedes;
+    #[ORM\OneToMany(mappedBy: 'idObjet', targetEntity: Inventory::class)]
+    private $inventories;
 
     public function __construct()
     {
-        $this->possedes = new ArrayCollection();
+        $this->inventories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,27 +76,27 @@ class Objet
     /**
      * @return Collection<int, Possede>
      */
-    public function getPossedes(): Collection
+    public function getInventories(): Collection
     {
-        return $this->possedes;
+        return $this->inventories;
     }
 
-    public function addPossede(Possede $possede): self
+    public function addInventory(Inventory $inventory): self
     {
-        if (!$this->possedes->contains($possede)) {
-            $this->possedes[] = $possede;
-            $possede->setIdObjet($this);
+        if (!$this->inventories->contains($inventory)) {
+            $this->inventories[] = $inventory;
+            $inventory->setObjet($this);
         }
 
         return $this;
     }
 
-    public function removePossede(Possede $possede): self
+    public function removeInventory(Inventory $inventory): self
     {
-        if ($this->possedes->removeElement($possede)) {
+        if ($this->inventories->removeElement($inventory)) {
             // set the owning side to null (unless already changed)
-            if ($possede->getIdObjet() === $this) {
-                $possede->setIdObjet(null);
+            if ($inventory->getObjet() === $this) {
+                $inventory->setObjet(null);
             }
         }
 

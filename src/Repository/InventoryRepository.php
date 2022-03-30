@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Possede;
+use App\Entity\Inventory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Possede|null find($id, $lockMode = null, $lockVersion = null)
- * @method Possede|null findOneBy(array $criteria, array $orderBy = null)
- * @method Possede[]    findAll()
- * @method Possede[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Inventory|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Inventory|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Inventory[]    findAll()
+ * @method Inventory[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PossedeRepository extends ServiceEntityRepository
+class InventoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Possede::class);
+        parent::__construct($registry, Inventory::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(Possede $entity, bool $flush = true): void
+    public function add(Inventory $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class PossedeRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(Possede $entity, bool $flush = true): void
+    public function remove(Inventory $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class PossedeRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Possede[] Returns an array of Possede objects
+    //  * @return Inventory[] Returns an array of Inventory objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class PossedeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Possede
+    public function findOneBySomeField($value): ?Inventory
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
