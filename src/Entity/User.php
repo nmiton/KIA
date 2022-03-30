@@ -71,7 +71,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         $this->scores = new ArrayCollection();
 
-        $this->possedes = new ArrayCollection();
+        $this->inventories = new ArrayCollection();
 
     }
 
@@ -308,19 +308,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->scores->contains($score)) {
             $this->scores[] = $score;
             $score->setUser($this);
-
-     * @return Collection<int, Possede>
+        }
+        return $this;
+    }
+    /*
+     * @return Collection<int, Inventory>
      */
-    public function getPossedes(): Collection
+    public function getInventory(): Collection
     {
-        return $this->possedes;
+        return $this->inventories;
     }
 
-    public function addPossede(Inventory $possede): self
+    public function addInventory(Inventory $possede): self
     {
         if (!$this->possedes->contains($possede)) {
             $this->possedes[] = $possede;
-            $possede->setIdUser($this);
+            $possede->setUser($this);
 
         }
 
@@ -333,13 +336,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($score->getUser() === $this) {
                 $score->setUser(null);
+            }
+        }
+        return $this;
+    }
 
     public function removePossede(Inventory $possede): self
     {
         if ($this->possedes->removeElement($possede)) {
             // set the owning side to null (unless already changed)
-            if ($possede->getIdUser() === $this) {
-                $possede->setIdUser(null);
+            if ($possede->getUser() === $this) {
+                $possede->setUser(null);
             }
         }
 
