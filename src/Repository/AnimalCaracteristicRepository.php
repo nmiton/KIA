@@ -53,6 +53,7 @@ class AnimalCaracteristicRepository extends ServiceEntityRepository
             SELECT animal_caracteristic.value,caracteristic.name 
             FROM animal_caracteristic 
             INNER JOIN caracteristic 
+            ON animal_caracteristic.caracteristic_id = caracteristic.id
             WHERE animal_id = :animalId 
             GROUP BY  caracteristic.id
             ';

@@ -1,12 +1,12 @@
 <section id="overlay">
     <section id="infosChienJoeur">
         <div id="id_animal">
-            <p>Nom de votre animal: {{"Roxy"}}</p>
-            <p>Espèce: {{"CHIEN"}}</p>
+            <p>Nom de votre animal: {{animal.name}}</p>
+            <p>Espèce: {{animal.AnimalType.name}}</p>
         </div>
         <div id="mon_portefeuille">
             <label>Mon portefeuille :</label>
-            <input class="form-control" type="text" id="money" disabled value="{{'550 pesos'}}" name="money" required size="10">
+            <input class="form-control" type="text" id="money" disabled value="{{animal.user.money}} pesos" name="money" required size="10">
         </div>
     </section>
     <section id="stats">

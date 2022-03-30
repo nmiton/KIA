@@ -77,6 +77,69 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
+    public function findAnimalIsAliveWithLifeByUserId($userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT a.id, a.animal_type_id, a.name, a.last_active, a.created_at, ac.value
+            FROM animal as a
+            INNER JOIN user u ON a.user_id = u.id
+            INNER JOIN animal_caracteristic ac ON ac.animal_id = a.id 
+            INNER JOIN caracteristic c ON c.id = ac.caracteristic_id
+            WHERE user_id = :userId
+            AND c.name LIKE "Vie"
+            AND is_alive = 1
+            GROUP BY c.name
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    
+    public function findAnimalIsAliveByUserId($userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT a.id, a.animal_type_id, a.name, a.last_active, a.created_at
+            FROM animal as a
+            INNER JOIN user u ON a.user_id = u.id
+            WHERE user_id = :userId
+            AND is_alive = 1
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+
+    public function findAnimalStatsIsAliveByUser($userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT a.id, ac.value,c.name 
+            FROM user u
+            INNER JOIN animal a  ON a.user_id = u.id
+            INNER JOIN animal_caracteristic ac ON ac.animal_id = a.id 
+            INNER JOIN caracteristic c ON c.id = ac.caracteristic_id
+            WHERE u.id = :userId
+            AND a.is_alive = 1
+            GROUP BY  c.id
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block main_id %}game{% endblock %}
+{% block main_class %}new{% endblock %}
+
+{% block body %}
+<main>
+    <h1 class="h3 mb-3 font-weight-normal">Créer un nouvel animal :</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+        <div class="text-center">
+            <button class="btn">{{ button_label|default('Créer') }}</button>
+        </div>
+    {{ form_end(form) }}
+</main>   
+
+{% endblock %}
