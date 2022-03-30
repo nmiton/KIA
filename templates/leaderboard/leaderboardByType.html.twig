@@ -4,19 +4,60 @@
 {% block main_id %}leaderboard{% endblock %}
 
 {% block body %}
+
 <section>
-    <h1 class="h3 mb-3 font-weight-normal">Classement par type :</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
         <div class="text-center">
-            <button class="btn">{{ button_label|default('Créer') }}</button>
+            <button class="btn">{{ button_label|default('Voir') }}</button>
         </div>
     {{ form_end(form) }}
-
-    
 </section>
+
+{% if (classement == []) %}
+<h1 class="h3 mb-3 font-weight-normal">Classement par type :</h1>
+
+    <table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">#</th>
+        <th scope="col">Joueur</th>
+        <th scope="col">Animal</th>
+        <th scope="col">Score</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td data-label="Place" colspan="4">Aucun classement n'est disponible</td>
+        </tr>
+    <tbody>
+</table>  
+{% else %}
+<table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">#</th>
+        <th scope="col">Joueur</th>
+        <th scope="col">Animal</th>
+        <th scope="col">Score</th>
+    </thead>
+    <tbody>
+        {% set i = 1 %}
+        {% for place in classement %}
+            <tr>
+                <td data-label="Place">{{ i }}</td>
+                <td data-label="Joueur">{{ place.pseudo }}</td>
+                <td data-label="Animal">{{ place.name}}</td>
+                <td data-label="Score">{{ place.score }}</td>
+            </tr>
+            {% set i = i + 1 %}
+        {% endfor %}
+    <tbody>
+</table>  
+
+{% endif %}
+{# 
+
 {% if classement is not null %}
-<h2 class="h4 m-3 font-weight-normal">Type : {{"Chien"}}</h2>
+{{dump(animalType)}}
+<h2 class="h4 m-3 font-weight-normal">Type : {{ animalType.getName() }}</h2>
 
 <table class="table table-striped mt-3">
     <thead>
@@ -26,13 +67,17 @@
         <th scope="col">Score</th>
     </thead>
     <tbody>
+    {% set i = 1 %}
+    {% for place in classement %}
         <tr>
-            <td data-label="Place">1</td>
-            <td data-label="Joueur">Nico</td>
-            <td data-label="Animal">Roxy</td>
-            <td data-label="Score">150</td>
+            <td data-label="Place">{{ i }}</td>
+            <td data-label="Joueur">{{ place.pseudo }}</td>
+            <td data-label="Animal">{{ place.name }}</td>
+            <td data-label="Score">{{ place.score }}</td>
         </tr>
+        {% set i = i + 1 %}
+    {% endfor %}
     <tbody>
 </table>  
-{% endif %}
+{% endif %} #}
 {% endblock %}

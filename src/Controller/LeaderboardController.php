@@ -6,9 +6,9 @@ use App\Form\SelectTypeAnimalType;
 use App\Repository\UserRepository;
 use App\Repository\ScoreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 
 #[Route('/classement')]
@@ -23,30 +23,30 @@ class LeaderboardController extends AbstractController
         ]);
     }
 
-    #[Route('/classement-par-types', name: 'app_leaderboard_by_types', methods: ['POST'])]
+    #[Route('/classement-par-types', name: 'app_leaderboard_by_types')]
     public function classementParType(Request $request, ScoreRepository $repo): Response
-    {
+    {   
         $classement = null;
-        $animalType = new AnimalType();
         $form = $this->createForm(SelectTypeAnimalType::class);
+        $form->handleRequest($request);
         
-        if ($request->isMethod('POST')) {
-            // if ($form->isSubmitted() && $form->isValid()) {
-                dd($request->request->get($form->getName()));
-                $classement = $repo->findScoresByAnimalTypeId($animalType->getId());
-            // }
-            // dd($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $animalType = $form->get("animalType")->getData();
+            // dd($form->get("animalType")->getData()->getId());
+            $id_type_animal = $form->get("animalType")->getData()->getId();
+            $classement = $repo->findAllScoresByAnimalTypeId($id_type_animal);
+            // dd($classement);
+            return $this->render('leaderboard/leaderboardByType.html.twig', [
+                'form' => $form->createView(),
+                'controller_name' => 'LeaderboardController',
+                'classement' => $classement,
+                'animalType' => $animalType
+            ]);
         }
-        // $form->handleRequest($request);
-        
-        
-        
-        
         return $this->render('leaderboard/leaderboardByType.html.twig', [
             'form' => $form->createView(),
             'controller_name' => 'LeaderboardController',
             'classement' => $classement,
-            'animalType' => $animalType
         ]);
     }
 

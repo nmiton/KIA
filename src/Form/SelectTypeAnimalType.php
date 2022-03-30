@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\AnimalType;
+use App\Entity\Score;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,6 +21,7 @@ class SelectTypeAnimalType extends AbstractType
             'attr' => ['autocomplete' => 'text','class' => 'form-control'],
             'class' => AnimalType::class,
             'label' => "Type d'animal :",
+            'mapped' => false,
             'placeholder' => "Choisir un type d'animal",
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('p')
@@ -33,7 +35,7 @@ class SelectTypeAnimalType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => AnimalType::class,
+            'data_class' => Score::class,
         ]);
     }
 }

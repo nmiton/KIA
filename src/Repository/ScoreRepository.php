@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Score;
-use App\Entity\AnimalType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -46,9 +45,7 @@ class ScoreRepository extends ServiceEntityRepository
         }
     }
 
-    // recuper score par types
-    
-    public function findScoresByAnimalTypeId($animaTypeId): array
+    public function findAllScoresByAnimalTypeId($animalTypeId)
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -57,11 +54,11 @@ class ScoreRepository extends ServiceEntityRepository
             FROM score  
             INNER JOIN user 
             ON user.id = score.user_id
-            WHERE score.type_animal_id = :animalTypeId
+            WHERE score.type_animal_id = :animalTypelId
             ORDER BY score.score ASC
             ';
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['animaTypelId' => $animaTypeId]);
+        $resultSet = $stmt->executeQuery(['animalTypelId' => $animalTypeId]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
