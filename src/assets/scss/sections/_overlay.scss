@@ -6,22 +6,55 @@
         margin: 0.5rem;
     }
 
+    section{
+        margin: 1rem;
+    }
+
+    .myBorder{
+        border: 0.25rem outset;
+        border-color: $color-bg-altmenu;
+        padding: 1rem;
+        margin: 1rem;
+    }
+
     #infosChienJoeur{
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
 
-            #mon_portefeuille{
+        #id_animal{
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            @include respond(md) {
+                flex-direction: column;
+            }
+        }
+
+        #mon_portefeuille{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            label{
+                margin: auto 1rem;
+            }
+
+            #grp_input_money{
                 display: flex;
-                flex-direction: row;
 
-                label{
-                    margin: auto 1rem;
-                }
-                
                 input{
                     width: auto;
+                    height: 2.5rem;
+                    text-align: right;
                 }
             }
+        }
+
+        @include respond(md) {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
     }
 
     #stats{
@@ -29,7 +62,7 @@
         flex-direction: column;
         justify-content: center;
 
-        @include respond(lg) {
+        @include respond(md) {
             display: grid;
             grid-template-columns: 7fr 3fr;
         }

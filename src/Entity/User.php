@@ -61,10 +61,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Score::class)]
     private $scores;
 
+    #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: Inventory::class)]
+    private $inventories;
+
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
+
         $this->scores = new ArrayCollection();
+
+        $this->possedes = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -300,6 +308,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->scores->contains($score)) {
             $this->scores[] = $score;
             $score->setUser($this);
+
+     * @return Collection<int, Possede>
+     */
+    public function getPossedes(): Collection
+    {
+        return $this->possedes;
+    }
+
+    public function addPossede(Inventory $possede): self
+    {
+        if (!$this->possedes->contains($possede)) {
+            $this->possedes[] = $possede;
+            $possede->setIdUser($this);
+
         }
 
         return $this;
@@ -311,6 +333,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($score->getUser() === $this) {
                 $score->setUser(null);
+
+    public function removePossede(Inventory $possede): self
+    {
+        if ($this->possedes->removeElement($possede)) {
+            // set the owning side to null (unless already changed)
+            if ($possede->getIdUser() === $this) {
+                $possede->setIdUser(null);
             }
         }
 
