@@ -27,7 +27,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $user->setMoney(254444444);       
         $user->setlastConnection(new DateTime());  
         $user ->setIsActive(true);     
-        $user->setIsVerified(false);
+        $user->setIsVerified(true);
         $user ->setCreatedAt(new \DateTime());         
         $manager->persist($user);        
         $this->addReference('user1', $user);

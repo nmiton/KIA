@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\AnimalCaracteristic;
 use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
 use DateTime;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AnimalCaracteristicRepository;
+use App\Repository\CaracteristicRepository;
 
 #[Route('/animal')]
 class AnimalController extends AbstractController
@@ -24,7 +26,7 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/new', name: 'app_animal_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AnimalRepository $animalRepository): Response
+    public function new(Request $request, AnimalRepository $animalRepository, CaracteristicRepository $statsRepo, AnimalCaracteristicRepository $statsAnimalRepo): Response
     {
         $animal = new Animal();
         $form = $this->createForm(AnimalType::class, $animal);
@@ -36,6 +38,16 @@ class AnimalController extends AbstractController
             $animal->setCreatedAt($today);
             $animal->setLastActive($today);
             $animalRepository->add($animal);
+            //on récupère nos entity stats
+            $all_stats = $statsRepo->findAll();
+            //on créer chq stats pr l'animal
+            foreach ($all_stats as $stat) {
+                $stats_animal = new AnimalCaracteristic();
+                $stats_animal->setAnimal($animal);
+                $stats_animal->setCaracteristic($stat);
+                $stats_animal->setValue(100);
+                $statsAnimalRepo->add($stats_animal);
+            }
             return $this->redirectToRoute('app_animal_index', [], Response::HTTP_SEE_OTHER);
         }
 
