@@ -58,9 +58,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Animal::class)]
     private $animals;
 
+    #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: Possede::class)]
+    private $possedes;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
+        $this->possedes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -277,6 +281,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($animal->getUser() === $this) {
                 $animal->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Possede>
+     */
+    public function getPossedes(): Collection
+    {
+        return $this->possedes;
+    }
+
+    public function addPossede(Possede $possede): self
+    {
+        if (!$this->possedes->contains($possede)) {
+            $this->possedes[] = $possede;
+            $possede->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePossede(Possede $possede): self
+    {
+        if ($this->possedes->removeElement($possede)) {
+            // set the owning side to null (unless already changed)
+            if ($possede->getIdUser() === $this) {
+                $possede->setIdUser(null);
             }
         }
 
