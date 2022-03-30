@@ -21,13 +21,10 @@
     <tbody>
 </table>  
 {% else %}
-
-{{ dump(users)}} 
 <table class="table table-striped mt-3">
     <thead>
         <th scope="col">#</th>
         <th scope="col">Joueur</th>
-        <th scope="col">Animal</th>
         <th scope="col">Score</th>
     </thead>
     <tbody>
@@ -36,7 +33,6 @@
             <tr>
                 <td data-label="Place">{{ i }}</td>
                 <td data-label="Joueur">{{ user.pseudo }}</td>
-                <td data-label="Animal">{{"Roxy"}}</td>
                 <td data-label="Score">{{ user.score }}</td>
             </tr>
             {% set i = i + 1 %}

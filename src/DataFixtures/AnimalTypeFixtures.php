@@ -16,6 +16,10 @@ class AnimalTypeFixtures extends Fixture implements OrderedFixtureInterface
         $typeAnimal->setName("Chien");
         $manager->persist($typeAnimal);  
         $this->addReference('type_animal_chien', $typeAnimal);
+        $typeAnimal = new AnimalType();
+        $typeAnimal->setName("Chat");
+        $manager->persist($typeAnimal);  
+        $this->addReference('type_animal_chat', $typeAnimal);
         $manager->flush();
     }
     public function getOrder(){         

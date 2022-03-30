@@ -1,8 +1,12 @@
 #leaderboard{
     section {
         display: flex;
+        margin: 1rem 0;
         flex-direction: column;
         form{
+            label{
+                margin: 1rem 0;
+            }
             button{
                 margin: 1rem;
                 background-color: $color-bg-altmenu;
