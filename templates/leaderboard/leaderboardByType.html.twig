@@ -5,15 +5,17 @@
 
 {% block body %}
 <section>
-    <h1 class="h3 mb-3 font-weight-normal">Classement par types :</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Classement par type :</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+        <div class="text-center">
+            <button class="btn">{{ button_label|default('Créer') }}</button>
+        </div>
+    {{ form_end(form) }}
 
-    <select class="form-select form-select-sm" aria-label="Default select example">
-        <option selected>Sélectionner un type d'animal</option>
-        <option value="Chien">Chien</option>
-        <option value="Chat">Chat</option>
-        <option value="Dragon">Dragon</option>
-    </select>
+    
 </section>
+{% if classement is not null %}
 <h2 class="h4 m-3 font-weight-normal">Type : {{"Chien"}}</h2>
 
 <table class="table table-striped mt-3">
@@ -32,5 +34,5 @@
         </tr>
     <tbody>
 </table>  
-
+{% endif %}
 {% endblock %}
