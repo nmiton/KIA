@@ -37,11 +37,11 @@ class AnimalCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         $energie->setAnimal($this->getReference('animal1'));
         $manager->persist($energie);
 
-        $humeur = new AnimalCaracteristic();
-        $humeur->setValue(100);
-        $humeur->setCaracteristic($this->getReference('Humeur'));
-        $humeur->setAnimal($this->getReference('animal1'));
-        $manager->persist($humeur);
+        $bonheur = new AnimalCaracteristic();
+        $bonheur->setValue(100);
+        $bonheur->setCaracteristic($this->getReference('Bonheur'));
+        $bonheur->setAnimal($this->getReference('animal1'));
+        $manager->persist($bonheur);
 
         $manager->flush();
     }

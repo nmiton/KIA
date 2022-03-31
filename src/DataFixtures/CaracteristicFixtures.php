@@ -36,11 +36,11 @@ class CaracteristicFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($energie);
         $this->addReference('Énergie', $energie);
 
-        $humeur = new Caracteristic();
-        $humeur->setName("Humeur");
-        $humeur->setLostByHour(4);
-        $manager->persist($humeur);
-        $this->addReference('Humeur', $humeur);
+        $bonheur = new Caracteristic();
+        $bonheur->setName("Bonheur");
+        $bonheur->setLostByHour(4);
+        $manager->persist($bonheur);
+        $this->addReference('Bonheur', $bonheur);
 
         $manager->flush();
     }
