@@ -30,9 +30,13 @@ class Objects
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $description;
 
+    #[ORM\OneToMany(mappedBy: 'object', targetEntity: ActionObjects::class)]
+    private $actionObjects;
+
     public function __construct()
     {
         $this->inventories = new ArrayCollection();
+        $this->actionObjects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,6 +118,36 @@ class Objects
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ActionObjects>
+     */
+    public function getActionObjects(): Collection
+    {
+        return $this->actionObjects;
+    }
+
+    public function addActionObject(ActionObjects $actionObject): self
+    {
+        if (!$this->actionObjects->contains($actionObject)) {
+            $this->actionObjects[] = $actionObject;
+            $actionObject->setObject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActionObject(ActionObjects $actionObject): self
+    {
+        if ($this->actionObjects->removeElement($actionObject)) {
+            // set the owning side to null (unless already changed)
+            if ($actionObject->getObject() === $this) {
+                $actionObject->setObject(null);
+            }
+        }
 
         return $this;
     }
