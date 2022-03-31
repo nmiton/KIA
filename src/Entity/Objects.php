@@ -24,7 +24,7 @@ class Objects
     #[ORM\Column(type: 'integer')]
     private $lossPercentage;
 
-    #[ORM\OneToMany(mappedBy: 'idObjet', targetEntity: Inventory::class)]
+    #[ORM\OneToMany(mappedBy: 'objet', targetEntity: Inventory::class)]
     private $inventories;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
