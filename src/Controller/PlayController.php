@@ -27,9 +27,11 @@ class PlayController extends AbstractController
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
                 //nb d'aimaux vivant(s) pr le user
-                $animals =$repo->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                
+                $animals=$repo->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                
+                // dd($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
-                // dd($animals);
                 if(count($animals)==0){
                     return $this->redirectToRoute('app_new_animal');
                 }else{

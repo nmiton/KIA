@@ -22,7 +22,7 @@ class AnimalCaracteristic
     private $caracteristic;
 
     #[ORM\Column(type: 'integer')]
-    private $value;
+    private $value = 100;
 
     public function getId(): ?int
     {

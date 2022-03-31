@@ -1,5 +1,27 @@
 #shopInventory{
 
+    #mon_portefeuille{
+        display: flex;
+        flex-direction: row;
+        margin: 2rem auto;
+        justify-content: end;
+
+        label{
+            margin: auto 1rem;
+        }
+
+        #grp_input_money{
+            display: flex;
+
+            input{ 
+                width: auto;
+                height: 2.5rem;
+                text-align: right;
+                margin: auto;
+            }
+        }
+    }
+
     #inventaire_magasin{
         display: flex;
         flex-direction: row;
@@ -9,9 +31,8 @@
             border-radius: 5%;
             color: white;
             text-decoration: none;
-            padding: 0.75rem;
+            padding: 1rem;
             background-color: $color-bg-alt;
-            line-height: 1;
         }
 
         a:hover{

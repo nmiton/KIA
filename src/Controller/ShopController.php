@@ -19,13 +19,14 @@ class ShopController extends AbstractController
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
         $error = isset($_GET['error']) ? $_GET['error'] : "";
-
+        $success = isset($_GET['success']) ? $_GET['success'] : "";
         $all_items = $repoObjet->findAll();
         return $this->render('shop/index.html.twig', [
             'money' => $this->getUser()->getMoney(),
             'controller_name' => 'ShopController',
             'shopItems' => $all_items,
-            'error' => $error
+            'error' => $error,
+            'success'=>$success,
         ]);
     }
 
@@ -35,16 +36,17 @@ class ShopController extends AbstractController
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
         $user = $this->getUser();
-        if ($user->getMoney() - $objet->getPrice() < 0) return $this->redirectToRoute('app_shop', ['error' => "Tu n'as pas assez d'argent."]);
-
-        $user->setMoney($user->getMoney() - $objet->getPrice());
-        $repoUser->add($user);
-
-        $inv = new Inventory();
-        $inv->setUser($this->getUser());
-        $inv->setObjet($objet);
-        $repoInv->add($inv);
-
-        return $this->redirectToRoute('app_shop');
+        if ($user->getMoney() - $objet->getPrice() < 0) {
+            return $this->redirectToRoute('app_shop', ['error' => "Tu n'as pas assez d'argent."]);
+        }else{
+            $user->setMoney($user->getMoney() - $objet->getPrice());
+            $repoUser->add($user);
+    
+            $inv = new Inventory();
+            $inv->setUser($this->getUser());
+            $inv->setObjet($objet);
+            $repoInv->add($inv);
+            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!"]);
+        }
     }
 }
