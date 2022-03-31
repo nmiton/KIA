@@ -64,6 +64,26 @@ class ObjectsRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
+    public function findByCountAllObjetsByUserId($userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT COUNT(o.id) as quantity,
+            o.id, o.description, o.name, o.price, o.loss_percentage 
+            FROM objects o 
+            INNER JOIN inventory i 
+            ON o.id = i.objet_id
+            WHERE i.user_id = :userId 
+            GROUP BY o.id;
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
     
     public function findAllObjetsNotOwnUserId($userId)
     {
