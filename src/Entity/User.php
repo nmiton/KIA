@@ -61,7 +61,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Score::class)]
     private $scores;
 
-    #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: Inventory::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Inventory::class)]
     private $inventories;
 
 

@@ -17,14 +17,18 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $objet->setDescription("Balle jaune pour jouer à la raquette");
         $objet->setLossPercentage(30);
         $manager->persist($objet);
-        $this->addReference('objet1', $objet);
-        $objet = new Objects();
-        $objet->setName("Freezbee");
-        $objet->setDescription("Jeu en forme d'assiette avec la capacité de retour et de non retour");
-        $objet->setPrice(20);
-        $objet->setLossPercentage(50);
-        $manager->persist($objet);         
-        $this->addReference('objet2', $objet);
+        $this->addReference('balle_tennis', $objet);
+
+        for ($i=1; $i < 6 ; $i++) { 
+            $objet = new Objects();
+            $objet->setName('objet'.$i);
+            $objet->setDescription("desc_objet".$i);
+            $objet->setPrice(10);
+            $objet->setLossPercentage(50);
+            $manager->persist($objet);         
+            $this->addReference('objet'.$i, $objet);
+        }    
+
         $manager->flush();
     }
 

@@ -13,11 +13,11 @@ class Inventory
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'inventaries')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'inventories')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
-    #[ORM\ManyToOne(targetEntity: Objects::class, inversedBy: 'inventaries')]
+    #[ORM\ManyToOne(targetEntity: Objects::class, inversedBy: 'inventories')]
     #[ORM\JoinColumn(nullable: false)]
     private $objet;
 
