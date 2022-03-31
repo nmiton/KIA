@@ -13,8 +13,8 @@
         </div>
     {{ form_end(form) }}
 </section>
-{% if classement == [] %}
-{% elseif classement is null %}
+{% if classement is null %} 
+{% elseif classement == []  %}
 <h1 class="h3 mb-3 font-weight-normal">Classement par type :</h1>
 
     <table class="table table-striped mt-3">

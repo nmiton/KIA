@@ -1,0 +1,29 @@
+#shopInventory{
+
+    #inventaire_magasin{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    
+        a{
+            border-radius: 5%;
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem;
+            background-color: $color-bg-alt;
+            line-height: 1;
+        }
+
+        a:hover{
+            background-color: $color-bg-altmenu;
+        }
+    }
+    
+    .tips{
+        margin: 1.5rem auto;
+    }
+}
+
+
+
+

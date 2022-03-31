@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Magasin{% endblock %}
-{% block main_id %}magasin{% endblock %}
+{% block main_id %}shopInventory{% endblock %}
 
 {% block body %}
+<div id="inventaire_magasin">
     <h1 class="h3 mb-3 font-weight-normal">Magasin : </h1>
-    <p class="mt-3"> En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
+    <a href="{{path("app_inventory")}}">Inventaire</a>
+</div>
+<p class="tips"> En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
 {% if shopItems == [] %}
 {% elseif shopItems is null %}
-
     <table class="table table-striped mt-3">
         <thead>
             <th scope="col">Objet</th>
@@ -23,9 +25,7 @@
             </tr>
         <tbody>
     </table>  
-</div>
 {% else %}
-
     <table class="table table-striped mt-3">
         <thead>
             <th scope="col">Objet</th>
@@ -53,6 +53,5 @@
             {% endfor %}
         <tbody>
     </table>  
-</div>
 {% endif %}
 {% endblock %}
