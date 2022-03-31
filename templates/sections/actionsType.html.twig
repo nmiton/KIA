@@ -1,0 +1,18 @@
+<section id="action">    
+    {# {{dump(typesAction)}} #}
+    <p class="mb-3 font-weight-normal">Type d'actions :</p>
+    <div id="actions_buttons">
+        {% for typeAction in typesAction %}
+            <form action="{{ path('app_play_type_action', {'id': animal.id , 'typeAction' : typeAction.type}) }}" method="post">
+                <button type="submit" class="btn btn-primary">{{typeAction.type}}</button>
+            </form>
+        {% endfor %}
+        <form action="{{path("app_inventory")}}">
+            <button type="submit" class="inventoryBtn btn btn-danger">Inventaire</button>
+        </form>
+    </div>
+
+    {% if actions is not null %}
+        {% include "sections/actionsList.html.twig" %}
+    {% endif %}
+</section>

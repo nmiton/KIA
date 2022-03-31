@@ -1,11 +1,10 @@
 main{
     margin-top: 1rem;
-    min-height: 48rem;
+    min-height: 45rem;
 
     @include respond(md){
-        min-height: 50rem;
-    }
-    
+        min-height: 48rem;
+    }  
     @import '../sections/_overlay.scss';
 
     #console{

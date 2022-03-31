@@ -13,7 +13,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
     {
         $actionSortirParc = new Action();
         $actionSortirParc->setName("Sortir le chien au parc");
-        $actionSortirParc->setType("SORTIR");
+        $actionSortirParc->setType("Sortir");
         $actionSortirParc->setConsoleLog("Vous promenez votre chienne, et elle adore ça!");
         $actionSortirParc->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($actionSortirParc);
@@ -21,7 +21,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
 
         $jouerBalleTennis = new Action();
         $jouerBalleTennis->setName("Jouer à la balle de tennis");
-        $jouerBalleTennis->setType("JOUER");
+        $jouerBalleTennis->setType("Jouer");
         $jouerBalleTennis->setConsoleLog(" vous ramène la balle");
         $jouerBalleTennis->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($jouerBalleTennis);
@@ -29,7 +29,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
 
         $nourrirCroquette = new Action();
         $nourrirCroquette->setName("Nourrir avec des croquettes");
-        $nourrirCroquette->setType("NOURRIR");
+        $nourrirCroquette->setType("Nourrir");
         $nourrirCroquette->setConsoleLog(" se régale");
         $nourrirCroquette->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($nourrirCroquette);
@@ -37,7 +37,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
 
         $remplirGamelle = new Action();
         $remplirGamelle->setName("Remplir la gamelle d'eau");
-        $remplirGamelle->setType("BOIRE");
+        $remplirGamelle->setType("Boire");
         $remplirGamelle->setConsoleLog("Vous en avez mis partout");
         $remplirGamelle->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($remplirGamelle);
@@ -45,11 +45,19 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
 
         $soinNiv1 = new Action();
         $soinNiv1->setName("Soigner des petits bobos");
-        $soinNiv1->setType("SOIN");
+        $soinNiv1->setType("Soigner");
         $soinNiv1->setConsoleLog("Vous faites vos meilleurs pansements");
         $soinNiv1->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($soinNiv1);
         $this->addReference('soinNiv1', $soinNiv1);
+
+        $donnerFriandise = new Action();
+        $donnerFriandise->setName("Donner friandise");
+        $donnerFriandise->setType("Nourrir");
+        $donnerFriandise->setConsoleLog("Un peu de sucre ne fait pas de mal");
+        $donnerFriandise->setAnimalType($this->getReference('typeAnimalChien'));
+        $manager->persist($donnerFriandise);
+        $this->addReference('donnerFriandise', $donnerFriandise);
 
         $manager->flush();
     }

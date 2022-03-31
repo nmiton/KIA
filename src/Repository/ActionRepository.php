@@ -45,6 +45,64 @@ class ActionRepository extends ServiceEntityRepository
         }
     }
 
+    public function findTypeAction()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT DISTINCT type FROM `action`
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findTypeActionByAnimalType($animalType)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT DISTINCT type FROM `action` WHERE animal_type_id = :animalType
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['animalType' => $animalType]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+
+    public function findByActionsAnimalTypeAndActionType($animalTypeId,$actionType)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT a.id, a.name, a.type, a.console_log FROM action a 
+        INNER JOIN action_caracteristic ac ON ac.action_id = a.id 
+        INNER JOIN caracteristic c on c.id = ac.caracteritic_id 
+        WHERE animal_type_id = :animalTypeId AND type=:actionType GROUP BY a.id
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['animalTypeId' => $animalTypeId,'actionType'=>$actionType]);
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findByStatsActionsByAnimalTypeAndActionType($animalTypeId,$actionType)
+    {
+        $conn = $this->getEntityManager()->getConnection();    
+        $sql = '
+        SELECT a.id, c.name, ac.val_max, ac.val_min FROM action a 
+            INNER JOIN action_caracteristic ac ON ac.action_id = a.id 
+            INNER JOIN caracteristic c on c.id = ac.caracteritic_id 
+            WHERE animal_type_id = :animalTypeId AND type=:actionType;
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['animalTypeId' => $animalTypeId,'actionType'=>$actionType]);
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Action[] Returns an array of Action objects
     //  */

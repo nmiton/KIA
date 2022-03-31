@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\AnimalCaracteristic;
+use App\Entity\AnimalType;
 use App\Repository\AnimalRepository;
 use App\Form\CreateAnimalType;
+use App\Repository\ActionRepository;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\CaracteristicRepository;
 use App\Repository\UserRepository;
@@ -14,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Collection;
 
 class PlayController extends AbstractController
 {
@@ -27,7 +28,6 @@ class PlayController extends AbstractController
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
                 //nb d'aimaux vivant(s) pr le user
-                
                 $animals=$repo->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 
                 // dd($this->getUser()->getId());
@@ -44,7 +44,7 @@ class PlayController extends AbstractController
     }
 
     #[Route('/jouer/{id}', name: 'app_play', methods: ['GET'])]
-    public function play(Animal $animal,AnimalCaracteristicRepository $statsRepo): Response
+    public function play(Animal $animal,AnimalCaracteristicRepository $statsRepo, ActionRepository $repoAction): Response
     {   
         if(!$this->getUser()){
             return $this->render('home/home.html.twig');   
@@ -52,11 +52,45 @@ class PlayController extends AbstractController
             if($animal->getUser()->getId()!=$this->getUser()->getId() || !$animal->getIsAlive() ){
                 return $this->redirectToRoute('app_play_preload');
             }else{
+                $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
+                // dd($typesActionTypeAnimal);
                 $stats = $statsRepo->findAllStatsByAnimalId($animal->getId());
-                return $this->render('play/main.html.twig', ['animal' => $animal,'stats' => $stats ]);   
+                return $this->render('play/main.html.twig', [
+                    'animal' => $animal,
+                    'stats' => $stats,
+                    'typesAction' => $typesActionTypeAnimal,
+                    'actions' => null
+                ]);   
             }
         }
     }
+
+    #[Route('/jouer/{id}/{typeAction}/' , name: 'app_play_type_action', methods : ['POST'])]
+    public function selectTypeAction(Animal $animal, $typeAction,AnimalCaracteristicRepository $statsRepo, ActionRepository $repoAction):Response
+    {   
+        $stats = $statsRepo->findAllStatsByAnimalId($animal->getId());
+        $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
+
+        $actions_type_action_type_animal = $repoAction->findByActionsAnimalTypeAndActionType($animal->getAnimalType()->getId(),$typeAction);
+        $stats_actions_type_action_type_animal = $repoAction->findByStatsActionsByAnimalTypeAndActionType($animal->getAnimalType()->getId(),$typeAction);
+
+
+        // dd($stats_actions_type_action_type_animal);
+        return $this->render('play/main.html.twig', [
+            'animal' => $animal,
+            'stats' => $stats,
+            'typesAction' => $typesActionTypeAnimal,
+            'actions' => $actions_type_action_type_animal,
+            'stats_actions' => $stats_actions_type_action_type_animal,
+        ]);           
+    }
+
+    #[Route('/action/{id}' , name: 'app_play_action')]
+    public function executeAction():Response
+    {   
+        return $this->render('play/main.html.twig');   
+    }
+
 
     #[Route('/choisir-animal', name: 'app_choose_animal')]
     public function chooseAnimal(): Response

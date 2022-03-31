@@ -32,6 +32,13 @@ class ActionObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $var->setObject($this->getReference('eau'));
         $manager->persist($var);      
         $this->addReference('actionObjectGamelle', $var);
+        //remplir gamelle
+        $var = new ActionObjects();
+        $var->setQuantity(1);
+        $var->setAction($this->getReference('donnerFriandise'));
+        $var->setObject($this->getReference('friandise'));
+        $manager->persist($var);      
+        $this->addReference('actionObjectFriandise', $var);
         $manager->flush();
     }
 
