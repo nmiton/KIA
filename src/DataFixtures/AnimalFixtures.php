@@ -18,7 +18,7 @@ class AnimalFixtures extends Fixture implements OrderedFixtureInterface
         $animal->setIsAlive(true);
         $animal->setLastActive($date);
         $animal->setCreatedAt($date);
-        $animal->setUser($this->getReference('user1'));
+        $animal->setUser($this->getReference('nath'));
         $animal->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($animal);
         $this->addReference('animal_chien', $animal);

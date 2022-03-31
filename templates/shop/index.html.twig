@@ -1,28 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Magasin
-{% endblock %}
-{% block main_id %}shopInventory
-{% endblock %}
+{% block title %}Magasin{% endblock %}
+{% block main_id %}shopInventory{% endblock %}
 
 {% block body %}
-	<div id="inventaire_magasin">
-		<h1 class="h3 mb-3 font-weight-normal">Magasin :
-		</h1>
-		<a href="{{path("app_inventory")}}">Inventaire</a>
+<div id="mon_portefeuille">
+	<label>Mon portefeuille :</label>
+	<div id="grp_input_money">
+		<input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
 	</div>
-	<p class="tips">
-		En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
-	</p>
-	<div id="mon_portefeuille">
-		<label>Mon portefeuille :</label>
-		<div id="grp_input_money">
-			<input class="form-control" type="text" id="money" disabled value="{{money}}" name="money" required size="10">
-			<label>pesos</label>
-		</div>
-	</div>
+</div>
+<div id="inventaire_magasin">
+	<h1 class="h3 mb-3 font-weight-normal">Magasin : </h1>
+	<a href="{{path("app_inventory")}}">Inventaire</a>
+</div>
+<p class="tips">
+	En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
+</p>
+
 	{% if error != "" %}
 		<div class="alert alert-danger">{{ error }}</div>
+	{% endif %}
+	{% if success != "" %}
+		<div class="alert alert-success">{{ success }}</div>
 	{% endif %}
 	{% if shopItems == [] %}
 		{% elseif shopItems is null %}
@@ -30,13 +30,13 @@
 				<thead>
 					<th scope="col">Objet</th>
 					<th scope="col">Description</th>
-					<th scope="col">Conséquences</th>
+					{# <th scope="col">Conséquences</th> #}
 					<th scope="col">Prix</th>
 					<th scope="col"></th>
 				</thead>
 				<tbody>
 					<tr>
-						<td data-label="Place" colspan="5">Aïe, il semblerait que le magasin a été dévalisé</td>
+						<td data-label="Place" colspan="4">Aïe, il semblerait que le magasin a été dévalisé</td>
 					</tr>
 				</tbody>
 				<tbody></tbody>
@@ -46,7 +46,7 @@
 				<thead>
 					<th scope="col">Objet</th>
 					<th scope="col">Description</th>
-					<th scope="col">Conséquences</th>
+					{# <th scope="col">Conséquences</th> #}
 					<th scope="col">Prix</th>
 					<th scope="col"></th>
 				</thead>
@@ -55,8 +55,8 @@
 						<tr>
 							<td data-label="Objet">{{item.name}}</td>
 							<td data-label="Description">{{item.description}}</td>
-							<td data-label="Conséquences">TODO</td>
-							<td data-label="Prix">{{item.price}}$</td>
+							{# <td data-label="Conséquences">TODO</td> #}
+							<td data-label="Prix">{{item.price}}$$</td>
 							<td data-label="">
 								<form action="{{ path('app_shop_buy_id', {'id': item.id}) }}" method="post">
 									{% if item.price <= app.user.getMoney() %}

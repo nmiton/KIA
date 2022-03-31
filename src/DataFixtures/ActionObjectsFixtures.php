@@ -22,7 +22,7 @@ class ActionObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $var = new ActionObjects();
         $var->setQuantity(1);
         $var->setAction($this->getReference('nourrirCroquette'));
-        $var->setObject($this->getReference('balle_tennis'));
+        $var->setObject($this->getReference('croquettes'));
         $manager->persist($var);      
         $this->addReference('actionObjectCroquette', $var);
         //remplir gamelle

@@ -14,34 +14,36 @@ class AnimalCaracteristicFixtures extends Fixture implements OrderedFixtureInter
     public function load(ObjectManager $manager): void
     {
         $vie = new AnimalCaracteristic();
-        $vie->setValue(100);
         $vie->setCaracteristic($this->getReference('Vie'));
-        $vie->setAnimal($this->getReference('animal1'));
+        $vie->setAnimal($this->getReference('animal_chien'));
         $manager->persist($vie);
 
         $nourriture = new AnimalCaracteristic();
-        $nourriture->setValue(100);
         $nourriture->setCaracteristic($this->getReference('Nourriture'));
-        $nourriture->setAnimal($this->getReference('animal1'));
+        $nourriture->setAnimal($this->getReference('animal_chien'));
         $manager->persist($nourriture);
 
         $hydratation = new AnimalCaracteristic();
-        $hydratation->setValue(100);
         $hydratation->setCaracteristic($this->getReference('Hydratation'));
-        $hydratation->setAnimal($this->getReference('animal1'));
+        $hydratation->setAnimal($this->getReference('animal_chien'));
         $manager->persist($hydratation);
 
         $energie = new AnimalCaracteristic();
-        $energie->setValue(100);
         $energie->setCaracteristic($this->getReference('Énergie'));
-        $energie->setAnimal($this->getReference('animal1'));
+        $energie->setAnimal($this->getReference('animal_chien'));
         $manager->persist($energie);
 
         $bonheur = new AnimalCaracteristic();
-        $bonheur->setValue(100);
         $bonheur->setCaracteristic($this->getReference('Bonheur'));
-        $bonheur->setAnimal($this->getReference('animal1'));
+        $bonheur->setAnimal($this->getReference('animal_chien'));
         $manager->persist($bonheur);
+        
+        for ($i=1; $i<5 ; $i++) { 
+            $bonheur = new AnimalCaracteristic();
+            $bonheur->setCaracteristic($this->getReference('Bonheur'));
+            $bonheur->setAnimal($this->getReference('animal'.$i));
+            $manager->persist($bonheur);
+        }
 
         $manager->flush();
     }
