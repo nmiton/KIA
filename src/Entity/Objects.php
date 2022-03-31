@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ObjetRepository;
+use App\Repository\ObjectsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ObjetRepository::class)]
+#[ORM\Entity(repositoryClass: ObjectsRepository::class)]
 class Objects
 {
     #[ORM\Id]

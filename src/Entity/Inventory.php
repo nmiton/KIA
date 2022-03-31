@@ -2,10 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\PossedeRepository;
+use App\Repository\InventoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PossedeRepository::class)]
+#[ORM\Entity(repositoryClass: InventoryRepository::class)]
 class Inventory
 {
     #[ORM\Id]
