@@ -24,10 +24,14 @@ class AnimalType
     #[ORM\OneToMany(mappedBy: 'typeAnimal', targetEntity: Score::class)]
     private $scores;
 
+    #[ORM\OneToMany(mappedBy: 'animalType', targetEntity: Action::class)]
+    private $actions;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
         $this->scores = new ArrayCollection();
+        $this->actions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class AnimalType
             // set the owning side to null (unless already changed)
             if ($score->getTypeAnimal() === $this) {
                 $score->setTypeAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Action>
+     */
+    public function getActions(): Collection
+    {
+        return $this->actions;
+    }
+
+    public function addAction(Action $action): self
+    {
+        if (!$this->actions->contains($action)) {
+            $this->actions[] = $action;
+            $action->setAnimalType($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAction(Action $action): self
+    {
+        if ($this->actions->removeElement($action)) {
+            // set the owning side to null (unless already changed)
+            if ($action->getAnimalType() === $this) {
+                $action->setAnimalType(null);
             }
         }
 
