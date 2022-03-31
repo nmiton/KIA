@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Objects[]    findAll()
  * @method Objects[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ObjetsRepository extends ServiceEntityRepository
+class ObjectsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -43,6 +43,48 @@ class ObjetsRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+
+    public function findAllObjetsByUserId($userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * 
+            FROM objects o 
+            INNER JOIN inventory i 
+            ON o.id = i.objet_id
+            WHERE i.user_id = :userId
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    
+    public function findAllObjetsNotOwnUserId($userId)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT * 
+        FROM `objects` 
+        WHERE id NOT IN ( 
+            SELECT o.id 
+            FROM objects o 
+            INNER JOIN inventory i 
+            ON o.id = i.objet_id 
+            WHERE i.user_id = :userId
+        );
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
 
     // /**
