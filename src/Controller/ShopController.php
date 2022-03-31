@@ -18,7 +18,7 @@ class ShopController extends AbstractController
             $all_items_user_not_own = $repoObjet->findAllObjetsNotOwnUserId($this->getUser()->getId());
             return $this->render('shop/index.html.twig', [
                 'controller_name' => 'ShopController',
-                'items'=>$all_items_user_not_own,
+                'shopItems'=>$all_items_user_not_own,
             ]);
         }
     }

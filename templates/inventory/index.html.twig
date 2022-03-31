@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Mon inventaire{% endblock %}
-{% block main_id %}magasin{% endblock %}
+{% block main_id %}inventaire{% endblock %}
 
 {% block body %}
 <div id="inventaire">
@@ -10,8 +10,8 @@
         <a href="{{path("app_shop")}}" class="btn btn-danger">Magasin</a>
     </div>
 </div>
-{% if items == [] %}
-{% elseif items is null %}
+{% if userItems == [] %}
+{% elseif userItems is null %}
     <table class="table table-striped mt-3">
         <thead>
             <th scope="col">Objet</th>
