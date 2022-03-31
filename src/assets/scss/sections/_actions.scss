@@ -4,9 +4,28 @@
     }
 
     #actions_buttons{
-
         display: flex;
         flex-direction: column;
+        text-align: center;
+
+        form{
+            button{
+                border-radius: 5%;
+                padding: 0.25rem 0.5rem;
+                margin: auto;
+                margin-bottom: 1rem;
+                width: 50%;
+
+                &:hover{
+                    background-color: $color-bg-altmenu;
+                    border-color: $color-bg-alt;
+                }
+                
+                @include respond(lg) {
+                    width: auto;
+                }
+            }
+        }
 
         @include respond(lg) {
             display: grid;
@@ -14,17 +33,6 @@
             grid-gap : 1rem
         }
         
-        button{
-            border-radius: 5%;
-            padding: 0.25rem 0.5rem;
-            margin: auto;
-            margin-bottom: 1rem;
-            width: 50%;
-            
-            @include respond(lg) {
-                width: auto;
-            }
-        }
     }
 
     #actions_list {            
