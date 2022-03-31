@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon inventaire{% endblock %}
+{% block main_id %}shopInventory{% endblock %}
+
+{% block body %}
+<div id="inventaire_magasin">
+    <h1 class="h3 mb-3 font-weight-normal">Inventaire : </h1>
+    <a href="{{path("app_shop")}}">Magasin</a>
+</div>
+{% if userItems == [] %}
+{% elseif userItems is null %}
+<table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">Objet</th>
+        <th scope="col">Description</th>
+        <th scope="col">Conséquences</th>
+        <th scope="col">Quantité</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3">Aïe, il semblerait que ton inventaire soit vide</td>
+        </tr>
+    </tbody>
+</table> 
+{% else %}
+<table class="table table-striped mt-3">
+    <thead>
+        <th scope="col">Objet</th>
+        <th scope="col">Description</th>
+        <th scope="col">Conséquences</th>
+        <th scope="col">Quantité</th>
+    </thead>
+    <tbody>
+    {% for item in userItems %}
+        <tr>
+            <td data-label="Objet">{{item.name}}</td>
+            <td data-label="Description">{{item.description}}</td>
+            <td data-label="Conséquences">TODO</td>
+            <td data-label="Quantité">{{item.quantity}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table> 
+{% endif %}
+{% endblock %}

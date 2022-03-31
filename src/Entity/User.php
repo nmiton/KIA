@@ -58,13 +58,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Animal::class)]
     private $animals;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Score::class)]
+    private $scores;
+
     #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: Inventory::class)]
     private $inventories;
+
 
     public function __construct()
     {
         $this->animals = new ArrayCollection();
-        $this->possedes = new ArrayCollection();
+
+        $this->scores = new ArrayCollection();
+
+        $this->inventories = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -288,20 +296,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Possede>
+     * @return Collection<int, Score>
      */
-    public function getPossedes(): Collection
+    public function getScores(): Collection
     {
-        return $this->possedes;
+        return $this->scores;
     }
 
-    public function addPossede(Inventory $possede): self
+    public function addScore(Score $score): self
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setUser($this);
+        }
+        return $this;
+    }
+    /*
+     * @return Collection<int, Inventory>
+     */
+    public function getInventory(): Collection
+    {
+        return $this->inventories;
+    }
+
+    public function addInventory(Inventory $possede): self
     {
         if (!$this->possedes->contains($possede)) {
             $this->possedes[] = $possede;
-            $possede->setIdUser($this);
+            $possede->setUser($this);
+
         }
 
+        return $this;
+    }
+
+    public function removeScore(Score $score): self
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getUser() === $this) {
+                $score->setUser(null);
+            }
+        }
         return $this;
     }
 
@@ -309,8 +345,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->possedes->removeElement($possede)) {
             // set the owning side to null (unless already changed)
-            if ($possede->getIdUser() === $this) {
-                $possede->setIdUser(null);
+            if ($possede->getUser() === $this) {
+                $possede->setUser(null);
             }
         }
 

@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 class PlayController extends AbstractController
 {
     #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repo, AnimalCaracteristicRepository $statsAnimalRepo): Response
+    public function preload(UserRepository $repo): Response
     {
         if($this->getUser()){
             //si le user est verifié
@@ -42,7 +42,7 @@ class PlayController extends AbstractController
     }
 
     #[Route('/jouer/{id}', name: 'app_play', methods: ['GET'])]
-    public function play(Animal $animal,UserRepository $repo,AnimalCaracteristicRepository $statsRepo): Response
+    public function play(Animal $animal,AnimalCaracteristicRepository $statsRepo): Response
     {   
         if(!$this->getUser()){
             return $this->render('home/home.html.twig');   

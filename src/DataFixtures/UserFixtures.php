@@ -24,7 +24,8 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $user->setEmail('nathan.miton@orange.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'nath'));             
         $user->setRoles(['ROLE_ADMIN']);        
-        $user->setMoney(254444444);       
+        $user->setMoney(254444444);
+        $user->setScore(10);       
         $user->setlastConnection(new DateTime());  
         $user ->setIsActive(true);     
         $user->setIsVerified(true);
