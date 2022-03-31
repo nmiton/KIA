@@ -35,7 +35,7 @@ class ShopController extends AbstractController
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
         $user = $this->getUser(); // $objet->getPrice()
-        if ($user->getMoney() - 354444359 < 0) return $this->redirectToRoute('app_shop', ['error' => "Tu n'as pas assez d'argent."]);
+        if ($user->getMoney() - $objet->getPrice() < 0) return $this->redirectToRoute('app_shop', ['error' => "Tu n'as pas assez d'argent."]);
 
         $user->setMoney($user->getMoney() - $objet->getPrice());
         $repoUser->add($user);
