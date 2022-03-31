@@ -24,10 +24,14 @@ class Caracteristic
     #[ORM\OneToMany(mappedBy: 'caracteristic', targetEntity: AnimalCaracteristic::class)]
     private $animalCaracteristics;
 
+    #[ORM\OneToMany(mappedBy: 'caracteritic', targetEntity: ActionCaracteristic::class)]
+    private $actionCaracteristics;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
         $this->animalCaracteristics = new ArrayCollection();
+        $this->actionCaracteristics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,36 @@ class Caracteristic
             // set the owning side to null (unless already changed)
             if ($animalCaracteristic->getCaracteristic() === $this) {
                 $animalCaracteristic->setCaracteristic(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ActionCaracteristic>
+     */
+    public function getActionCaracteristics(): Collection
+    {
+        return $this->actionCaracteristics;
+    }
+
+    public function addActionCaracteristic(ActionCaracteristic $actionCaracteristic): self
+    {
+        if (!$this->actionCaracteristics->contains($actionCaracteristic)) {
+            $this->actionCaracteristics[] = $actionCaracteristic;
+            $actionCaracteristic->setCaracteritic($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActionCaracteristic(ActionCaracteristic $actionCaracteristic): self
+    {
+        if ($this->actionCaracteristics->removeElement($actionCaracteristic)) {
+            // set the owning side to null (unless already changed)
+            if ($actionCaracteristic->getCaracteritic() === $this) {
+                $actionCaracteristic->setCaracteritic(null);
             }
         }
 
