@@ -15,7 +15,7 @@
             <th scope="col">Description</th>
             <th scope="col">Conséquences</th>
             <th scope="col">Prix</th>
-            <th scope="col">Acheter</th>
+            <th scope="col"></th>
         </thead>
         <tbody>
             <tr>
@@ -32,7 +32,7 @@
             <th scope="col">Description</th>
             <th scope="col">Conséquences</th>
             <th scope="col">Prix</th>
-            <th scope="col">Acheter</th>
+            <th scope="col"></th>
         </thead>
         <tbody>
             {% for item in shopItems %}
@@ -40,8 +40,15 @@
                 <td data-label="Objet">{{item.name}}</td>
                 <td data-label="Description">{{item.description}}</td>
                 <td data-label="Conséquences">TODO</td>
-                <td data-label="Prix">{{item.price}}$$</td>
-                <td data-label=""><a href="#">Acheter</a></td>
+                <td data-label="Prix">{{item.price}}$</td>
+                <td data-label="">
+                {% if item.price <= app.user.getMoney() %}
+                    <a href="#">Acheter</a>
+
+                {% else %}
+                    Trop cher
+                {% endif %}
+                </td>
             </tr>
             {% endfor %}
         <tbody>
