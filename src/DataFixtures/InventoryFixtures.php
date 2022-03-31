@@ -12,8 +12,8 @@ class InventoryFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $inv = new Inventory();
-        $inv->setUser($this->getReference('user1'));
-        $inv->setObjet($this->getReference('objet1'));
+        $inv->setUser($this->getReference('nath'));
+        $inv->setObjet($this->getReference('balle_tennis'));
         $manager->persist($inv);        
         $manager->flush();
     }
