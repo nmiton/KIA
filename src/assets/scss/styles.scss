@@ -6,14 +6,13 @@
 @import 'animaux/_chien.scss';
 @import 'animaux/_chat.scss';
 @import 'animaux/_husky.scss';
-@import 'sections/_magasin.scss';
-@import 'sections/_inventaire.scss';
 
 @import 'layout/_header.scss';
 @import 'pages/_staticPages.scss';
 @import 'layout/_footer.scss';
 
 @import 'pages/_crud.scss';
+@import 'pages/_shopInventory.scss';
 @import 'pages/_login.scss';
 @import 'pages/_register.scss';
 @import 'pages/_resetPassword.scss';
