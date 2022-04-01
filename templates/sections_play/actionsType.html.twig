@@ -8,11 +8,11 @@
             </form>
         {% endfor %}
         <form action="{{path("app_inventory")}}">
-            <button type="submit" class="inventoryBtn btn btn-danger">Inventaire</button>
+            <button type="submit" class="btn btn-danger inventoryBtn ">Inventaire</button>
         </form>
     </div>
 
     {% if actions is not null %}
-        {% include "sections/actionsList.html.twig" %}
+        {% include "sections_play/actionsList.html.twig" %}
     {% endif %}
 </section>

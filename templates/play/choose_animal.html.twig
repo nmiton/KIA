@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block main_id %}game{% endblock %}
 {% block body %}
 <main>
@@ -22,7 +21,7 @@
                 <td data-label="Dernière activité">{{ animal.last_active ? animal.last_active|date('d/m/Y H:i:s') : '' }}</td>
                 <td data-label="Date de naissance">{{ animal.created_at ? animal.created_at|date('d/m/Y') : '' }}</td>
                 <td data-label="">
-                    <a name="btn" href="{{path('app_play', {'id': animal.id})}}">Jouer</a>
+                    <a name="btn btn-danger" href="{{path('app_play', {'id': animal.id})}}">Jouer</a>
                 </td>
             </tr>
         {% else %}
