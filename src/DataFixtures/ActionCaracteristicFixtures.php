@@ -87,6 +87,33 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         $var->setCaracteritic($this->getReference('Vie'));
         $manager->persist($var);      
         $this->addReference('actionCaracteristicVieSoinNiveau1', $var);
+        //action donner friandise
+        $var = new ActionCaracteristic();
+        $var->setValMax(+5);
+        $var->setValMin(+25);
+        $var->setAction($this->getReference('donnerFriandise'));
+        $var->setCaracteritic($this->getReference('Nourriture'));
+        $manager->persist($var);      
+        $this->addReference('actionCaracteristicNourritureDonnerFriandise', $var);
+        //action donner friandise
+        $var = new ActionCaracteristic();
+        $var->setValMax(-5);
+        $var->setValMin(-15);
+        $var->setAction($this->getReference('donnerFriandise'));
+        $var->setCaracteritic($this->getReference('Hydratation'));
+        $manager->persist($var);      
+        $this->addReference('actionCaracteristicHydratationDonnerFriandise', $var);
+
+
+
+
+
+
+
+
+
+
+
         $manager->flush();
     }
 

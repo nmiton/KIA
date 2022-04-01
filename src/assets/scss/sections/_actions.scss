@@ -12,9 +12,10 @@
             button{
                 border-radius: 5%;
                 padding: 0.75rem;
-                margin: auto;
                 margin-bottom: 1rem;
                 width: 15rem;
+                background-color: $color-blue-one;
+                border-color: $color-blue-one;
 
                 &:hover{
                     background-color: $color-bg-altmenu;
@@ -25,20 +26,45 @@
                     width: auto;
                 }
             }
+
+            
+            .inventoryBtn{
+                background-color: $color-bg-alt;
+                border-color: $color-bg-alt;
+
+                &:hover{
+                    background-color: $color-blue-one;
+                    border: $color-blue-one;
+                }
+            }
         }
 
         @include respond(lg) {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-            grid-gap : 1rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 1rem;
             margin: 2rem;
-        }
-        
+        }   
     }
 
-    #actions_list {            
-        button {
-            border-radius: 5%;
+    #actions_list{
+        table{
+            text-align: center;
+
+            .statsNegative{
+                background-color: $color-bg-alt;
+                color: white;
+            }
+
+            .statsPositive{
+                background-color: $color-green;
+                color: white;
+            }
+
+            td{
+                vertical-align: middle;
+            }
         }
     }
 }

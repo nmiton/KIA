@@ -28,6 +28,14 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $this->addReference('croquettes', $objet);
 
         $objet = new Objects();
+        $objet->setName("Friandise");
+        $objet->setPrice(15);
+        $objet->setDescription("Petit bonbon caramélisé");
+        $objet->setLossPercentage(100);
+        $manager->persist($objet);
+        $this->addReference('friandise', $objet);
+
+        $objet = new Objects();
         $objet->setName("Eau");
         $objet->setPrice(2);
         $objet->setDescription("Eau minéral en bouteille");

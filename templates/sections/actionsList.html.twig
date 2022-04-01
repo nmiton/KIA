@@ -1,0 +1,61 @@
+{% if actions != null %}
+<div id="actions_list">
+    <p class="mb-3 font-weight-normal">Listes des actions disponibles :</p> 
+    <table class="table table-striped mt-3">
+        <thead class="thead-light">
+            <th scope="col">Nom</th>
+            <th scope="col">Conséquences</th>
+            <th scope="col">Lancer action</th>
+        </thead>
+        <tbody>
+        {% for action in actions%}
+            <tr>
+                <td data-label="Nom">{{ action.name }}</td>
+                <td data-label="Conséquences">
+                    <table id="table_csq" class="table table-striped mt-3">
+                        <thead class="thead-light">
+                            <th scope="col">Stat</th>
+                            <th scope="col">Valeur min</th>
+                            <th scope="col">Valeur max</th>
+                        </thead>
+                    {% for csq_stats in stats_actions %}
+                        {% if csq_stats.id == action.id %}
+                            <tr>
+                                <td data-label="Stat" class="csq_stats_name">{{csq_stats.name}}</td>
+                                {% if csq_stats.val_max < csq_stats.val_min %}
+                                    <td data-label="Valeur min" class="{% if csq_stats.val_max > 0 %}statsPositive{% else %}statsNegative{% endif %} csq_stats_val_max">{{csq_stats.val_max}}</td>
+                                    <td data-label="Valeur max" class="{% if csq_stats.val_min > 0 %}statsPositive{% else %}statsNegative{% endif %} csq_stats_val_min">{{csq_stats.val_min}}</td>
+                                {% else %}
+                                    <td data-label="Valeur min" class="{% if csq_stats.val_min > 0 %}statsPositive{% else %}statsNegative{% endif %} csq_stats_val_max">{{csq_stats.val_min}}</td>
+                                    <td data-label="Valeur max" class="{% if csq_stats.val_max > 0 %}statsPositive{% else %}statsNegative{% endif %} csq_stats_val_min">{{csq_stats.val_max}}</td>
+                                {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </table>
+                </td>
+                <td data-label="Lancer action"><button class="btn btn-light">GO</button></td>
+            </tr>
+        {% endfor %}
+        <tbody>
+    </table>  
+</div>
+{% else %}
+<div id="actions_list">
+    <p class="mb-3 font-weight-normal">Listes des actions:</p> 
+    <table class="table table-striped mt-3">
+        <thead>
+            <th scope="col">Nom</th>
+            <th scope="col">Conséquences</th>
+            <th scope="col">Lancer action</th>
+        </thead>
+        <tbody>
+        {% for action in actions %}
+            <tr>
+                <td colspan="3">Il semblerait qu'aucune action ne soit disponible...</td>
+            </tr>
+        {% endfor %}
+        <tbody>
+    </table>  
+</div>
+{% endif %}
