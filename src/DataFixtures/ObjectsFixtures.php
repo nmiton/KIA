@@ -52,7 +52,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $this->addReference('soin1', $objet);
 
 
-        for ($i=1; $i < 6 ; $i++) { 
+        for ($i=0; $i < 6 ; $i++) { 
             $objet = new Objects();
             $objet->setName('objet'.$i);
             $objet->setDescription("desc_objet".$i);

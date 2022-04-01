@@ -40,6 +40,57 @@ class ActionObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($var);      
         $this->addReference('actionObjectFriandise', $var);
         $manager->flush();
+
+        //object action nourrir
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionObjects();
+            $var->setQuantity(1);
+            $var->setAction($this->getReference('ActionNourrir'.$i));
+            $var->setObject($this->getReference('objet'.$i));
+            $manager->persist($var);      
+            $this->addReference('actionObjectActionNourrir'.$i, $var);
+            $manager->flush();
+        }
+        //object action boire
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionObjects();
+            $var->setQuantity(1);
+            $var->setAction($this->getReference('ActionBoire'.$i));
+            $var->setObject($this->getReference('objet'.$i));
+            $manager->persist($var);      
+            $this->addReference('actionObjectActionBoire'.$i, $var);
+            $manager->flush();
+        }
+        //object action jouer
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionObjects();
+            $var->setQuantity(1);
+            $var->setAction($this->getReference('ActionJouer'.$i));
+            $var->setObject($this->getReference('objet'.$i));
+            $manager->persist($var);      
+            $this->addReference('actionObjectActionJouer'.$i, $var);
+            $manager->flush();
+        }
+        //object action sortir
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionObjects();
+            $var->setQuantity(1);
+            $var->setAction($this->getReference('ActionSortir'.$i));
+            $var->setObject($this->getReference('objet'.$i));
+            $manager->persist($var);      
+            $this->addReference('actionObjectActionSortir'.$i, $var);
+            $manager->flush();
+        }
+        //object action soin
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionObjects();
+            $var->setQuantity(1);
+            $var->setAction($this->getReference('ActionSoin'.$i));
+            $var->setObject($this->getReference('objet'.$i));
+            $manager->persist($var);      
+            $this->addReference('actionObjectActionSoin'.$i, $var);
+        }
+        $manager->flush();
     }
 
     public function getOrder(){         

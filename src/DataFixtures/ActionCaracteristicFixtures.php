@@ -105,9 +105,81 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         $this->addReference('actionCaracteristicHydratationDonnerFriandise', $var);
 
 
+        //action type NOurrir
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionCaracteristic();
+            $var->setValMax(-5);
+            $var->setValMin(-15);
+            $var->setAction($this->getReference("ActionNourrir".$i));
+            $var->setCaracteritic($this->getReference('Hydratation'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicHydratationNourrir'.$i, $var);
+            $var = new ActionCaracteristic();
+            $var->setValMax(+7);
+            $var->setValMin(+21);
+            $var->setAction($this->getReference("ActionNourrir".$i));
+            $var->setCaracteritic($this->getReference('Nourriture'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicNourritureNourrir'.$i, $var);
+        }
+        //action type soin
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionCaracteristic();
+            $var->setValMax(+5);
+            $var->setValMin(+20);
+            $var->setAction($this->getReference("ActionSoin".$i));
+            $var->setCaracteritic($this->getReference('Vie'));
+            $manager->persist($var);     
+            // $this->addReference('actionCaracteristicVieSoin'.$i, $var);
+        }
 
+        //action type Jouer
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionCaracteristic();
+            $var->setValMax(-5);
+            $var->setValMin(-15);
+            $var->setAction($this->getReference("ActionJouer".$i));
+            $var->setCaracteritic($this->getReference('Hydratation'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicHydratationJouer'.$i, $var);
+            $var = new ActionCaracteristic();
+            $var->setValMax(-7);
+            $var->setValMin(-21);
+            $var->setAction($this->getReference("ActionJouer".$i));
+            $var->setCaracteritic($this->getReference('Nourriture'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicNourritureJouer'.$i, $var); 
+        }
 
+        //action type Sortir
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionCaracteristic();
+            $var->setValMax(-7);
+            $var->setValMin(-21);
+            $var->setAction($this->getReference("ActionSortir".$i));
+            $var->setCaracteritic($this->getReference('Nourriture'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicNourritureSortir'.$i, $var);
+            $var = new ActionCaracteristic();
+            $var->setValMax(-5);
+            $var->setValMin(-15);
+            $var->setAction($this->getReference("ActionSortir".$i));
+            $var->setCaracteritic($this->getReference('Hydratation'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicNourritureSortir'.$i, $var);
+        }
 
+        
+        //action type boire
+        for ($i=0; $i < 6; $i++) { 
+            $var = new ActionCaracteristic();
+            $var->setValMax(+5);
+            $var->setValMin(+15);
+            $var->setAction($this->getReference("ActionBoire".$i));
+            $var->setCaracteritic($this->getReference('Hydratation'));
+            $manager->persist($var);      
+            // $this->addReference('actionCaracteristicHydratationBoire'.$i, $var);
+        }
 
 
 

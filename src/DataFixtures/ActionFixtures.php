@@ -45,7 +45,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
 
         $soinNiv1 = new Action();
         $soinNiv1->setName("Soigner des petits bobos");
-        $soinNiv1->setType("Soigner");
+        $soinNiv1->setType("Soin");
         $soinNiv1->setConsoleLog("Vous faites vos meilleurs pansements");
         $soinNiv1->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($soinNiv1);
@@ -59,6 +59,63 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($donnerFriandise);
         $this->addReference('donnerFriandise', $donnerFriandise);
 
+        //action type NOurrir
+        for ($i=0; $i < 6; $i++) { 
+            $actionFixture = new Action();
+            $actionFixture->setName("ActionNourrir".$i);
+            $actionFixture->setType("Nourrir");
+            $actionFixture->setConsoleLog("console log");
+            $actionFixture->setAnimalType($this->getReference('typeAnimalChien'));
+            $manager->persist($actionFixture);
+            $this->addReference("ActionNourrir".$i, $actionFixture);
+        }
+
+        //action type Soin
+        for ($i=0; $i < 6; $i++) { 
+            $actionFixture = new Action();
+            $actionFixture->setName("ActionSoin".$i);
+            $actionFixture->setType("Soin");
+            $actionFixture->setConsoleLog("console log");
+            $actionFixture->setAnimalType($this->getReference('typeAnimalChien'));
+            $manager->persist($actionFixture);
+            $this->addReference('ActionSoin'.$i, $actionFixture);
+        }
+
+        
+        //action type Jouer
+        for ($i=0; $i < 6; $i++) { 
+            $actionFixture = new Action();
+            $actionFixture->setName("ActionJouer".$i);
+            $actionFixture->setType("Jouer");
+            $actionFixture->setConsoleLog("console log");
+            $actionFixture->setAnimalType($this->getReference('typeAnimalChien'));
+            $manager->persist($actionFixture);
+            $this->addReference('ActionJouer'.$i, $actionFixture);
+        }
+
+        //action type Sortir
+        for ($i=0; $i < 6; $i++) { 
+            $actionFixture = new Action();
+            $actionFixture->setName("ActionSortir".$i);
+            $actionFixture->setType("Sortir");
+            $actionFixture->setConsoleLog("console log");
+            $actionFixture->setAnimalType($this->getReference('typeAnimalChien'));
+            $manager->persist($actionFixture);
+            $this->addReference('ActionSortir'.$i, $actionFixture);
+        }
+
+          //action type Boire
+        for ($i=0; $i < 6; $i++) { 
+            $actionFixture = new Action();
+            $actionFixture->setName("ActionBoire".$i);
+            $actionFixture->setType("Boire");
+            $actionFixture->setConsoleLog("console log");
+            $actionFixture->setAnimalType($this->getReference('typeAnimalChien'));
+            $manager->persist($actionFixture);
+            $this->addReference('ActionBoire'.$i, $actionFixture);
+        }
+
+    
         $manager->flush();
     }
 
