@@ -1,61 +1,42 @@
 #overlay{
     display: flex;
     flex-direction: column;
+    
+    @import '_statsGrid.scss';
 
     p{
         margin: 0.5rem;
     }
 
-    section{
-        padding: 1rem;
-    }
 
-    .myBorder{
-        border: 0.25rem outset;
-        border-color: $color-bg-altmenu;
-        padding: 1rem;
-        margin: 1rem;
-    }
-
-    #infosChienJoeur{
+    #mon_portefeuille{
         display: flex;
-        flex-direction: column;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
 
-        #id_animal{
+        label{
+            margin: 1rem;
+        }
+
+        #grp_input_money{
             display: flex;
-            justify-content: space-between;
-            margin: 1rem 0;
-            @include respond(md) {
-                flex-direction: column;
+
+            input{
+                width: auto;
+                height: 2.5rem;
+                text-align: right;
+                margin: auto;
             }
         }
 
-        #mon_portefeuille{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-
-            label{
-                margin: auto 1rem;
-            }
-
-            #grp_input_money{
-                display: flex;
-
-                input{
-                    width: auto;
-                    height: 2.5rem;
-                    text-align: right;
-                    margin: auto;
-                }
-            }
+        @include respond(md){
+            justify-content: end;
         }
+    }
 
-        @include respond(md) {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
+    #infosAnimal{
+        margin: 1rem 1rem 0 1rem;
     }
 
     #stats{
@@ -67,15 +48,13 @@
             display: grid;
             grid-template-columns: 7fr 3fr;
         }
-
-        #stats_animal{
-            @import '_stats.scss';
-        } 
     }
 
     #img_animal{
         width: 50%;
         margin: auto;
     }
+
+
 }
 

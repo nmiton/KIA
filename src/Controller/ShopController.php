@@ -20,6 +20,8 @@ class ShopController extends AbstractController
 
         $error = isset($_GET['error']) ? $_GET['error'] : "";
         $success = isset($_GET['success']) ? $_GET['success'] : "";
+        $transaction = isset($_GET['transaction']) ? $_GET['transaction'] : "";
+
         $all_items = $repoObjet->findAll();
         return $this->render('shop/index.html.twig', [
             'money' => $this->getUser()->getMoney(),
@@ -27,6 +29,7 @@ class ShopController extends AbstractController
             'shopItems' => $all_items,
             'error' => $error,
             'success'=>$success,
+            'transaction'=>$transaction
         ]);
     }
 
@@ -41,12 +44,12 @@ class ShopController extends AbstractController
         }else{
             $user->setMoney($user->getMoney() - $objet->getPrice());
             $repoUser->add($user);
-    
+            
             $inv = new Inventory();
             $inv->setUser($this->getUser());
             $inv->setObjet($objet);
             $repoInv->add($inv);
-            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!"]);
+            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!", "transaction" => $objet->getPrice()]);
         }
     }
 }

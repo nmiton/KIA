@@ -7,6 +7,10 @@
 <div id="mon_portefeuille">
 	<label>Mon portefeuille :</label>
 	<div id="grp_input_money">
+		{% if transaction != "" %}
+			<p class="argentPerduApresAchat"> <i id="shop_arrow_down" class="fa-solid fa-arrow-down"></i> {{transaction}} $$</p>
+		{% endif %}
+
 		<input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
 	</div>
 </div>
@@ -60,7 +64,7 @@
 							<td data-label="">
 								<form action="{{ path('app_shop_buy_id', {'id': item.id}) }}" method="post">
 									{% if item.price <= app.user.getMoney() %}
-										<button class="btn" type="submit">Acheter</button>
+										<button class="btn btn-danger" type="submit">Acheter</button>
 									{% else %}
 										Trop cher
 									{% endif %}

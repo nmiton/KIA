@@ -1,0 +1,15 @@
+#game{
+
+    a{
+        border-radius: 5%;
+        color: white;
+        text-decoration: none;
+        padding: 0.4rem 0.8rem;
+        background-color: $color-bg-alt;
+    }
+
+    a:hover{
+        background-color: $color-bg-altmenu;
+    }
+
+}

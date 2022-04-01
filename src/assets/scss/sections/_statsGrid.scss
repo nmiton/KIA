@@ -11,7 +11,7 @@
             display: flex;
             flex-direction:column;
             justify-content: space-around;
-            margin: 0.5rem;
+            margin: 0.3rem;
             
             @include respond(md) {
                 display: flex;
@@ -43,9 +43,10 @@
         }
 
         @include respond(md) {
-            margin: 1rem;
+            margin: 0.5rem;
             display: grid;
             text-align: center;
+            row-gap: 0.5rem;
             grid-template-columns: 1fr 1fr 1fr;
         }
 
@@ -56,7 +57,7 @@
             width: 50%;
 
             @include respond(md) {
-                margin: 1rem auto;
+                margin: 0.5rem auto;
             }
         }
     }

@@ -1,12 +1,11 @@
+#inventaire_magasin{
 
-    #inventaire_magasin{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-        a{
-            line-height: 2;
-        }
+    a{
+        line-height: 2;
     }
+}
     

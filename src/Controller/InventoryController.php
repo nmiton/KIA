@@ -15,10 +15,12 @@ class InventoryController extends AbstractController
         if(!$this->getUser()){
             return $this->render('home/home.html.twig');   
         }else{
+            $money = $this->getUser()->getMoney();
             $items_user = $repoObjet->findByCountAllObjetsByUserId($this->getUser()->getId());
             return $this->render('inventory/index.html.twig', [
                 'controller_name' => 'InventoryController',
                 'userItems'=>$items_user,
+                'money' => $money,
             ]);
         }
     }

@@ -32,7 +32,7 @@ table {
     &::before {
         content: attr(data-label);
         float: left;
-        font-weight: bold;
+        font-weight:500px;
         text-transform: uppercase;
     }
 

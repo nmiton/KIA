@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const block_chien = document.getElementById('img_animal')
     const chien_queue =  document.getElementById('queue'); 
 
-    let caresses = 0;
-    
+    let monAnimal = new Object();
+    monAnimal.caresses = 0;
+    monAnimal.estContent = false;
     //~ On lance l'initialisation 
     init();
     //~ Déclenchement de base
@@ -13,19 +14,31 @@ document.addEventListener("DOMContentLoaded", function() {
         //~ On assigne un évènement à chaque bouton : tu cliques ou tu meures
         chien.addEventListener('click', function(){
             //~ Go go go le calcul \o/
-            calcul();
-            est_content();
+            setCaresse()
+            screamer()
         });
     }
 
-    function calcul(){
-        caresses++;
+    function setCaresse(){
+        monAnimal.caresses++;
+        if(monAnimal.caresses>10){
+            monAnimal.caresses = 0
+        }
+        setEstContent()
     }
 
-    function est_content(){
-        if(caresses>3) {
+    function setEstContent(){
+        if(monAnimal.caresses > 3){
+            monAnimal.estContent = true
+        }else{
+            monAnimal.estContent = false
+        }
+    }
+
+    function screamer(){
+        if(monAnimal.caresses>5 & monAnimal.estContent) {
             chien.style.position = 'inherit'
-            setInterval("chien.style.position = 'relative'",750)
+            setInterval("chien.style.position = 'relative'",800)
         }
     }
 
