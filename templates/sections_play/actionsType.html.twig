@@ -1,16 +1,27 @@
 <section id="action">    
     {# {{dump(typesAction)}} #}
-    <p class="mb-3 font-weight-normal">Type d'actions :</p>
-    <div id="actions_buttons">
+    <h2 class="h5 m-3 font-weight-normal">Types d'action :</h2>
+
+    {% if typesAction != [] %}
+        <div id="actions_buttons">
         {% for typeAction in typesAction %}
             <form action="{{ path('app_play_type_action', {'id': animal.id , 'typeAction' : typeAction.type}) }}" method="post">
                 <button type="submit" class="btn btn-primary">{{typeAction.type}}</button>
             </form>
         {% endfor %}
-        <form action="{{path("app_inventory")}}">
-            <button type="submit" class="btn btn-danger inventoryBtn ">Inventaire</button>
-        </form>
-    </div>
+            <form action="{{path("app_inventory")}}">
+                <button type="submit" class="btn btn-danger inventoryBtn ">Inventaire</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="actionTypeNull">
+            <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
+            <div class="text-center">
+                <a href="{{path("app_shop")}}">Magasin</a>
+            </div>
+        </div>
+    {% endif %}
+
 
     {% if actions is not null %}
         {% include "sections_play/actionsList.html.twig" %}

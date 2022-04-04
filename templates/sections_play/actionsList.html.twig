@@ -1,6 +1,8 @@
-{% if actions != null %}
+{# {{dump(actions)}} #}
+
+{% if actions != [] %}
 <div id="actions_list">
-    <p class="mb-3 font-weight-normal">Listes des actions disponibles :</p> 
+    <h2 class="h5 m-3 font-weight-normal">Liste des actions disponibles :</h2>
     <table class="table table-striped mt-3">
         <thead class="thead-light">
             <th scope="col">Nom</th>
@@ -43,19 +45,23 @@
 {% else %}
 <div id="actions_list">
     <p class="mb-3 font-weight-normal">Listes des actions:</p> 
-    <table class="table table-striped mt-3">
+    {# <table class="table table-striped mt-3">
         <thead>
             <th scope="col">Nom</th>
             <th scope="col">Conséquences</th>
             <th scope="col">Lancer action</th>
         </thead>
         <tbody>
-        {% for action in actions %}
             <tr>
                 <td colspan="3">Il semblerait qu'aucune action ne soit disponible...</td>
             </tr>
-        {% endfor %}
         <tbody>
-    </table>  
+    </table>   #}
+    <div class="actionTypeNull">
+            <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
+            <div class="text-center">
+                <a href="{{path("app_shop")}}">Magasin</a>
+            </div>
+    </div>
 </div>
 {% endif %}

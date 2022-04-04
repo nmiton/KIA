@@ -2,7 +2,16 @@
     p{
         margin: 1rem;
     }
-
+    .actionTypeNull{
+        margin: 1rem;
+        
+        p{
+            text-align: center;
+        }
+        .text-center{
+            margin-top: 2rem;
+        }
+    }
     #actions_buttons{
 
         display: grid;
