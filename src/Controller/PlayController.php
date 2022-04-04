@@ -71,9 +71,8 @@ class PlayController extends AbstractController
         $stats = $statsRepo->findAllStatsByAnimalId($animal->getId());
         $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
 
-        $actions_type_action_type_animal = $repoAction->findByActionsAnimalTypeAndActionType($animal->getAnimalType()->getId(),$typeAction);
+        $actions_type_action_type_animal = $repoAction->findByActionsAnimalTypeAndActionTypeWhereObjectsInInventory($animal->getAnimalType()->getId(),$typeAction);
         $stats_actions_type_action_type_animal = $repoAction->findByStatsActionsByAnimalTypeAndActionType($animal->getAnimalType()->getId(),$typeAction);
-
 
         // dd($stats_actions_type_action_type_animal);
         return $this->render('play/main.html.twig', [
