@@ -45,22 +45,19 @@ class ActionObjectsRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return ActionObjects[] Returns an array of ActionObjects objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    
+    public function findByActionIdLossPercentage($actionId): array
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT o.id, o.loss_percentage FROM action_objects ao INNER JOIN objects o on o.id = ao.object_id where ao.action_id = :actionId";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['actionId' => $actionId]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?ActionObjects

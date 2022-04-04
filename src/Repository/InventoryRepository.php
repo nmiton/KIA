@@ -20,7 +20,6 @@ class InventoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Inventory::class);
     }
-
     /**
      * @throws ORMException
      * @throws OptimisticLockException
@@ -32,7 +31,6 @@ class InventoryRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-
     /**
      * @throws ORMException
      * @throws OptimisticLockException

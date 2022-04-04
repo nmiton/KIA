@@ -36,7 +36,11 @@
                     {% endfor %}
                     </table>
                 </td>
-                <td data-label="Lancer action"><button class="btn btn-danger">GO</button></td>
+                <td data-label="Lancer action">
+                    <form action="{{ path('app_play_make_action', {'id': animal.id , 'idAction' : action.id }) }}" method="POST">
+                        <button type="submit" class="btn btn-danger">GO</button>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
         <tbody>

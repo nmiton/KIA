@@ -45,22 +45,24 @@ class ActionCaracteristicRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return ActionCaracteristic[] Returns an array of ActionCaracteristic objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
+    /**
+    * @return ActionCaracteristic[] Returns an array of ActionCaracteristic objects
     */
+    
+    public function findByIdAction($idAction)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT ac.caracteritic_id, ac.val_min, ac.val_max from action_caracteristic ac 
+        INNER JOIN action a ON a.id = ac.action_id
+        WHERE a.id = :idAction
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['idAction' => $idAction]);
+        return $resultSet->fetchAllAssociative();
+    }
+    
 
     /*
     public function findOneBySomeField($value): ?ActionCaracteristic
