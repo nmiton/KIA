@@ -50,7 +50,10 @@ class ActionObjectsRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT o.id, o.loss_percentage FROM action_objects ao INNER JOIN objects o on o.id = ao.object_id where ao.action_id = :actionId";
+        $sql = "SELECT o.id, o.loss_percentage, o.name 
+        FROM action_objects ao 
+        INNER JOIN objects o on o.id = ao.object_id 
+        WHERE ao.action_id = :actionId";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['actionId' => $actionId]);
 
