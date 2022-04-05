@@ -3,6 +3,11 @@
 {% block main_id %}game{% endblock %}
 {% block body %}
 <div>
+    {# affichage du message lors de la perte d'un objet #}
+    {% if console_obj_perdu is not null %}
+		<div class="alert alert-danger">{{ console_obj_perdu }}</div>
+	{% endif %}
+
     {% include "sections_play/overlay.html.twig" %}
     {% include "sections_play/console.html.twig" %}
     {% include "sections_play/actionsType.html.twig" %}

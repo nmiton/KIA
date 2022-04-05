@@ -16,7 +16,6 @@
 </head>
 <body>
     {% include 'layout/header.html.twig' %}
-    
     <main id="{% block main_id %}{% endblock %}"class="container {% block main_class %}{% endblock %}">
         {% block body %}
 
@@ -24,6 +23,5 @@
     </main>
     {# {% include 'layout/main.html.twig' %} #}
     {% include 'layout/footer.html.twig' %}
-
 </body>
 </html>

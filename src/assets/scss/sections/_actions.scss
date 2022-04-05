@@ -13,12 +13,9 @@
         }
     }
     #actions_buttons{
-
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         text-align: center;
-
-
         button:hover{
             transform: scale(1.05);
             transition-duration: 0.3s;
@@ -29,7 +26,7 @@
                 border-radius: 5%;
                 padding: 0.75rem;
                 margin-bottom: 1rem;
-                width: 15rem;
+                width: 12rem;
                 background-color: $color-blue-one;
                 border-color: $color-blue-one;
 
@@ -37,11 +34,6 @@
                     background-color: $color-bg-altmenu;
                     border-color: $color-bg-alt;
                 }
-                
-                @include respond(md) {
-                    width: 12rem;
-                }
-
                 @include respond(lg) {
                     width: 10rem;
                 }
@@ -75,17 +67,16 @@
     }
 
     #actions_list{
+        margin : 2rem 0;
+
         table{
             text-align: center;
-
             #table_csq{
-
                 td { 
                     @include respond(md){
                         border:  0.125rem solid #ccc;
                     }
                 }
-
                 @include respond(md){
                     border:  0.125rem solid #ccc;
                     border-radius: 0.25rem;    
