@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Inventory::class)]
     private $inventories;
 
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $lastPayDay;
+
 
     public function __construct()
     {
@@ -349,6 +352,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $possede->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastPayDay(): ?\DateTimeInterface
+    {
+        return $this->lastPayDay;
+    }
+
+    public function setLastPayDay(?\DateTimeInterface $lastPayDay): self
+    {
+        $this->lastPayDay = $lastPayDay;
 
         return $this;
     }
