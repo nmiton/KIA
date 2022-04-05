@@ -174,12 +174,13 @@ class PlayController extends AbstractController
 
         //recuperation des stats de l'animal
         $stats = $animalCaracRepo->findAllStatsByAnimalId($animal->getId());
+    
+        //Maj lastActive User
         $dateTime = new DateTime();
         $user= $this->getUser();
         $user->setLastActive($dateTime);
         $userRepo->add($user);
-        //TODO
-        //Maj lastActive User
+        
         return $this->render('play/main.html.twig', [
             'animal' => $animal,
             'stats' => $stats,
