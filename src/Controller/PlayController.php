@@ -100,7 +100,8 @@ class PlayController extends AbstractController
         AnimalCaracteristicRepository $animalCaracRepo,
         ActionObjectsRepository $actionObjetRepo,
         ActionRepository $actionRepo,
-        InventoryRepository $inventoryRepo):Response
+        InventoryRepository $inventoryRepo,
+        UserRepository $userRepo):Response
     {   
         $action = $actionRepo->findBy(
             array(
@@ -173,7 +174,10 @@ class PlayController extends AbstractController
 
         //recuperation des stats de l'animal
         $stats = $animalCaracRepo->findAllStatsByAnimalId($animal->getId());
-        
+        $dateTime = new DateTime();
+        $user= $this->getUser();
+        $user->setLastActive($dateTime);
+        $userRepo->add($user);
         //TODO
         //Maj lastActive User
         return $this->render('play/main.html.twig', [
