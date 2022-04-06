@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\AnimalCaracteristic;
+use App\Entity\Caracteristic;
 use App\Repository\AnimalRepository;
 use App\Form\CreateAnimalType;
 use App\Repository\ActionCaracteristicRepository;
@@ -64,7 +65,7 @@ class PlayController extends AbstractController
                     'stats' => $stats,
                     'typesAction' => $typesActionTypeAnimal,
                     'actions' => null,
-                    'console_obj_perdu' => null,
+                    'msg_danger' => null,
                 ]);   
             }
         }
@@ -88,7 +89,7 @@ class PlayController extends AbstractController
             'typesAction' => $typesActionTypeAnimal,
             'actions' => $actions_type_action_type_animal,
             'stats_actions' => $stats_actions_type_action_type_animal,
-            'console_obj_perdu' => null,
+            'msg_danger' => null,
         ]);           
     }
 
@@ -99,24 +100,50 @@ class PlayController extends AbstractController
         ActionCaracteristicRepository $actionCaracRepo,
         AnimalCaracteristicRepository $animalCaracRepo,
         ActionObjectsRepository $actionObjetRepo,
+        CaracteristicRepository $caracRepo,
         ActionRepository $actionRepo,
         InventoryRepository $inventoryRepo,
         UserRepository $userRepo):Response
     {   
-        $action = $actionRepo->findBy(
-            array(
-                'id' => $idAction,
-            )
-        );
+        $action = $actionRepo->find(['id' => $idAction]);
+        //stats de avant action 
+        $stats = $animalCaracRepo->findAllStatsByAnimalId($animal->getId());
         $objetPerdu = null;
         //Maj console 
         //on récupère le console log de l'action 
-        $console = $action[0]->getConsoleLog();
+        $console = $action->getConsoleLog();
         //récupération de tous les types d'action par type d'animaux
         $typesActionTypeAnimal = $actionRepo->findTypeActionByAnimalType($animal->getAnimalType()->getId());
         //gestion des stats de l'animal en fonction de l'action choisie
         //recupération des stats de l'action 
         $statsActionChoisie = $actionCaracRepo->findByIdAction($idAction);
+
+        if($action->getType() == "Jouer" || $action->getType() == "Sortir"){
+
+            $stat_nourriture = $caracRepo->findBy(['name'=> "Nourriture"]);
+            
+            $stat_eau = $caracRepo->findBy(['name'=> "Hydratation"]);
+
+            $stat_eau_ani = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $stat_eau ]);
+            $stat_nouriture_ani = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $stat_nourriture ]);
+
+            if(($stat_eau_ani->getValue() + $stat_nouriture_ani->getValue()/2)<10){
+
+                //TODO 
+                
+                // return $this->render('play/main.html.twig', [
+                // 'animal' => $animal,
+                // 'stats' => $stats,
+                // 'typesAction' => $typesActionTypeAnimal,
+                // 'actions' => null,
+                // 'msg_danger' => "Attention l'énergie de votre animal est trop faible 
+                //                     pour pouvoir : ".$action->getType().". Veuillez 
+                //                     faire le nécessaire afin d'augmenter 
+                //                     cette statistiques",
+                // ]); 
+            }
+        }
+
         //pour chq stats de l'action
         foreach ($statsActionChoisie as $stat) {
             //si action boost 
@@ -188,7 +215,7 @@ class PlayController extends AbstractController
             'typesAction' => $typesActionTypeAnimal,
             'actions' => null,
             'stats_actions' => null,
-            'console_obj_perdu' => $objetPerdu,
+            'msg_danger' => $objetPerdu,
         ]);           
     }
 

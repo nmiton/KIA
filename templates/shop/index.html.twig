@@ -25,7 +25,6 @@
 <p class="tips">
 	En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
 </p>
-
 	{% if error != "" %}
 		<div class="alert alert-danger">{{ error }}</div>
 	{% endif %}
@@ -66,7 +65,7 @@
 							{# <td data-label="Conséquences">TODO</td> #}
 							<td data-label="Prix">{{item.price}}$$</td>
 							<td data-label="">
-								<form action="{{ path('app_shop_buy_id', {'id': item.id}) }}" method="post">
+								<form action="{{ path('app_shop_buy_objet', {'id': item.id, 'idAnimal' : animal.id}) }}" method="post">
 									{% if item.price <= app.user.getMoney() %}
 										<button class="btn btn-danger" type="submit">Acheter</button>
 									{% else %}

@@ -4,8 +4,8 @@
 {% block body %}
 <div>
     {# affichage du message lors de la perte d'un objet #}
-    {% if console_obj_perdu is not null %}
-		<div class="alert alert-danger">{{ console_obj_perdu }}</div>
+    {% if msg_danger is not null %}
+		<div class="alert alert-danger">{{ msg_danger }}</div>
 	{% endif %}
 
     {% include "sections_play/overlay.html.twig" %}

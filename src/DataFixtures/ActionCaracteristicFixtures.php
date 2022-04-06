@@ -50,8 +50,8 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         $manager->persist($var);      
         $this->addReference('actionCaracteristicHydratationJouerBalleTennis', $var);
         $var = new ActionCaracteristic();
-        $var->setValMax(-5);
-        $var->setValMin(-10);
+        $var->setValMax(+5);
+        $var->setValMin(+10);
         $var->setAction($this->getReference('jouerBalleTennis'));
         $var->setCaracteritic($this->getReference('Bonheur'));
         $manager->persist($var);      

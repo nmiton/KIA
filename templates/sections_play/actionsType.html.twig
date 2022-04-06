@@ -25,6 +25,6 @@
 
 
     {% if actions is not null %}
-        {% include "sections_play/actionsList.html.twig" %}
+        {% include "sections_play/actionsList.html.twig" with {'animal' : animal } %}
     {% endif %}
 </section>
