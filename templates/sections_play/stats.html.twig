@@ -27,7 +27,7 @@
                 <i class="fa-solid fa-bolt fa-xl"></i>
                 <span class="label_icon_stats">Énergie</span>
             </p>
-            <p class="stat_value">{% set energie = (stats[2].value + stats[1].value)/2 %}{{energie|number_format(0)}}%</p>
+            <p class="stat_value">{{ stats[3].value }}%</p>
         </div>
         <div class="icon_label_stats">
             <p>
