@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur 403{% endblock %}
+{% block main_id %}error403{% endblock %}
+{% block main_class %}errorPage{% endblock %}
+
+{% block body %}
+    <h1>Erreur 403</h1>
+    <h2>UH OH! Vous êtes perdu!</h2>
+    <p>La page demandée n'est pas autorisée.
+        Mais vous pouvez cliquer sur le bouton ci-dessous pour être redirigé vers l'accueil.
+    </p>
+    <a class="btn_accueil" href="{{ path("app_home") }}">Accueil</a>
+
+{% endblock %}

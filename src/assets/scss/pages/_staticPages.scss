@@ -125,7 +125,7 @@
     #btn_jouer{
         display: block;
         width: 50%;
-        border: none;
+        border-radius: 5%;
         background-color: $color-bg-alt;
         color : white;
         padding: 14px 28px;
@@ -136,6 +136,43 @@
         &:hover{
             background-color: $color-bg-altmenu;
         }
+    } 
+}
+
+
+.errorPage{
+
+    display: flex;
+    flex-direction: column;
+
+    h1,h2,p{
+        margin : 1rem 0;
     }
+    h1{
+        font-size: xx-large;
+        color: $color-bg-alt;
+    }
+
+    h2{
+        color: $color-bg-altmenu;
+        font-size: x-large;
+    }    
+
+    .text-center{
+        margin: 3rem 0;
+
+        .btn_accueil{
+            width: 50%;
+            border-radius: 5%;
+            background-color: $color-bg-alt;
+            color : white;
+            padding: 14px 28px;
+            font-size: 16px;
+            text-align: center;
     
+            &:hover{
+                background-color: $color-bg-altmenu;
+            }
+        }
+    }
 }
