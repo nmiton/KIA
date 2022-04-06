@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlayController extends AbstractController
 {
     #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repo): Response
+    public function preload(UserRepository $repoUser): Response
     {
         //si un user est connecté
         if($this->getUser()){
@@ -34,12 +34,8 @@ class PlayController extends AbstractController
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
                 //animaux de l'user
-                $animals=$repo->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                $animals=$repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
-
-                $payDay = new PayDay();
-                $payDay->jourDePaye($this->getUser(), $repo);
-
                 if(count($animals)==0){
                     return $this->redirectToRoute('app_new_animal');
                 }else{
@@ -52,7 +48,7 @@ class PlayController extends AbstractController
     }
 
     #[Route('/jouer/{id}', name: 'app_play', methods: ['GET'])]
-    public function play(Animal $animal,AnimalCaracteristicRepository $statsRepo, ActionRepository $repoAction): Response
+    public function play(Animal $animal,AnimalCaracteristicRepository $statsRepo, ActionRepository $repoAction,UserRepository $repoUser): Response
     {   
         //si user non conncté
         if(!$this->getUser()){
@@ -62,6 +58,18 @@ class PlayController extends AbstractController
             if($animal->getUser()->getId() != $this->getUser()->getId() || !$animal->getIsAlive() ){
                 return $this->redirectToRoute('app_play_preload');
             }else{
+                //on gère la paye de l'utilisateur
+                $payDay = new PayDay();
+                //on récupère la somme de la paye
+                $value_paye = $payDay->jourDePaye($this->getUser(), $repoUser);
+                //si value_paye ne retourne pas -1
+                if ($value_paye!="-1") {
+                    $msg_paye = "Vous venez de recevoir votre paye quotidienne!";
+                }else{
+                    //on mets nos variables a null pr le traitement twig
+                    $msg_paye= null;
+                    $value_paye = null;
+                }
                 //affichage du tableau des animaux vivant du joueur
                 $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
                 //récupération des stats des animaux
@@ -72,6 +80,8 @@ class PlayController extends AbstractController
                     'typesAction' => $typesActionTypeAnimal,
                     'actions' => null,
                     'msg_danger' => null,
+                    'msg_paye' => $msg_paye,
+                    'value_paye'=> $value_paye,
                 ]);   
             }
         }
@@ -95,6 +105,8 @@ class PlayController extends AbstractController
             'actions' => $actions_type_action_type_animal,
             'stats_actions' => $stats_actions_type_action_type_animal,
             'msg_danger' => null,
+            'msg_paye' => null,
+            'value_paye'=> null,
         ]);           
     }
 
@@ -149,6 +161,8 @@ class PlayController extends AbstractController
                                     pour pouvoir : ".$action->getName().". Veuillez 
                                     faire le nécessaire afin d'augmenter 
                                     cette statistique!",
+                'msg_paye' => null,
+                'value_paye'=> null,
                 ]); 
             }
         }
@@ -239,6 +253,8 @@ class PlayController extends AbstractController
             'actions' => null,
             'stats_actions' => null,
             'msg_danger' => $objetPerdu,
+            'msg_paye' => null,
+            'value_paye'=> null,
         ]);           
     }
 

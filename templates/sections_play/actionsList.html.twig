@@ -1,6 +1,7 @@
-{% if actions != [] %}
-<div id="actions_list">
+<div id="actions_list" class="flip-in-hor-top">
     <h2 class="h5 m-3 font-weight-normal">Liste des actions disponibles :</h2>
+
+{% if actions != [] %}
     <table class="table table-striped mt-3">
         <thead class="thead-light">
             <th scope="col">Nom</th>
@@ -43,10 +44,7 @@
         {% endfor %}
         <tbody>
     </table>  
-</div>
 {% else %}
-<div id="actions_list">
-    <h2 class="h5 m-3 font-weight-normal">Liste des actions :</h2>
     {# <table class="table table-striped mt-3">
         <thead>
             <th scope="col">Nom</th>
@@ -65,5 +63,6 @@
                 <a href="{{path("app_shop", {'id' : animal.id })}}">Magasin</a>
             </div>
     </div>
-</div>
+
 {% endif %}
+</div>

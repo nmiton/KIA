@@ -18,7 +18,7 @@
         <div class="actionTypeNull">
             <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
             <div class="text-center">
-                <a href="{{path("app_shop")}}">Magasin</a>
+                <a href="{{path("app_shop" , {'id': animal.id})}}">Magasin</a>
             </div>
         </div>
     {% endif %}

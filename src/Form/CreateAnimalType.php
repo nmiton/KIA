@@ -19,7 +19,7 @@ class CreateAnimalType extends AbstractType
     {
         $builder
             ->add('name', TypeTextType::class, [
-                'attr' => ['autocomplete' => 'text','class' => 'form-control','placeholder' => "roxy"],
+                'attr' => ['autocomplete' => 'text','class' => 'form-control','placeholder' => "Exemple : roxy"],
                 'label' => "Nom :",
                 'constraints' => [
                     new NotBlank([
