@@ -65,7 +65,7 @@
 							{# <td data-label="Conséquences">TODO</td> #}
 							<td data-label="Prix">{{item.price}}$$</td>
 							<td data-label="">
-								<form action="{{ path('app_shop_buy_objet', {'id': animal.id , 'item' : item.id }) }}" method="post">
+								<form action="{{ path('app_shop_buy_objet', {'id': animal.id , 'idObjet' : item.id }) }}" method="post">
 									{% if item.price <= app.user.getMoney() %}
 										<button class="btn btn-danger" type="submit">Acheter</button>
 									{% else %}
