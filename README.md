@@ -5,8 +5,6 @@
 <p align="center"><img src="public/assets/img/logo.png" align="center" alt="Logo keep it alive"></p><br><br>
 
 <h1 align="center">INSTALATION</h1>
-
-<h2>Installation du projet</h2>
 Ce projet Symfony et en version 5.4.
 
 AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download/
