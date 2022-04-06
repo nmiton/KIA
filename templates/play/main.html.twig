@@ -4,7 +4,7 @@
 {% block body %}
 <div>
     {# affichage notification de paye #}
-    {% if msg_paye is not null %}
+    {% if msg_paye is defined and msg_paye is not null %}
 		<div class="alert alert-success">{{ msg_paye }}</div>
 	{% endif %}
     {# affichage du message lors de la perte d'un objet #}

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\AnimalCaracteristic;
-use App\Entity\Caracteristic;
 use App\Repository\AnimalRepository;
 use App\Form\CreateAnimalType;
 use App\Repository\ActionCaracteristicRepository;
@@ -23,38 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PlayController extends AbstractController
 {
-    #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repoUser): Response
-    {
-        //si un user est connecté
-        if($this->getUser()){
-            //si le user est verifié
-            if(!$this->getUser()->isVerified()){
-                
-                return $this->render('registration/verify_my_email.html.twig');
-            }else{
-                //animaux de l'user
-                $animals=$repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
-                //si le user n'a pas d'animaux vivant
-                if(count($animals)==0){
-                    return $this->redirectToRoute('app_new_animal');
-                }else{
-                    return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
-                }
-            }
-        }else{
-            return $this->redirectToRoute('app_login');
-        }
-    }
-
+    //root de la page principale du jeu
     #[Route('/jouer/{id}', name: 'app_play', methods: ['GET'])]
-    public function play(Animal $animal,AnimalCaracteristicRepository $statsRepo, ActionRepository $repoAction,UserRepository $repoUser): Response
+    public function play(Animal $animal,AnimalCaracteristicRepository $animalStatsRepo, ActionRepository $repoAction,UserRepository $repoUser): Response
     {   
-        //si user non conncté
+        //si user est non connecté
         if(!$this->getUser()){
             return $this->render('home/home.html.twig');   
         }else{
-            //si l'animal (id dans URL) n'appartient pas au user actuel
+            //si l'animal (id URL) n'appartient pas au user actuel
             if($animal->getUser()->getId() != $this->getUser()->getId() || !$animal->getIsAlive() ){
                 return $this->redirectToRoute('app_play_preload');
             }else{
@@ -62,8 +38,8 @@ class PlayController extends AbstractController
                 $payDay = new PayDay();
                 //on récupère la somme de la paye
                 $value_paye = $payDay->jourDePaye($this->getUser(), $repoUser);
-                //si value_paye ne retourne pas -1
                 if ($value_paye!="-1") {
+                    //on gère la notification de paye
                     $msg_paye = "Vous venez de recevoir votre paye quotidienne!";
                 }else{
                     //on mets nos variables a null pr le traitement twig
@@ -73,7 +49,8 @@ class PlayController extends AbstractController
                 //affichage du tableau des animaux vivant du joueur
                 $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
                 //récupération des stats des animaux
-                $stats = $statsRepo->findAllStatsByAnimalId($animal->getId());
+                $stats = $animalStatsRepo->findBy(['animal'=>$animal->getId()]);
+                
                 return $this->render('play/main.html.twig', [
                     'animal' => $animal,
                     'stats' => $stats,
@@ -88,10 +65,10 @@ class PlayController extends AbstractController
     }
 
     #[Route('/jouer/{id}/{typeAction}/' , name: 'app_play_type_action', methods : ['POST'])]
-    public function selectTypeAction(Animal $animal, $typeAction,AnimalCaracteristicRepository $statsRepo, ActionRepository $repoAction):Response
+    public function selectTypeAction(Animal $animal, $typeAction ,AnimalCaracteristicRepository $animalStatsRepo, ActionRepository $repoAction):Response
     {   
         //récupération des stats de l'animal
-        $stats = $statsRepo->findAllStatsByAnimalId($animal->getId());
+        $stats = $animalStatsRepo->findBy(['animal'=>$animal->getId()]);
         //récupération de tous les types d'action par type d'animaux
         $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
         //récupération des toutes les actions par type d'action et par type d'animaux
@@ -123,17 +100,14 @@ class PlayController extends AbstractController
         UserRepository $userRepo):Response
     {   
         $action = $actionRepo->find(['id' => $idAction]);
+        //stats de l'animal avant l'action 
+        $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);     
         
-        //stats d avant action 
-        $stats = $animalCaracRepo->findAllStatsByAnimalId($animal->getId());
-        $objetPerdu = null;
         //Maj console 
-
         //on récupère le console log de l'action 
         $console = $action->getConsoleLog();
         //récupération de tous les types d'action par type d'animaux
         $typesActionTypeAnimal = $actionRepo->findTypeActionByAnimalType($animal->getAnimalType()->getId());
-
 
         //on récupère l'entity nourriture
         $entity_stat_nourriture = $caracRepo->findOneBy(['name'=> "Nourriture"]);
@@ -161,14 +135,12 @@ class PlayController extends AbstractController
                                     pour pouvoir : ".$action->getName().". Veuillez 
                                     faire le nécessaire afin d'augmenter 
                                     cette statistique!",
-                'msg_paye' => null,
-                'value_paye'=> null,
                 ]); 
             }
         }
         
-        //gestion des stats de l'animal en fonction de l'action choisie
-        //recupération des stats de l'action 
+        //Gestion des stats de l'animal en fonction de l'action choisie
+        //récupération des stats de l'action 
         $statsActionChoisie = $actionCaracRepo->findByIdAction($idAction);
         //pour chq stats de l'action
         foreach ($statsActionChoisie as $stat) {
@@ -214,6 +186,8 @@ class PlayController extends AbstractController
         $animalCaracRepo->add($stat_energie_animal);
 
         //Calcul de proba de perte de l'object utilisé pr l'action
+        //on initialise la notification d'objet perdu 
+        $objetPerdu = null;
         //on récupère la proba de l'objet lié à l'action
         $objet = $actionObjetRepo->findByActionIdLossPercentage($idAction);
         $proba = $objet[0]["loss_percentage"];
@@ -253,58 +227,6 @@ class PlayController extends AbstractController
             'actions' => null,
             'stats_actions' => null,
             'msg_danger' => $objetPerdu,
-            'msg_paye' => null,
-            'value_paye'=> null,
         ]);           
     }
-
-    #[Route('/action/{id}' , name: 'app_play_action')]
-    public function executeAction():Response
-    {   
-        return $this->render('play/main.html.twig');   
-    }
-
-
-    #[Route('/choisir-animal', name: 'app_choose_animal')]
-    public function chooseAnimal(): Response
-    {
-        return $this->renderForm('play/choose_animal.html.twig');
-    }
-
-
-    #[Route('/creer-nouvel-animal', name: 'app_new_animal')]
-    public function createNewAnimal(Request $request, AnimalRepository $animalRepository, CaracteristicRepository $statsRepo, AnimalCaracteristicRepository $statsAnimalRepo): Response
-    {
-        $animal = new Animal();
-        $form = $this->createForm(CreateAnimalType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $today = new DateTime();
-            $animal->setName($form->get('name')->getData());
-            $animal->setAnimalType($form->get('animalType')->getData());
-            $animal->setIsAlive(1);
-            $animal->setCreatedAt($today);
-            $animal->setLastActive($today);
-            $animal->setUser($this->getUser());
-            $animalRepository->add($animal);
-            //on récupère nos entity stats
-            $all_stats = $statsRepo->findAll();
-            //on créer chq stats pr l'animal
-            foreach ($all_stats as $stat) {
-                dump($stat);
-                $stats_animal = new AnimalCaracteristic();
-                $stats_animal->setAnimal($animal);
-                $stats_animal->setCaracteristic($stat);
-                $stats_animal->setValue(100);
-                $statsAnimalRepo->add($stats_animal);
-            }
-            return $this->redirectToRoute('app_play', ['id' => $animal->getId()]);
-        }
-
-        return $this->render('play/create_new_animal.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
 }
