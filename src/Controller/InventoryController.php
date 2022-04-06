@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Animal;
 use App\Repository\ObjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,8 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class InventoryController extends AbstractController
 {
-    #[Route('/mon-inventaire', name: 'app_inventory')]
-    public function index(ObjectsRepository $repoObjet): Response
+    #[Route('/mon-inventaire/{id}', name: 'app_inventory', methods:['GET'])]
+    public function index(Animal $animal, ObjectsRepository $repoObjet): Response
     {
         if(!$this->getUser()){
             return $this->render('home/home.html.twig');   
@@ -21,6 +22,7 @@ class InventoryController extends AbstractController
                 'controller_name' => 'InventoryController',
                 'userItems'=>$items_user,
                 'money' => $money,
+                'animal' => $animal,
             ]);
         }
     }

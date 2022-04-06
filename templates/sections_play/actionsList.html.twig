@@ -1,5 +1,3 @@
-{# {{dump(actions)}} #}
-
 {% if actions != [] %}
 <div id="actions_list">
     <h2 class="h5 m-3 font-weight-normal">Liste des actions disponibles :</h2>
@@ -64,7 +62,7 @@
     <div class="actionTypeNull">
             <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
             <div class="text-center">
-                <a href="{{path("app_shop")}}">Magasin</a>
+                <a href="{{path("app_shop", {'animal': animal})}}">Magasin</a>
             </div>
     </div>
 </div>

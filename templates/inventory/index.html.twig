@@ -4,15 +4,19 @@
 {% block main_id %}shopInventory{% endblock %}
 
 {% block body %}
-<div id="mon_portefeuille">
-	<label>Mon portefeuille :</label>
-	<div id="grp_input_money">
-		<input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
-	</div>
+
+<div id="overlay_shopInventory">
+    <a href="{{path('app_play', {'id': animal.id})}}">Mon Animal</a>
+    <div id="mon_portefeuille">
+        <label>Mon portefeuille :</label>
+        <div id="grp_input_money">
+            <input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
+        </div>
+    </div>
 </div>
 <div id="inventaire_magasin">
     <h1 class="h3 mb-3 font-weight-normal">Inventaire : </h1>
-    <a href="{{path("app_shop")}}">Magasin</a>
+    <a href="{{path("app_shop", {'id': animal.id})}}">Magasin</a>
 </div>
 {% if userItems == [] %}
 {% elseif userItems is null %}

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Animal;
 use App\Entity\Inventory;
 use App\Entity\Objects;
 use App\Repository\InventoryRepository;
@@ -13,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShopController extends AbstractController
 {
-    #[Route('/magasin', name: 'app_shop')]
-    public function index(ObjectsRepository $repoObjet): Response
+    #[Route('/magasin/{id}', name: 'app_shop', methods:['GET'])]
+    public function index(Animal $animal, ObjectsRepository $repoObjet): Response
     {
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
@@ -29,7 +30,8 @@ class ShopController extends AbstractController
             'shopItems' => $all_items,
             'error' => $error,
             'success'=>$success,
-            'transaction'=>$transaction
+            'transaction'=>$transaction,
+            'animal' => $animal,
         ]);
     }
 

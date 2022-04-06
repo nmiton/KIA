@@ -1,8 +1,7 @@
 #grid_stats{
-    margin: 1rem;
 
     #grid_stats_col{
-        margin: 1rem;
+        margin: 2rem 0;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -11,7 +10,7 @@
             display: flex;
             flex-direction:column;
             justify-content: space-around;
-            margin: 0.3rem;
+            // margin: 0.3rem;
             
             @include respond(md) {
                 display: flex;
@@ -19,9 +18,17 @@
             }
 
             .stat_value{
-                margin-top: 1rem;
+                margin: 1.25rem 0 0 0.3rem;
                 color : $color-red;
                 font-weight: bolder;
+
+                @include respond(md) {
+                        
+                    margin: 1rem 0 0 0 ;
+                    color : $color-red;
+                    font-weight: bolder;
+                }
+
             }
 
             

@@ -4,11 +4,6 @@
     
     @import '_statsGrid.scss';
 
-    p{
-        margin: 0.5rem;
-    }
-
-
     #mon_portefeuille{
         display: flex;
         width: 100%;
@@ -36,7 +31,22 @@
     }
 
     #infosAnimal{
-        margin: 1rem 1rem 0 1rem;
+        display: flex;
+        flex-direction: row;
+        margin: 0 0 0 1rem;
+
+        @include respond(md){
+            display: flex;
+            flex-direction: column;
+        }
+
+        p{
+            margin: 1rem;
+
+            @include respond(md){
+                margin: 0 0 1rem 1rem;
+            }
+        }
     }
 
     #stats{

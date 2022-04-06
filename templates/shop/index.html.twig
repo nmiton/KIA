@@ -4,19 +4,23 @@
 {% block main_id %}shopInventory{% endblock %}
 
 {% block body %}
-<div id="mon_portefeuille">
-	<label>Mon portefeuille :</label>
-	<div id="grp_input_money">
-		{% if transaction != "" %}
-			<p class="argentPerduApresAchat"> <i id="shop_arrow_down" class="fa-solid fa-arrow-down"></i> {{transaction}} $$</p>
-		{% endif %}
 
-		<input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
+<div id="overlay_shopInventory">
+    <a href="{{path('app_play', {'id': animal.id})}}">Mon Animal</a>
+	<div id="mon_portefeuille">
+		<label>Mon portefeuille :</label>
+		<div id="grp_input_money">
+			{% if transaction != "" %}
+				<p class="argentPerduApresAchat"> <i id="shop_arrow_down" class="fa-solid fa-arrow-down"></i> {{transaction}} $$</p>
+			{% endif %}
+
+			<input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
+		</div>
 	</div>
 </div>
 <div id="inventaire_magasin">
-	<h1 class="h3 mb-3 font-weight-normal">Magasin : </h1>
-	<a href="{{path("app_inventory")}}">Inventaire</a>
+    <h1 class="h3 font-weight-normal">Magasin : </h1>
+    <a href="{{path("app_inventory", {'id' : animal.id })}}">Inventaire</a>
 </div>
 <p class="tips">
 	En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
