@@ -10,7 +10,7 @@
 AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download <br>
 ET UN SYSTEME DE BDD EN LOCAL, VOUS POUVEZ UTILISER SQLITE OU MYSQL AVEC : https://www.wampserver.com
 
-Il vous faudra dans un premier tant dans un dossier faire cette commande:<br>
+Il vous faudra dans un premier temps dans un dossier faire cette commande:<br>
 <code>git clone https://github.com/nmiton/kia.git</code>
 
 Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
