@@ -141,21 +141,22 @@ class PlayController extends AbstractController
         
         //Gestion des stats de l'animal en fonction de l'action choisie
         //récupération des stats de l'action 
-        $statsActionChoisie = $actionCaracRepo->findByIdAction($idAction);
+        $statsSelectedAction = $actionCaracRepo->findBy(["action"=>$idAction]);
         //pour chq stats de l'action
-        foreach ($statsActionChoisie as $stat) {
+        foreach ($statsSelectedAction as $stat) {
             //si action boost 
-            if($stat["val_max"] < $stat["val_min"]){
-                $val_min_stats_action = $stat["val_max"];
-                $val_max_stats_action = $stat["val_min"];
+            if($stat->getValMax() < $stat->getValMin()){
+                $val_min_stats_action = $stat->getValMax();
+                $val_max_stats_action = $stat->getValMin();
             }else{
-                $val_min_stats_action = $stat["val_min"];
-                $val_max_stats_action = $stat["val_max"];
+                $val_min_stats_action = $stat->getValMin();
+                $val_max_stats_action = $stat->getValMax();
             }
             //random sur la valeur de stat
             $random_value = random_int($val_min_stats_action,$val_max_stats_action);
             //récupération de la valeur de la stats de l'animal
-            $valueStat = $animalCaracRepo->findByValueStatByStatIdAndAnimalId($stat["caracteritic_id"],$animal->getId())[0];
+            $valueStat = $animalCaracRepo->findByValueStatByStatIdAndAnimalId($stat->getCaracteritic()->getId(),$animal->getId())[0];
+            // $valueStat = $animalCaracRepo->findBy(["caracteristic"=>$stat->getId(),"animal"=>$animal->getId()]);
             //calcul nouvelle Stat
             $newStat = $valueStat["value"] + $random_value; 
             //condition 0<stats<100
@@ -211,7 +212,7 @@ class PlayController extends AbstractController
         }
 
         //recuperation des stats de l'animal
-        $stats = $animalCaracRepo->findAllStatsByAnimalId($animal->getId());
+        $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);    
     
         //Maj lastActive User
         $dateTime = new DateTime();

@@ -1,5 +1,9 @@
 <section id="overlay">
-    {% include "sections_play/portefeuille.html.twig" with {'value_paye': value_paye} %}
+    {% if value_paye is defined %}
+        {% include "sections_play/portefeuille.html.twig" with {'value_paye': value_paye} %}
+    {% else %}
+        {% include "sections_play/portefeuille.html.twig" %}
+    {% endif %}
     {% include "sections_play/infosAnimal.html.twig" %}
 
 

@@ -4,13 +4,18 @@
 {% block main_id %}shopInventory{% endblock %}
 
 {% block body %}
-
+{% if error is defined and error is not null %}
+	<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+{% if success is defined and success is not null %}
+	<div class="alert alert-success">{{ success }}</div>
+{% endif %}
 <div id="overlay_shopInventory">
     <a href="{{path('app_play', {'id': animal.id})}}">Mon Animal</a>
 	<div id="mon_portefeuille">
 		<label>Mon portefeuille :</label>
 		<div id="grp_input_money">
-			{% if transaction != "" %}
+			{% if transaction is defined and transaction is not null %}
 				<p class="argentPerduApresAchat"> <i id="shop_arrow_down" class="fa-solid fa-arrow-down"></i> {{transaction}} $$</p>
 			{% endif %}
 
@@ -25,31 +30,8 @@
 <p class="tips">
 	En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
 </p>
-	{% if error != "" %}
-		<div class="alert alert-danger">{{ error }}</div>
-	{% endif %}
-	{% if success != "" %}
-		<div class="alert alert-success">{{ success }}</div>
-	{% endif %}
-	{% if shopItems == [] %}
-		{% elseif shopItems is null %}
-			<table class="table table-striped mt-3">
-				<thead>
-					<th scope="col">Objet</th>
-					<th scope="col">Description</th>
-					{# <th scope="col">Conséquences</th> #}
-					<th scope="col">Prix</th>
-					<th scope="col"></th>
-				</thead>
-				<tbody>
-					<tr>
-						<td data-label="Place" colspan="4">Aïe, il semblerait que le magasin a été dévalisé</td>
-					</tr>
-				</tbody>
-				<tbody></tbody>
-			</table>
-		{% else %}
-			<table class="table table-striped mt-3">
+	{% if shopItems is defined and not null %}
+		<table class="table table-striped mt-3">
 				<thead>
 					<th scope="col">Objet</th>
 					<th scope="col">Description</th>
@@ -76,6 +58,22 @@
 						</tr>
 					{% endfor %}
 				</tbody>
+			</table>
+		{% else %}
+			<table class="table table-striped mt-3">
+				<thead>
+					<th scope="col">Objet</th>
+					<th scope="col">Description</th>
+					{# <th scope="col">Conséquences</th> #}
+					<th scope="col">Prix</th>
+					<th scope="col"></th>
+				</thead>
+				<tbody>
+					<tr>
+						<td data-label="Place" colspan="4">Aïe, il semblerait que le magasin a été dévalisé</td>
+					</tr>
+				</tbody>
+				<tbody></tbody>
 			</table>
 	{% endif %}
 {% endblock %}

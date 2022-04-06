@@ -11,7 +11,11 @@
     {% if msg_danger is not null %}
 		<div class="alert alert-danger">{{ msg_danger }}</div>
 	{% endif %}
-    {% include "sections_play/overlay.html.twig" with {'value_paye': value_paye} %}
+    {% if value_paye is defined %}
+      {% include "sections_play/overlay.html.twig" with {'value_paye': value_paye} %}
+    {% else %}
+      {% include "sections_play/overlay.html.twig" %}
+    {% endif %}
     {% include "sections_play/console.html.twig" %}
     {% include "sections_play/actionsType.html.twig" with {'animal': animal}  %}
 </div>   

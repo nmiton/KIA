@@ -45,25 +45,6 @@ class ObjectsRepository extends ServiceEntityRepository
         }
     }
 
-
-    public function findAllObjetsByUserId($userId)
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-            SELECT * 
-            FROM objects o 
-            INNER JOIN inventory i 
-            ON o.id = i.objet_id
-            WHERE i.user_id = :userId
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['userId' => $userId]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
     public function findByCountAllObjetsByUserId($userId)
     {
         $conn = $this->getEntityManager()->getConnection();
@@ -76,29 +57,6 @@ class ObjectsRepository extends ServiceEntityRepository
             ON o.id = i.objet_id
             WHERE i.user_id = :userId 
             GROUP BY o.id;
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['userId' => $userId]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
-    
-    public function findAllObjetsNotOwnUserId($userId)
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-        SELECT * 
-        FROM `objects` 
-        WHERE id NOT IN ( 
-            SELECT o.id 
-            FROM objects o 
-            INNER JOIN inventory i 
-            ON o.id = i.objet_id 
-            WHERE i.user_id = :userId
-        );
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['userId' => $userId]);

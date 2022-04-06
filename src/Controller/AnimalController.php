@@ -58,9 +58,9 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_animal_show', methods: ['GET'])]
-    public function show(Animal $animal, AnimalCaracteristicRepository $repo): Response
+    public function show(Animal $animal, AnimalCaracteristicRepository $animalCaracRepo): Response
     {
-        $stats = $repo->findAllStatsByAnimalId($animal->getId());
+        $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);  
         return $this->render('animal/show.html.twig', [
             'animal' => $animal,
             'stats' => $stats 

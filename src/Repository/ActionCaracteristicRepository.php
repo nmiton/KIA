@@ -43,26 +43,7 @@ class ActionCaracteristicRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
-    }
-
-    /**
-    * @return ActionCaracteristic[] Returns an array of ActionCaracteristic objects
-    */
-    
-    public function findByIdAction($idAction)
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-        SELECT ac.caracteritic_id, ac.val_min, ac.val_max from action_caracteristic ac 
-        INNER JOIN action a ON a.id = ac.action_id
-        WHERE a.id = :idAction
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['idAction' => $idAction]);
-        return $resultSet->fetchAllAssociative();
-    }
-    
+    }    
 
     /*
     public function findOneBySomeField($value): ?ActionCaracteristic

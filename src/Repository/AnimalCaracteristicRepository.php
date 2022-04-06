@@ -45,45 +45,6 @@ class AnimalCaracteristicRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllStatsByAnimalId($animalId): array
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-            SELECT animal_caracteristic.value,caracteristic.name 
-            FROM animal_caracteristic 
-            INNER JOIN caracteristic 
-            ON animal_caracteristic.caracteristic_id = caracteristic.id
-            WHERE animal_id = :animalId 
-            GROUP BY  caracteristic.id
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['animalId' => $animalId]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
-
-    public function findByValueStatByStatIdAndAnimalId($statId,$animalId): array
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-            SELECT ac.id , ac.animal_id, ac.caracteristic_id, ac.value
-            FROM animal_caracteristic ac
-            INNER JOIN animal a
-            ON ac.animal_id = a.id
-            WHERE a.id = :animalId AND caracteristic_id = :statId 
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['animalId' => $animalId, 'statId' => $statId]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
-
     /*
     public function findOneBySomeField($value): ?AnimalCaracteristic
     {
