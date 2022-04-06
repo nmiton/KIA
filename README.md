@@ -26,3 +26,5 @@ Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
     <li>La base de donnée</li>
     <li>Le mailer</li>
 </ul>
+
+<p>Et voila Keep It Alive vous est maintenant disponible.</p>
