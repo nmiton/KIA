@@ -22,7 +22,7 @@ Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
 <p>Dans le fichier .ENV à la racine de votre projet il vous faudra paramétrer:</p>
 <ul>
     <li>L'environnement prod/dev/test</li>
-    <li>Générer votre propre clé APP</li>
+    <li>Générer votre propre clé APP_SECRET <code>php -r 'echo bin2hex(random_bytes(16));'</code></li>
     <li>La base de donnée</li>
     <li>Le mailer</li>
 </ul>
