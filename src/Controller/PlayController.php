@@ -106,44 +106,51 @@ class PlayController extends AbstractController
         UserRepository $userRepo):Response
     {   
         $action = $actionRepo->find(['id' => $idAction]);
-        //stats de avant action 
+        
+        //stats d avant action 
         $stats = $animalCaracRepo->findAllStatsByAnimalId($animal->getId());
         $objetPerdu = null;
         //Maj console 
+
         //on récupère le console log de l'action 
         $console = $action->getConsoleLog();
         //récupération de tous les types d'action par type d'animaux
         $typesActionTypeAnimal = $actionRepo->findTypeActionByAnimalType($animal->getAnimalType()->getId());
+
+
+        //on récupère l'entity nourriture
+        $entity_stat_nourriture = $caracRepo->findOneBy(['name'=> "Nourriture"]);
+        //on récupère l'entity énergie
+        $entity_stat_energie = $caracRepo->findOneBy(['name'=> "Énergie"]);
+        //on récupère l'entity hydratation
+        $entity_stat_eau = $caracRepo->findOneBy(['name'=> "Hydratation"]);
+        //on cherche l'hydratation de l'animal
+        $stat_eau_animal = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $entity_stat_eau ]);
+        //on cherche la nourriture de l'animal
+        $stat_nouriture_animal = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $entity_stat_nourriture ]);
+        //on cherche l'energie de l'animal
+        $stat_energie_animal = $animalCaracRepo->findOneBy(["caracteristic"=> $entity_stat_energie, "animal"=> $animal ]);
+
+        if($action->getType() == "Jouer" || $action->getType() == "Sortir"){
+            // dd($stat_energie_animal);
+            //erreur si énergie est <= 10 (pas de promenade, ni de jeu) 
+            if($stat_energie_animal->getValue()<=10){
+                return $this->render('play/main.html.twig', [
+                'animal' => $animal,
+                'stats' => $stats,
+                'typesAction' => $typesActionTypeAnimal,
+                'actions' => null,
+                'msg_danger' => "Attention l'énergie de votre animal est trop faible 
+                                    pour pouvoir : ".$action->getName().". Veuillez 
+                                    faire le nécessaire afin d'augmenter 
+                                    cette statistique!",
+                ]); 
+            }
+        }
+        
         //gestion des stats de l'animal en fonction de l'action choisie
         //recupération des stats de l'action 
         $statsActionChoisie = $actionCaracRepo->findByIdAction($idAction);
-
-        if($action->getType() == "Jouer" || $action->getType() == "Sortir"){
-
-            $stat_nourriture = $caracRepo->findBy(['name'=> "Nourriture"]);
-            
-            $stat_eau = $caracRepo->findBy(['name'=> "Hydratation"]);
-
-            $stat_eau_ani = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $stat_eau ]);
-            $stat_nouriture_ani = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $stat_nourriture ]);
-
-            if(($stat_eau_ani->getValue() + $stat_nouriture_ani->getValue()/2)<10){
-
-                //TODO 
-                
-                // return $this->render('play/main.html.twig', [
-                // 'animal' => $animal,
-                // 'stats' => $stats,
-                // 'typesAction' => $typesActionTypeAnimal,
-                // 'actions' => null,
-                // 'msg_danger' => "Attention l'énergie de votre animal est trop faible 
-                //                     pour pouvoir : ".$action->getType().". Veuillez 
-                //                     faire le nécessaire afin d'augmenter 
-                //                     cette statistiques",
-                // ]); 
-            }
-        }
-
         //pour chq stats de l'action
         foreach ($statsActionChoisie as $stat) {
             //si action boost 
@@ -175,6 +182,17 @@ class PlayController extends AbstractController
             $statAnimal->getValue();
             $animalCaracRepo->add($statAnimal);
         }
+
+        //Calcul de l'énergie
+        //on gère ici l'énergie de l'animal après avoir gérer les stats qui ont été affectées par l'action choisie        
+        //on cherche la nouvelle valeur d'hydratation de l'animal
+        $stat_eau_animal = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $entity_stat_eau ]);
+        //on cherche la nouvelle valeur de la nourriture de l'animal
+        $stat_nouriture_animal = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $entity_stat_nourriture ]);
+        //on set la nouvelle valeur de energie avec (nourriture+hydaration)/2 
+        $stat_energie_animal->setValue(($stat_nouriture_animal->getValue()+$stat_eau_animal->getValue())/2);
+        //on persite dans la bdd
+        $animalCaracRepo->add($stat_energie_animal);
 
         //Calcul de proba de perte de l'object utilisé pr l'action
         //on récupère la proba de l'objet lié à l'action
