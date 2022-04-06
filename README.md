@@ -7,6 +7,7 @@
 <h1 align="center">INSTALATION</h1>
 Ce projet Symfony et en version 5.4. <br>
 
+
 AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download/ <br>
 ET UN SYSTEME DE BDD EN LOCAL VOUS POUVEZ UTILISER SQLITE OU MYSQL AVEC : https://www.wampserver.com/
 
