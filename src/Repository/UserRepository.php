@@ -99,27 +99,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $resultSet->fetchAllAssociative();
     }
 
-    
-    public function findByAnimalStatsIsAliveWithUserId($userId)
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-        SELECT ac.animal_id, c.name, ac.value, c.lost_by_hour
-            FROM animal_caracteristic ac
-            INNER JOIN animal a on a.id = ac.animal_id
-            INNER JOIN user u on a.user_id = u.id
-            INNER JOIN caracteristic c on ac.caracteristic_id= c.id
-            WHERE user_id = :userId
-            AND is_alive = 1 ORDER BY ac.caracteristic_id
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['userId' => $userId]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
