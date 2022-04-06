@@ -19,4 +19,10 @@ Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
 
 <h1 align="center">UTILISATION</h1>
 
-
+<p>Dans le fichier .ENV à la racine de votre projet il vous faudra paramétrer:</p>
+<ul>
+    <li>L'environnement prod/dev/test</li>
+    <li>Générer votre propre clé APP</li>
+    <li>La base de donnée</li>
+    <li>Le mailer</li>
+</ul>
