@@ -14,6 +14,7 @@ use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\CaracteristicRepository;
 use App\Repository\InventoryRepository;
 use App\Repository\UserRepository;
+use App\Service\PayDay;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,10 @@ class PlayController extends AbstractController
                 //animaux de l'user
                 $animals=$repo->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
+
+                $payDay = new PayDay();
+                $payDay->jourDePaye($this->getUser(), $repo);
+
                 if(count($animals)==0){
                     return $this->redirectToRoute('app_new_animal');
                 }else{
