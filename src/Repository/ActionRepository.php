@@ -95,7 +95,7 @@ class ActionRepository extends ServiceEntityRepository
         SELECT a.id, c.name, ac.val_max, ac.val_min FROM action a 
             INNER JOIN action_caracteristic ac ON ac.action_id = a.id 
             INNER JOIN caracteristic c on c.id = ac.caracteritic_id 
-            WHERE animal_type_id = :animalTypeId AND type=:actionType;
+            WHERE animal_type_id = :animalTypeId AND type=:actionType ORDER BY ac.val_max DESC ;
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['animalTypeId' => $animalTypeId,'actionType'=>$actionType]);

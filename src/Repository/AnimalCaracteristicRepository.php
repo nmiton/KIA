@@ -45,44 +45,26 @@ class AnimalCaracteristicRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllStatsByAnimalId($animalId): array
+        
+    public function findByAnimalStatsIsAliveWithUserId($userId)
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT animal_caracteristic.value,caracteristic.name 
-            FROM animal_caracteristic 
-            INNER JOIN caracteristic 
-            ON animal_caracteristic.caracteristic_id = caracteristic.id
-            WHERE animal_id = :animalId 
-            GROUP BY  caracteristic.id
-            ';
-        $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['animalId' => $animalId]);
-
-        // returns an array of arrays (i.e. a raw data set)
-        return $resultSet->fetchAllAssociative();
-    }
-
-
-    public function findByValueStatByStatIdAndAnimalId($statId,$animalId): array
-    {
-        $conn = $this->getEntityManager()->getConnection();
-
-        $sql = '
-            SELECT ac.id , ac.animal_id, ac.caracteristic_id, ac.value
+        SELECT ac.animal_id, c.name, ac.value, c.lost_by_hour
             FROM animal_caracteristic ac
-            INNER JOIN animal a
-            ON ac.animal_id = a.id
-            WHERE a.id = :animalId AND caracteristic_id = :statId 
+            INNER JOIN animal a on a.id = ac.animal_id
+            INNER JOIN user u on a.user_id = u.id
+            INNER JOIN caracteristic c on ac.caracteristic_id= c.id
+            WHERE user_id = :userId
+            AND is_alive = 1 ORDER BY ac.caracteristic_id
             ';
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['animalId' => $animalId, 'statId' => $statId]);
+        $resultSet = $stmt->executeQuery(['userId' => $userId]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
-
 
     /*
     public function findOneBySomeField($value): ?AnimalCaracteristic
