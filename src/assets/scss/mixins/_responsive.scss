@@ -4,12 +4,25 @@
 // $breakpoint-lg: 1025px;
 // $breakpoint-xl: 1201px;
 /* Default breakpoints */
-$breakpoint-sm: 700px;
-$breakpoint-md: 850px;
+$breakpoint-sm: 481px;
+$breakpoint-md: 769px;
 $breakpoint-lg: 1025px;
 $breakpoint-xl: 1201px;
+
+$breakpoint-sm-menu: 900px;
+
 /* Mixin: Media queries */
 @mixin respond($breakpoint) {
+    @if ($breakpoint == sm-menu) {
+        @media (min-width: $breakpoint-sm-menu) {
+            @content;
+        }
+    }
+    @if ($breakpoint == md-menu) {
+        @media (min-width: $breakpoint-md-menu) {
+            @content;
+        }
+    }
     @if ($breakpoint == sm) {
         @media (min-width: $breakpoint-sm) {
             @content;

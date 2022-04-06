@@ -67,7 +67,7 @@
         background-color: $color-bg-secondary;
         transition: background .2s ease-out;
 
-        @include respond(sm) {
+        @include respond(sm-menu) {
             display: none;
         }
 
@@ -102,7 +102,7 @@
         box-shadow: 0 $box-shadow-y $box-shadow-radius $box-shadow-color;
         transition: max-height 0.3s ease-in-out;
 
-        @include respond(sm) {
+        @include respond(sm-menu) {
             position: initial;
             display: block;
             width: auto;
@@ -116,14 +116,14 @@
             padding: 1rem;
             width: calc(100% - 2rem);
 
-            @include respond(sm) {
+            @include respond(sm-menu) {
                 display: flex;
                 padding: 0;
                 align-items: center;
             }
 
             & > li {
-                @include respond(sm) {
+                @include respond(sm-menu) {
                     margin: 0;
                 }
 
@@ -140,12 +140,12 @@
                     white-space: nowrap;
                     color: $color-bg-primary;
 
-                    @include respond(sm) {
+                    @include respond(sm-menu) {
                         margin: 0 0.5rem;
                         padding: 1.25rem 0;
                     }
 
-                    @include respond(md) {
+                    @include respond(sm) {
                         margin: 0 1.5rem;
                     }
 
@@ -220,7 +220,7 @@
                         }
                     }
 
-                    @include respond(sm) {
+                    @include respond(sm-menu) {
                         position: absolute;
                         right: 0;
                         top: 3.75rem;

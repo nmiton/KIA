@@ -1,18 +1,34 @@
 #shopInventory{
-
     #overlay_shopInventory{
+        
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
 
         margin: 1rem 0;
 
+        @include respond(md){  
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
         a{
-            border-radius: 5%;
+            border-radius: 10%;
             color: white;
             text-decoration: none;
             padding: 1rem;
             background-color: $color-bg-altmenu;
+            width: 12.5rem;
+            margin: auto;
+            text-align: center;
+            font-weight: 600;
+
+            @include respond(md){  
+                width: auto;
+                margin: 0;
+            }
+
         }
 
         a:hover{
@@ -22,6 +38,13 @@
         #mon_portefeuille{
             display: flex;
             flex-direction: row;
+            margin: 1.5rem 0 0 0;
+            justify-content: space-between;
+
+            @include respond(md){
+                justify-content: baseline;
+                margin: 0;
+            }
     
             label{
                 margin: auto 1rem;
@@ -69,7 +92,3 @@
         margin: 1.5rem auto;
     }
 }
-
-
-
-
