@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur{% endblock %}
+{% block main_id %}error{% endblock %}
+{% block main_class %}errorPage{% endblock %}
+
+{% block body %}
+    <h1>Erreur</h1>
+    <h2>UH OH! Vous êtes perdu!</h2>
+    <p>La page que vous souhaitez consulter n'existe pas.
+        Mais vous pouvez cliquer sur le bouton ci-dessous pour être redirigé vers l'accueil.
+    </p>
+    <a class="btn_accueil" href="{{ path("app_home") }}">Accueil</a>
+
+{% endblock %}
