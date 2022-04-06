@@ -61,6 +61,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         ]);
         //on met a jour le chp derniereConnexion de user
         $user->setLastConnection($today);
+        $user->setLastActive($today);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {

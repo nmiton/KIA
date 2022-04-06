@@ -28,6 +28,7 @@ class PlayController extends AbstractController
         if($this->getUser()){
             //si le user est verifié
             if(!$this->getUser()->isVerified()){
+                
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
                 //animaux de l'user
@@ -81,7 +82,6 @@ class PlayController extends AbstractController
         $actions_type_action_type_animal = $repoAction->findByActionsAnimalTypeAndActionTypeWhereObjectsInInventory($animal->getAnimalType()->getId(),$typeAction);
         //récupération des stats de chaq action par type d'action et type d'animaux
         $stats_actions_type_action_type_animal = $repoAction->findByStatsActionsByAnimalTypeAndActionType($animal->getAnimalType()->getId(),$typeAction);
-
         return $this->render('play/main.html.twig', [
             'animal' => $animal,
             'stats' => $stats,
