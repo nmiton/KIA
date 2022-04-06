@@ -7,14 +7,15 @@
 <h1 align="center">INSTALATION</h1>
 Ce projet Symfony et en version 5.4.
 
-AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download/
+AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download/ <br>
+ET UN SYSTEME DE BASE DONNEE EN LOCAL VOUS POUVEZ UTILISE SQLITE OU MYSQL AVEC : https://www.wampserver.com/
 
 Il vous faudra dans un premier tant dans un dossier faire cette commande:<br>
 <code>git clone https://github.com/nmiton/kia.git</code>
 
 Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
 <code>composer update</code>
-*Par précaution faite la commande 2 fois, il peut ne pas avoir mit toutes les versions en 5.4
+*Par précaution faite la commande 2 fois, il peut ne pas avoir mit toutes les versions en 5.4.
 
-
+<h1 align="center">UTILISATION</h1>
 
