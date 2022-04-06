@@ -1,32 +1,50 @@
 #shopInventory{
 
-    #mon_portefeuille{
+    #overlay_shopInventory{
         display: flex;
         flex-direction: row;
-        margin: 2rem auto;
-        justify-content: end;
+        justify-content: space-between;
 
-        label{
-            margin: auto 1rem;
+        margin: 1rem 0;
+
+        a{
+            border-radius: 5%;
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            background-color: $color-bg-altmenu;
         }
 
-        #grp_input_money{
+        a:hover{
+            background-color: $color-bg-alt;
+        }
+        
+        #mon_portefeuille{
             display: flex;
-            
-            .argentPerduApresAchat{
-                color : white;
-                padding: 0.6rem;
-                border-radius: 5%;
-                margin: 0.5rem;
-                background-color: $color-bg-altmenu;
+            flex-direction: row;
+    
+            label{
+                margin: auto 1rem;
             }
-            input{ 
-                width: auto;
-                height: 2.5rem;
-                text-align: right;
-                margin: auto;
+    
+            #grp_input_money{
+                display: flex;
+                
+                .argentPerduApresAchat{
+                    color : white;
+                    padding: 0.6rem;
+                    border-radius: 5%;
+                    margin: 0.5rem;
+                    background-color: $color-bg-altmenu;
+                }
+                input{ 
+                    width: auto;
+                    height: 2.5rem;
+                    text-align: right;
+                    margin: auto;
+                }
             }
-        }
+        }    
     }
 
     #inventaire_magasin{

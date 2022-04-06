@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Animal;
 use App\Entity\Inventory;
 use App\Entity\Objects;
 use App\Repository\InventoryRepository;
@@ -13,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ShopController extends AbstractController
 {
-    #[Route('/magasin', name: 'app_shop')]
-    public function index(ObjectsRepository $repoObjet): Response
+    #[Route('/magasin/{id}', name: 'app_shop', methods:['GET'])]
+    public function index(Animal $animal, ObjectsRepository $repoObjet): Response
     {
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
@@ -29,12 +30,13 @@ class ShopController extends AbstractController
             'shopItems' => $all_items,
             'error' => $error,
             'success'=>$success,
-            'transaction'=>$transaction
+            'transaction'=>$transaction,
+            'animal' => $animal,
         ]);
     }
 
-    #[Route('/magasin/{id}', name: 'app_shop_buy_id')]
-    public function achatObject(Objects $objet, ObjectsRepository $repoObjet, InventoryRepository $repoInv, UserRepository $repoUser): Response
+    #[Route('/magasin/{id}/{idAnimal}', name: 'app_shop_buy_objet', methods:['GET'])]
+    public function achatObject(Animal $animal, Objects $objet, InventoryRepository $repoInv, UserRepository $repoUser): Response
     {
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
@@ -49,7 +51,7 @@ class ShopController extends AbstractController
             $inv->setUser($this->getUser());
             $inv->setObjet($objet);
             $repoInv->add($inv);
-            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!", "transaction" => $objet->getPrice()]);
+            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!", "transaction" => $objet->getPrice(),'animal' => $animal]);
         }
     }
 }
