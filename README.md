@@ -5,7 +5,7 @@
 <p align="center"><img src="public/assets/img/logo.png" align="center" alt="Logo keep it alive"></p><br><br>
 
 <h1 align="center">INSTALATION</h1>
-<p>Ce projet Symfony et en version 5.4. </p><br>
+<p>Ce projet Symfony et en version 5.4. </p>
 
 AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download/ <br>
 ET UN SYSTEME DE BDD EN LOCAL VOUS POUVEZ UTILISER SQLITE OU MYSQL AVEC : https://www.wampserver.com/
