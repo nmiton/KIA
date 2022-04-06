@@ -11,11 +11,11 @@ Ce projet Symfony et en version 5.4.
 
 AVANT TOUT IL VOUS FAUDRA AU PRÉALABLE INSTALLER "Composer" : https://getcomposer.org/download/
 
-Il vous faudra dans un premier tant dans un dossier faire cette commande:
+Il vous faudra dans un premier tant dans un dossier faire cette commande:<br>
 <code>git clone https://github.com/nmiton/kia.git</code>
 
-Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:
+Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
 <code>
-composer update
+composer update<br>
 // Par précaution faite la commande 2 fois, il peut ne pas avoir mit toutes les versions en 5.4
 </code>
