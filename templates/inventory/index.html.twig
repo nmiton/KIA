@@ -18,8 +18,7 @@
     <h1 class="h3 mb-3 font-weight-normal">Inventaire : </h1>
     <a href="{{path("app_shop", {'id': animal.id})}}">Magasin</a>
 </div>
-{% if userItems == [] %}
-{% elseif userItems is null %}
+{% if userItems is null or userItems == [] %}
 <table class="table table-striped mt-3">
     <thead>
         <th scope="col">Objet</th>

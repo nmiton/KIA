@@ -35,14 +35,14 @@ class ShopController extends AbstractController
         ]);
     }
 
-    #[Route('/magasin/{id}/{idAnimal}', name: 'app_shop_buy_objet', methods:['GET'])]
+    #[Route('/magasin/{id}/{item}', name: 'app_shop_buy_objet')]
     public function achatObject(Animal $animal, Objects $objet, InventoryRepository $repoInv, UserRepository $repoUser): Response
     {
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
         $user = $this->getUser();
         if ($user->getMoney() - $objet->getPrice() < 0) {
-            return $this->redirectToRoute('app_shop', ['error' => "Tu n'as pas assez d'argent."]);
+            return $this->redirectToRoute('app_shop', ['error' => "Tu n'as pas assez d'argent.", 'id'=>$animal->getId()]);
         }else{
             $user->setMoney($user->getMoney() - $objet->getPrice());
             $repoUser->add($user);
@@ -51,7 +51,7 @@ class ShopController extends AbstractController
             $inv->setUser($this->getUser());
             $inv->setObjet($objet);
             $repoInv->add($inv);
-            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!", "transaction" => $objet->getPrice(),'animal' => $animal]);
+            return $this->redirectToRoute('app_shop', ['success' => "Objet acheté avec succès!", "transaction" => $objet->getPrice(), 'id'=>$animal->getId()]);
         }
     }
 }
