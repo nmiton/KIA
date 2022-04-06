@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Repository\UserRepository;
+use App\Service\PayDay;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,10 +53,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $u = $token->getUser();
-         //on géneère la date du jour en mode date time pour modifier le champ derniere connexion du collabo
+        //on géneère la date du jour en mode date time pour modifier le champ derniere connexion du collabo
         $today = new \DateTime('now');
-         //On pointe sur l'id de l'utilisateur
-         //on récupère le collaborateur en fonction de son id d'utilisateur
+        //On pointe sur l'id de l'utilisateur
+        //on récupère le collaborateur en fonction de son id d'utilisateur
         $user = $this->repositoryUser->findOneBy([
             'email' => $u->getEmail(),
         ]);
@@ -64,14 +65,18 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $user->setLastActive($today);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        $payDay = new PayDay();
+        $payDay->jourDePaye($u, $this->repositoryUser);
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-        
+
         try {
             return new RedirectResponse($this->urlGenerator->generate('app_home'));
-    } catch (\Throwable $th) {
-            throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        } catch (\Throwable $th) {
+            throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
         }
     }
 
