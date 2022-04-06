@@ -15,7 +15,6 @@ Il vous faudra dans un premier tant dans un dossier faire cette commande:<br>
 <code>git clone https://github.com/nmiton/kia.git</code>
 
 Ensuite dans le dossier créé "kia" il vous faudra entrer cette commande:<br>
-<code>
-composer update<br>
-// Par précaution faite la commande 2 fois, il peut ne pas avoir mit toutes les versions en 5.4
-</code>
+<code>composer update</code>
+*Par précaution faite la commande 2 fois, il peut ne pas avoir mit toutes les versions en 5.4
+
