@@ -18,10 +18,11 @@ use App\Service\UpdateCaracteristic;
 class PreloadController extends AbstractController
 {
     #[Route('/preload', name: 'app_play_preload')]
-    //MAJ STATS -> $repo $updateCaracteristic
-    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic): Response
+    //MAJ STATS -> $repo $updateCaracteristic $animalRepo
+    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo): Response
     {
         //si un user est connecté
+        
         if($this->getUser()){
             //si le user est verifié
             if(!$this->getUser()->isVerified()){
@@ -32,10 +33,11 @@ class PreloadController extends AbstractController
                 $animals=$repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
                 if(count($animals)==0){
+                    
                     return $this->redirectToRoute('app_new_animal');
                 }else{
                     //MAJ STATS
-                    $updateCaracteristic->updateCaract($this->getUser(), $repo);
+                    $updateCaracteristic->updateCaract($this->getUser(), $repo,$animalRepo);
 
                     return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
                 }

@@ -4,12 +4,13 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\AnimalCaracteristic;
 use App\Repository\AnimalCaracteristicRepository;
+use App\Repository\AnimalRepository;
 use DateTime;
 
 class UpdateCaracteristic
 
 {
-    public function updateCaract(User $user, AnimalCaracteristicRepository $repo ){
+    public function updateCaract(User $user, AnimalCaracteristicRepository $repo, AnimalRepository $animalRepo ){
         $animalStats = $repo->findByAnimalStatsIsAliveWithUserId($user->getId());
         //dd($animalStats);
         $datetime = new DateTime();
@@ -28,6 +29,9 @@ class UpdateCaracteristic
                     // update stats vie
                     if($animalStats[0]["lost_by_hour"]>$animalStats[0]["value"]){
                         $animalStats[0]["value"]=0;
+                        $animal = $animalRepo->find($animalStats[0]["animal_id"]);
+                        $animal->setIsAlive(false);
+                        $animalRepo->add($animal);
                         //setScore et is alive false
                     }else{
                         $animalStats[0]["value"]-=$animalStats[0]["lost_by_hour"];
