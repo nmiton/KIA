@@ -13,10 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\UpdateCaracteristic;
+
 class PreloadController extends AbstractController
 {
     #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repoUser): Response
+    //MAJ STATS -> $repo $updateCaracteristic
+    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic): Response
     {
         //si un user est connecté
         if($this->getUser()){
@@ -31,6 +34,9 @@ class PreloadController extends AbstractController
                 if(count($animals)==0){
                     return $this->redirectToRoute('app_new_animal');
                 }else{
+                    //MAJ STATS
+                    $updateCaracteristic->updateCaract($this->getUser(), $repo);
+
                     return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
                 }
             }

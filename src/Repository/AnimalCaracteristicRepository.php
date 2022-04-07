@@ -51,7 +51,7 @@ class AnimalCaracteristicRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-        SELECT ac.animal_id, c.name, ac.value, c.lost_by_hour
+        SELECT ac.id, ac.animal_id, c.name, ac.value, c.lost_by_hour
             FROM animal_caracteristic ac
             INNER JOIN animal a on a.id = ac.animal_id
             INNER JOIN user u on a.user_id = u.id
