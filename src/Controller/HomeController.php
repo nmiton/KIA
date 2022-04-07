@@ -11,8 +11,11 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $msg_paye = isset($_GET['msg_paye']) ? $_GET['msg_paye'] : null;
+
         return $this->render('home/home.html.twig', [
             'controller_name' => 'HomeController',
+            'msg_paye'=>$msg_paye,
         ]);
     }
     #[Route('/mentions-legales', name: 'app_mentions_legales')]

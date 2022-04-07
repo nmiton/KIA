@@ -7,7 +7,7 @@
     {% for error in app.flashes('error') %}
         <div class="alert alert-danger" role="alert">{{ error }}</div>
     {% endfor %}
-    <h1 class="h3 mb-3 font-weight-normal">Changer son pseudo :</h1>
+    <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Changer son pseudo :</h1>
     {{ form_start(changePseudo) }}
         {{ form_row(changePseudo.pseudo) }}
         <div class="text-center">
