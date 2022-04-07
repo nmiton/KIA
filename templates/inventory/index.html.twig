@@ -10,7 +10,7 @@
     <div id="mon_portefeuille">
         <label>Mon portefeuille :</label>
         <div id="grp_input_money">
-            <input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
+            <input class="form-control" type="text" id="money" disabled value="{{app.user.money}}$$" name="money" required size="10">
         </div>
     </div>
 </div>
@@ -18,25 +18,48 @@
     <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Inventaire : </h1>
     <a href="{{path("app_shop", {'id': animal.id})}}">Magasin</a>
 </div>
-{% if userItems is defined and userItems is not null  %}
-<table class="table table-striped mt-3">
-    <thead>
-        <th scope="col">Objet</th>
-        <th scope="col">Description</th>
-        {# <th scope="col">Conséquences</th> #}
-        <th scope="col">Quantité</th>
-    </thead>
-    <tbody>
-    {% for item in userItems %}
-        <tr>
-            <td data-label="Objet">{{item.name}}</td>
-            <td data-label="Description">{{item.description}}</td>
-            {# <td data-label="Conséquences">TODO</td> #}
-            <td data-label="Quantité">{{item.quantity}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table> 
+
+{# form choix type action #}
+<section id="select_type_action">
+{{ form_start(form) }}
+{{ form_widget(form) }}
+    <div class="text-center">
+        {# <a href="{{path("app_shop_action_object", { 'slug': article.slug })}}"class="btn">{{ button_label|default('Voir') }}</a> #}
+        <div class="text-center">
+            <button class="btn">{{ button_label|default('Voir') }}</button>
+        </div>
+    </div>
+{{ form_end(form) }}
+</section>
+{# nom type action si selectionnée #}
+{% if actionType is defined %}
+    {% if actionType != "all" %}
+        <h2 class="h4 font-weight-normal flip-in-hor-top">Catégorie : {{ actionType }}</h2>
+    {% endif %}
+{% else %}
+        <h2 class="h4 font-weight-normal flip-in-hor-top">Tous les objets : </h2>
+{% endif %}
+
+{% if userItems is defined and userItems is not null and userItems != [] %}
+
+    <table class="table table-striped mt-3">
+        <thead>
+            <th scope="col">Objet</th>
+            <th scope="col">Description</th>
+            {# <th scope="col">Conséquences</th> #}
+            <th scope="col">Quantité</th>
+        </thead>
+        <tbody>
+        {% for item in userItems %}
+            <tr>
+                <td data-label="Objet">{{item.name}}</td>
+                <td data-label="Description">{{item.description}}</td>
+                {# <td data-label="Conséquences">TODO</td> #}
+                <td data-label="Quantité">{{item.quantity}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
 {% else %}
 <table class="table table-striped mt-3">
     <thead>
@@ -47,7 +70,7 @@
     </thead>
     <tbody>
         <tr>
-            <td colspan="3">Aïe, il semblerait que ton inventaire soit vide</td>
+            <td data-label="Inventaire" colspan="3">Aïe, il semblerait que ton inventaire soit vide</td>
         </tr>
     </tbody>
 </table> 

@@ -10,7 +10,7 @@
                 <button type="submit" class="btn btn-primary">{{typeAction.type}}</button>
             </form>
         {% endfor %}
-            <form action="{{path("app_inventory" , {'id' : animal.id })}}">
+            <form action="{{path("app_inventory_full" , {'id' : animal.id })}}">
                 <button type="submit" class="btn btn-danger inventoryBtn ">Inventaire</button>
             </form>
         </div>
