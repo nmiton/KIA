@@ -56,7 +56,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
             $objet = new Objects();
             $objet->setName('objet'.$i);
             $objet->setDescription("desc_objet".$i);
-            $objet->setPrice(10);
+            $objet->setPrice(10+$i);
             $objet->setLossPercentage(50);
             $manager->persist($objet);         
             $this->addReference('objetSortir'.$i, $objet);
@@ -66,7 +66,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
             $objet = new Objects();
             $objet->setName('objetJouer'.$i);
             $objet->setDescription("desc_objetJouer".$i);
-            $objet->setPrice(10);
+            $objet->setPrice(10+$i);
             $objet->setLossPercentage(50);
             $manager->persist($objet);         
             $this->addReference('objetJouer'.$i, $objet);
@@ -76,7 +76,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
             $objet = new Objects();
             $objet->setName('objetSoin'.$i);
             $objet->setDescription("desc_objetSoin".$i);
-            $objet->setPrice(10);
+            $objet->setPrice(10+$i);
             $objet->setLossPercentage(50);
             $manager->persist($objet);         
             $this->addReference('objetSoin'.$i, $objet);
@@ -86,7 +86,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
             $objet = new Objects();
             $objet->setName('objetNourrir'.$i);
             $objet->setDescription("desc_objetNourrir".$i);
-            $objet->setPrice(10);
+            $objet->setPrice(10+$i);
             $objet->setLossPercentage(50);
             $manager->persist($objet);         
             $this->addReference('objetNourrir'.$i, $objet);
@@ -96,7 +96,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
             $objet = new Objects();
             $objet->setName('objetBoire'.$i);
             $objet->setDescription("desc_objetBoire".$i);
-            $objet->setPrice(10);
+            $objet->setPrice(10+$i);
             $objet->setLossPercentage(50);
             $manager->persist($objet);         
             $this->addReference('objetBoire'.$i, $objet);

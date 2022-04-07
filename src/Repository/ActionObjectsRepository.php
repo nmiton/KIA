@@ -53,14 +53,13 @@ class ActionObjectsRepository extends ServiceEntityRepository
         $sql = "SELECT o.id, o.loss_percentage, o.name 
         FROM action_objects ao 
         INNER JOIN objects o on o.id = ao.object_id 
-        WHERE ao.action_id = :actionId";
+        WHERE ao.action_name = :actionId";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['actionId' => $actionId]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
-    
 
     /*
     public function findOneBySomeField($value): ?ActionObjects

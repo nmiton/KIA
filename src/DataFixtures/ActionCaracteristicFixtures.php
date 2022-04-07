@@ -108,15 +108,15 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         //action type NOurrir
         for ($i=0; $i < 6; $i++) { 
             $var = new ActionCaracteristic();
-            $var->setValMax(-5);
-            $var->setValMin(-15);
+            $var->setValMax(-5+$i);
+            $var->setValMin(-15+$i);
             $var->setAction($this->getReference("ActionNourrir".$i));
             $var->setCaracteritic($this->getReference('Hydratation'));
             $manager->persist($var);      
             // $this->addReference('actionCaracteristicHydratationNourrir'.$i, $var);
             $var = new ActionCaracteristic();
-            $var->setValMax(+21);
-            $var->setValMin(+7);
+            $var->setValMax(+21+$i);
+            $var->setValMin(+7+$i);
             $var->setAction($this->getReference("ActionNourrir".$i));
             $var->setCaracteritic($this->getReference('Nourriture'));
             $manager->persist($var);      
@@ -125,8 +125,8 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         //action type soin
         for ($i=0; $i < 6; $i++) { 
             $var = new ActionCaracteristic();
-            $var->setValMax(+20);
-            $var->setValMin(+15);
+            $var->setValMax(+20+$i);
+            $var->setValMin(+15+$i);
             $var->setAction($this->getReference("ActionSoin".$i));
             $var->setCaracteritic($this->getReference('Vie'));
             $manager->persist($var);     
@@ -136,15 +136,15 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         //action type Jouer
         for ($i=0; $i < 6; $i++) { 
             $var = new ActionCaracteristic();
-            $var->setValMax(-5);
-            $var->setValMin(-15);
+            $var->setValMax(-5+$i);
+            $var->setValMin(-15+$i);
             $var->setAction($this->getReference("ActionJouer".$i));
             $var->setCaracteritic($this->getReference('Hydratation'));
             $manager->persist($var);      
             // $this->addReference('actionCaracteristicHydratationJouer'.$i, $var);
             $var = new ActionCaracteristic();
-            $var->setValMax(-7);
-            $var->setValMin(-21);
+            $var->setValMax(-7+$i);
+            $var->setValMin(-21+$i);
             $var->setAction($this->getReference("ActionJouer".$i));
             $var->setCaracteritic($this->getReference('Nourriture'));
             $manager->persist($var);      
@@ -154,15 +154,15 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         //action type Sortir
         for ($i=0; $i < 6; $i++) { 
             $var = new ActionCaracteristic();
-            $var->setValMax(-7);
-            $var->setValMin(-21);
+            $var->setValMax(-7+$i);
+            $var->setValMin(-21+$i);
             $var->setAction($this->getReference("ActionSortir".$i));
             $var->setCaracteritic($this->getReference('Nourriture'));
             $manager->persist($var);      
             // $this->addReference('actionCaracteristicNourritureSortir'.$i, $var);
             $var = new ActionCaracteristic();
-            $var->setValMax(-5);
-            $var->setValMin(-15);
+            $var->setValMax(-5+$i);
+            $var->setValMin(-15+$i);
             $var->setAction($this->getReference("ActionSortir".$i));
             $var->setCaracteritic($this->getReference('Hydratation'));
             $manager->persist($var);      
@@ -173,8 +173,8 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         //action type boire
         for ($i=0; $i < 6; $i++) { 
             $var = new ActionCaracteristic();
-            $var->setValMax(+15);
-            $var->setValMin(+5);
+            $var->setValMax(+15+$i);
+            $var->setValMin(+5+$i);
             $var->setAction($this->getReference("ActionBoire".$i));
             $var->setCaracteritic($this->getReference('Hydratation'));
             $manager->persist($var);      

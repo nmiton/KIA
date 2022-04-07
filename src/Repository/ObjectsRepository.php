@@ -53,8 +53,7 @@ class ObjectsRepository extends ServiceEntityRepository
             SELECT COUNT(o.id) as quantity,
             o.id, o.description, o.name, o.price, o.loss_percentage 
             FROM objects o 
-            INNER JOIN inventory i 
-            ON o.id = i.objet_id
+            INNER JOIN inventory i ON o.id = i.objet_id
             WHERE i.user_id = :userId 
             GROUP BY o.id;
             ';
@@ -64,7 +63,72 @@ class ObjectsRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+    public function findByCountAllObjetsByUserIdAndActionType($userId,$actionType)
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
+        $sql = '
+            SELECT COUNT(o.id) as quantity,
+            o.id, o.description, o.name, o.price, o.loss_percentage 
+            FROM objects o 
+            INNER JOIN action_objects ao ON ao.object_id = o.id
+            INNER JOIN action a on a.id = ao.action_id
+            INNER JOIN inventory i ON o.id = i.objet_id
+            WHERE i.user_id = :userId 
+            AND a.type = :actionType
+            GROUP BY o.id;
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['userId' => $userId,"actionType"=>$actionType]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findByActionType($typeName): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        from objects o 
+        INNER JOIN action_objects ao ON o.id = ao.object_id
+        INNER JOIN action a ON a.id = ao.action_id
+        WHERE a.type = :typeName";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['typeName' => $typeName]);
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+    
+    public function findByActionTypeOrderByPriceDesc($typeName): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        from objects o 
+        INNER JOIN action_objects ao ON o.id = ao.object_id
+        INNER JOIN action a ON a.id = ao.action_id
+        WHERE a.type = :typeName ORDER BY o.price DESC";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['typeName' => $typeName]);
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findByActionTypeOrderByPriceAsc($typeName): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        from objects o 
+        INNER JOIN action_objects ao ON o.id = ao.object_id
+        INNER JOIN action a ON a.id = action_id
+        WHERE a.type = :typeName ORDER BY o.price DESC";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery(['typeName' => $typeName]);
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
     // /**
     //  * @return Objects[] Returns an array of Objects objects
     //  */

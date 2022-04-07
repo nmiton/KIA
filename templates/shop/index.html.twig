@@ -4,83 +4,105 @@
 {% block main_id %}shopInventory{% endblock %}
 
 {% block body %}
-{% if error is defined and error is not null %}
-	<div class="alert alert-danger">{{ error }}</div>
-{% endif %}
-{% if success is defined and success is not null %}
-	<div class="alert alert-success">{{ success }}</div>
-{% endif %}
-<div id="overlay_shopInventory">
-    <a href="{{path('app_play', {'id': animal.id})}}">Mon Animal</a>
-	<div id="mon_portefeuille">
-		<label>Mon portefeuille :</label>
-		<div id="grp_input_money">
-			{% if transaction is defined and transaction is not null %}
-				<p class="argentPerduApresAchat"> <i id="shop_arrow_down" class="fa-solid fa-arrow-down"></i> {{transaction}} $$</p>
-			{% endif %}
+	{# overlay portefeuille / btn mon animal #}
+	<div id="overlay_shopInventory">
+		<a href="{{path('app_play', {'id': animal.id})}}">Mon Animal</a>
+		<div id="mon_portefeuille">
+			<label>Mon portefeuille :</label>
+			<div id="grp_input_money">
+				{% if transaction is defined and transaction is not null %}
+					<p class="argentPerduApresAchat"> <i id="shop_arrow_down" class="fa-solid fa-arrow-down"></i> {{transaction}} $$</p>
+				{% endif %}
 
-			<input class="form-control" type="text" id="money" disabled value="{{money}}$$" name="money" required size="10">
+				<input class="form-control" type="text" id="money" disabled value="{{app.user.money}}$$" name="money" required size="10">
+			</div>
 		</div>
 	</div>
-</div>
-<div id="inventaire_magasin">
-    <h1 class="h3 font-weight-normal flip-in-hor-top">Magasin : </h1>
-    <a href="{{path("app_inventory", {'id' : animal.id })}}">Inventaire</a>
-</div>
-<p class="tips">
-	En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
-</p>
-	{% if error is %}
+
+	{# overlay inventaire magasin #}
+	<div id="inventaire_magasin">
+		<h1 class="h3 font-weight-normal flip-in-hor-top">Magasin : </h1>
+		<a href="{{path("app_inventory_full", {'id' : animal.id })}}">Inventaire</a>
+	</div>
+	{# tips magasin #}
+	<p class="tips">
+		En ce lieu vous pouvez acheter tous les objets que désire votre adorable meilleur ami mais attention cela coute cher!
+	</p>
+	{# msg erreur et succes #}
+	{% if error is defined and error is not null %}
 		<div class="alert alert-danger">{{ error }}</div>
 	{% endif %}
-	{% if success != "" %}
+	{% if success is defined and success is not null %}
 		<div class="alert alert-success">{{ success }}</div>
 	{% endif %}
-	{% if shopItems is defined and not null %}
-		<table class="table table-striped mt-3">
+	{# form choix type action #}
+	<section id="select_type_action">
+	{{ form_start(form) }}
+	{{ form_widget(form) }}
+		<div class="text-center">
+			{# <a href="{{path("app_shop_action_object", { 'slug': article.slug })}}"class="btn">{{ button_label|default('Voir') }}</a> #}
+			<div class="text-center">
+				<button class="btn">{{ button_label|default('Voir') }}</button>
+			</div>
+		</div>
+	{{ form_end(form) }}
+	</section>
 
-				<thead>
-					<th scope="col">Objet</th>
-					<th scope="col">Description</th>
-					{# <th scope="col">Conséquences</th> #}
-					<th scope="col">Prix</th>
-					<th scope="col"></th>
-				</thead>
-				<tbody>
-					{% for item in shopItems %}
-						<tr>
-							<td data-label="Objet">{{item.name}}</td>
-							<td data-label="Description">{{item.description}}</td>
-							{# <td data-label="Conséquences">TODO</td> #}
-							<td data-label="Prix">{{item.price}}$$</td>
-							<td data-label="">
-								<form action="{{ path('app_shop_buy_objet', {'id': animal.id , 'idObjet' : item.id }) }}" method="post">
-									{% if item.price <= app.user.getMoney() %}
-										<button class="btn btn-danger" type="submit">Acheter</button>
-									{% else %}
-										Trop cher
-									{% endif %}
-								</form>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
+	{% if actionType is defined %}
+		{% if orderBy is defined and orderBy != "none" %}
+			<h2 class="h4 font-weight-normal flip-in-hor-top">Catégorie : {{ actionType }}</h2>
+			<p id="order_shop">Par prix {% if orderBy == "DESC"%}décroissant{% endif %}{% if orderBy == "ASC"%}croissant{% endif %}</p>
 		{% else %}
-			<table class="table table-striped mt-3">
-				<thead>
-					<th scope="col">Objet</th>
-					<th scope="col">Description</th>
-					{# <th scope="col">Conséquences</th> #}
-					<th scope="col">Prix</th>
-					<th scope="col"></th>
-				</thead>
-				<tbody>
-					<tr>
-						<td data-label="Place" colspan="4">Aïe, il semblerait que le magasin a été dévalisé</td>
-					</tr>
-				</tbody>
-				<tbody></tbody>
-			</table>
+			<h2 class="h4 font-weight-normal flip-in-hor-top">Catégorie : {{ actionType }}</h2>
+		{% endif %}
+	{% else %}
+		<h2 class="h4 font-weight-normal flip-in-hor-top">Tous les objets :</h2>
 	{% endif %}
+	{# affichage tableau des objets #}
+	{% if shopItems is defined and shopItems is not null and shopItems != [] %}
+		<table class="table table-striped mt-3">
+			<thead>
+				<th scope="col">Objet</th>
+				<th scope="col">Description</th>
+				{# <th scope="col">Conséquences</th> #}
+				<th scope="col">Prix</th>
+				<th scope="col"></th>
+			</thead>
+			<tbody>
+			{% for item in shopItems %}
+				<tr>
+					{# {{dump(item)}} #}
+					<td data-label="Objet">{{item.name}}</td>
+					<td data-label="Description">{{item.description}}</td>
+					{# <td data-label="Conséquences">TODO</td> #}
+					<td data-label="Prix">{{item.price}}$$</td>
+					<td data-label="">
+						<form action="{{ path('app_shop_buy_objet', {'id': animal.id , 'idObjet' : item.id }) }}" method="post">
+							{% if item.price <= app.user.getMoney() %}
+								<button class="btn btn-danger" type="submit">Acheter</button>
+							{% else %}
+								Trop cher
+							{% endif %}
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<table class="table table-striped mt-3">
+			<thead>
+				<th scope="col">Objet</th>
+				<th scope="col">Description</th>
+				{# <th scope="col">Conséquences</th> #}
+				<th scope="col">Prix</th>
+				<th scope="col"></th>
+			</thead>
+			<tbody>
+				<tr>
+					<td data-label="Magasin" colspan="4">Aïe, il semblerait que le magasin a été dévalisé</td>
+				</tr>
+			</tbody>
+		</table>
+{% endif %}
 {% endblock %}

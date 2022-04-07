@@ -40,6 +40,15 @@ class ActionObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($var);      
         $this->addReference('actionObjectFriandise', $var);
         $manager->flush();
+        //soin
+        $var = new ActionObjects();
+        $var->setQuantity(1);
+        $var->setAction($this->getReference('soinNiv1'));
+        $var->setObject($this->getReference('soin1'));
+        $manager->persist($var);      
+        $this->addReference('actionObjectSoin1', $var);
+        $manager->flush();
+
 
         //object action nourrir
         for ($i=0; $i < 6; $i++) { 

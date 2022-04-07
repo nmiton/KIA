@@ -1,4 +1,36 @@
 #shopInventory{
+
+    h2{
+        @include respond(md){
+            margin: 1rem 0;
+        }
+    }
+
+    #select_type_action{
+        label{
+            margin: 1rem 0;
+        }
+        
+        button{
+            border-radius: 10%;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem;
+            background-color: $color-bg-alt;
+            width:5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+
+            &:hover{
+                background-color: $color-bg-altmenu;
+            }
+
+            @include respond(lg){  
+                float: right;
+            }
+
+        }
+    }
     #overlay_shopInventory{
         
         display: flex;
@@ -14,11 +46,11 @@
         }
 
         a{
-            border-radius: 10%;
+            border-radius: 5%;
             color: white;
             text-decoration: none;
             padding: 1rem;
-            background-color: $color-bg-altmenu;
+            background-color: $color-bg-alt;
             width: 12.5rem;
             margin:auto;
             text-align: center;
@@ -32,7 +64,7 @@
         }
 
         a:hover{
-            background-color: $color-bg-alt;
+            background-color: $color-bg-altmenu;
         }
         
         #mon_portefeuille{
