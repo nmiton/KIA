@@ -8,15 +8,15 @@
         <div class="alert alert-success" role="alert">{{ success }}</div>
     {% endfor %}
     {# {{dump(app.user)}} #}
-    <h1 class="h3 mb-3 font-weight-normal">Mon profil :</h1>
+    <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Mon profil :</h1>
+    <section id="my_money">
+        <div class="form-group">
+            <p class="mb-3 font-weight-normal">Porte-monnaie :</p>
+            <input class="form-control"type="text" disabled value="{{ app.user.money }} pesos">
+        </div>
+    </section>
     <section id="change_password">
         <form action="{{path("app_forgot_password_request")}}">
-            {# <div class="form-group">
-                <label for="inputMoney">
-                    Porte-monnaie :
-                </label>
-                <input type="text" disabled value="{{ app.user.money }}">
-            </div> #}
             <div class="form-group">
                 <p class="mb-3 font-weight-normal">Vous voulez votre mot de passe ?</p>
                 <div class="text-center">

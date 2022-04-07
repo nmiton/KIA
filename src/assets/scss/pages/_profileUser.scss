@@ -1,5 +1,14 @@
 #profile_user{
 
+    p{
+        font-size: 1.25rem;
+        font-weight: 400;
+    }
+
+    button:hover{
+        background-color: $color-bg-alt;
+    }
+
     section{
         margin: 3rem auto;
 
@@ -59,5 +68,30 @@
         background-color: $color-bg-altmenu;
         color: white;
     }
-    
 }
+
+#my_money{
+    display: flex;
+    flex-direction: column;
+
+    .form-group{
+
+        margin :1rem;
+
+        label {
+            margin : 0 0 1rem 0;
+        }
+
+        input{
+            width: auto;
+            margin: 1rem auto;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            font-size: 1.25rem;
+            border-color: $color-bg-altmenu;
+            color: white;
+            background-color: $color-bg-altmenu;
+        }
+    }
+}
+

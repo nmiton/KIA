@@ -66,15 +66,23 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
+        //on gère la paye de l'utilisateur
         $payDay = new PayDay();
-        $payDay->jourDePaye($u, $this->repositoryUser);
-
+        //on récupère la somme de la paye
+        $value_paye = $payDay->jourDePaye($u, $this->repositoryUser);
+        //si value_paye ne retourne pas -1
+        if ($value_paye!="-1") {
+            $msg_paye = "Vous venez de recevoir votre paye quotidienne de ".$value_paye."$$ !";
+        }else{
+            //on mets nos variables a null pr le traitement twig
+            $msg_paye= null;
+        }
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
 
         try {
-            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+            return new RedirectResponse($this->urlGenerator->generate('app_home',["msg_paye"=>$msg_paye]));
         } catch (\Throwable $th) {
             throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
         }
