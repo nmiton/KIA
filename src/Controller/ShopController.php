@@ -19,9 +19,9 @@ class ShopController extends AbstractController
     {
         if (!$this->getUser()) return $this->render('home/home.html.twig');
 
-        $error = isset($_GET['error']) ? $_GET['error'] : "";
-        $success = isset($_GET['success']) ? $_GET['success'] : "";
-        $transaction = isset($_GET['transaction']) ? $_GET['transaction'] : "";
+        $error = isset($_GET['error']) ? $_GET['error'] : null;
+        $success = isset($_GET['success']) ? $_GET['success'] : null;
+        $transaction = isset($_GET['transaction']) ? $_GET['transaction'] : null ;
 
         $all_items = $repoObjet->findAll();
         return $this->render('shop/index.html.twig', [
@@ -29,7 +29,7 @@ class ShopController extends AbstractController
             'controller_name' => 'ShopController',
             'shopItems' => $all_items,
             'error' => $error,
-            'success'=>$success,
+            'success'=> $success,
             'transaction'=>$transaction,
             'animal' => $animal,
         ]);
