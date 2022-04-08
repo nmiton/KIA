@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\AnimalCaracteristic;
+use App\Form\CreateAnimalType;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\CaracteristicRepository;
@@ -18,7 +20,6 @@ use App\Service\UpdateCaracteristic;
 class PreloadController extends AbstractController
 {
     #[Route('/preload', name: 'app_play_preload')]
-    //MAJ STATS -> $repo $updateCaracteristic $animalRepo
     public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo): Response
     {
         //si un user est connecté
@@ -29,6 +30,9 @@ class PreloadController extends AbstractController
                 
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
+                //MAJ STATS
+                // TODO AFFICHER "TON ANIMAL A CREVÉ"
+                $updateCaracteristic->updateCaract($this->getUser(), $repo,$animalRepo);
                 //animaux de l'user
                 $animals=$repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
@@ -36,8 +40,7 @@ class PreloadController extends AbstractController
                     
                     return $this->redirectToRoute('app_new_animal');
                 }else{
-                    //MAJ STATS
-                    $updateCaracteristic->updateCaract($this->getUser(), $repo,$animalRepo);
+                    
 
                     return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
                 }
