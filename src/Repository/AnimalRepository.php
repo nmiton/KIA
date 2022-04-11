@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Animal;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -43,6 +46,32 @@ class AnimalRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * @return Animal[] Returns an array of Animal objects
+     */
+    public function findAllDeadAnimalsByUser($idUser, $atr)
+    {
+        $deadAnimals = $this->createQueryBuilder('a')
+            ->where("a.user = '$idUser'")
+            ->andWhere("a.isAlive = '0'")
+            ->getQuery()
+            ->getResult();
+
+        $nowDate = new DateTime('now', new DateTimeZone("UTC"));
+        $deads = [];
+        foreach ($deadAnimals as $dead) {
+            $diffDate = $dead->getLastActive()->diff($nowDate);
+            if ($diffDate->i < 20 && $diffDate->h < 1 && $diffDate->d < 1 && $diffDate->m < 1 && $diffDate->y < 1) {
+                array_push($deads, [
+                    "name" => $dead->getName(),
+                    "type" => $atr->find($dead->getAnimalType())->getName()
+                ]);
+            }
+        }
+
+        return $deads;
     }
 
     // /**

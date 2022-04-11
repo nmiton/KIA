@@ -6,14 +6,15 @@ use App\Entity\User;
 use App\Entity\AnimalCaracteristic;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
+use App\Repository\AnimalTypeRepository;
 use App\Repository\UserRepository;
 use DateTime;
 
 class UpdateCaracteristic
 {
-    public function updateCaract(User $user, AnimalCaracteristicRepository $repo, AnimalRepository $animalRepo, UserRepository $ur)
+    public function updateCaract(User $user, AnimalCaracteristicRepository $repo, AnimalRepository $animalRepo, AnimalTypeRepository $atr, UserRepository $ur)
     {
-        $boolDifined = false;
+        $tabReturn = [];
 
         $animalStats = $repo->findByAnimalStatsIsAliveWithUserId($user->getId());
         //dd($animalStats);
@@ -37,7 +38,12 @@ class UpdateCaracteristic
                         $animal->setIsAlive(false);
                         $animalRepo->add($animal);
 
-                        $boolDifined = true;
+                        //donne les animaux mort nom et type
+                        array_push($tabReturn, [
+                            "name" => $animal->getName(),
+                            "type" => $atr->find($animal->getAnimalType())->getName()
+                        ]);
+                        break;
                         //setScore et is alive false
                     } else {
                         $animalStats[0]["value"] -= $animalStats[0]["lost_by_hour"];
@@ -71,6 +77,6 @@ class UpdateCaracteristic
 
         $user->setLastActive(new DateTime());
         $ur->add($user);
-        return $boolDifined;
+        return $tabReturn;
     }
 }

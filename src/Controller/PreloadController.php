@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\AnimalCaracteristic;
+use App\Entity\User;
 use App\Form\CreateAnimalType;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
+use App\Repository\AnimalTypeRepository;
 use App\Repository\CaracteristicRepository;
 use App\Repository\UserRepository;
 use DateTime;
@@ -19,36 +21,37 @@ use App\Service\UpdateCaracteristic;
 
 class PreloadController extends AbstractController
 {
+
     #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo): Response
+    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo, AnimalTypeRepository $repoAnimalType): Response
     {
         //si un user est connecté
-
         if ($this->getUser()) {
             //si le user est verifié
             if (!$this->getUser()->isVerified()) {
-
                 return $this->render('registration/verify_my_email.html.twig');
             } else {
                 //MAJ STATS
                 // TODO AFFICHER "TON ANIMAL A CREVÉ"
-                $updateCaracteristic->updateCaract($this->getUser(), $repo, $animalRepo, $repoUser);
+                $animalsMorts = $updateCaracteristic->updateCaract($this->getUser(), $repo, $animalRepo, $repoAnimalType, $repoUser);
                 //animaux de l'user
                 $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+
                 //si le user n'a pas d'animaux vivant
                 if (count($animals) == 0) {
-
                     return $this->redirectToRoute('app_new_animal');
                 } else {
-
-
-                    return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
+                    return $this->render('play/choose_animal.html.twig', [
+                        'animal' => $animals,
+                        'animalsMorts' => $animalsMorts
+                    ]);
                 }
             }
         } else {
             return $this->redirectToRoute('app_login');
         }
     }
+
     #[Route('/choisir-animal', name: 'app_choose_animal')]
     public function chooseAnimal(): Response
     {
@@ -57,11 +60,13 @@ class PreloadController extends AbstractController
 
 
     #[Route('/creer-nouvel-animal', name: 'app_new_animal')]
-    public function createNewAnimal(Request $request, AnimalRepository $animalRepository, CaracteristicRepository $statsRepo, AnimalCaracteristicRepository $statsAnimalRepo): Response
+    public function createNewAnimal(Request $request, AnimalRepository $animalRepository, CaracteristicRepository $statsRepo, AnimalCaracteristicRepository $statsAnimalRepo, AnimalTypeRepository $atr): Response
     {
         $animal = new Animal();
         $form = $this->createForm(CreateAnimalType::class);
         $form->handleRequest($request);
+
+        $animalsMorts = $animalRepository->findAllDeadAnimalsByUser($this->getUser()->getId(), $atr);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $today = new DateTime();
@@ -88,6 +93,7 @@ class PreloadController extends AbstractController
 
         return $this->render('play/create_new_animal.html.twig', [
             'form' => $form->createView(),
+            'animalsMorts' => $animalsMorts
         ]);
     }
 }
