@@ -14,11 +14,14 @@ use App\Repository\CaracteristicRepository;
 use App\Repository\InventoryRepository;
 use App\Repository\UserRepository;
 use App\Service\PayDay;
+use App\Service\UpdateCaracteristic;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+
 
 class PlayController extends AbstractController
 {
@@ -96,10 +99,14 @@ class PlayController extends AbstractController
         ActionObjectsRepository $actionObjetRepo,
         CaracteristicRepository $caracRepo,
         ActionRepository $actionRepo,
+        AnimalRepository $animalRepo,
+        UpdateCaracteristic $updateCaracteristic,
         InventoryRepository $inventoryRepo,
         UserRepository $userRepo):Response
     {   
         $action = $actionRepo->find(['id' => $idAction]);
+        //MAJ STATS
+        $updateCaracteristic->updateCaract($this->getUser(), $animalCaracRepo,$animalRepo);
         //stats de l'animal avant l'action 
         $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);     
         

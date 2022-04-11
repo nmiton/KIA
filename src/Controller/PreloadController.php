@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Entity\AnimalCaracteristic;
+use App\Form\CreateAnimalType;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\CaracteristicRepository;
@@ -13,24 +15,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\UpdateCaracteristic;
+
 class PreloadController extends AbstractController
 {
     #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repoUser): Response
+    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo): Response
     {
         //si un user est connecté
+        
         if($this->getUser()){
             //si le user est verifié
             if(!$this->getUser()->isVerified()){
                 
                 return $this->render('registration/verify_my_email.html.twig');
             }else{
+                //MAJ STATS
+                // TODO AFFICHER "TON ANIMAL A CREVÉ"
+                $updateCaracteristic->updateCaract($this->getUser(), $repo,$animalRepo);
                 //animaux de l'user
                 $animals=$repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
                 if(count($animals)==0){
+                    
                     return $this->redirectToRoute('app_new_animal');
                 }else{
+                    
+
                     return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
                 }
             }
