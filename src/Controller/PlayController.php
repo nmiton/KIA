@@ -146,8 +146,12 @@ class PlayController extends AbstractController
             }
         }
         
+
+        $test =$animalCaracRepo->findByAnimalStatsIsAliveWithUserId($this->getUser()->getId());
+        // dd($test);
         //Gestion des stats de l'animal en fonction de l'action choisie
         //récupération des stats de l'action 
+
         $statsSelectedAction = $actionCaracRepo->findBy(["action"=>$idAction]);
         //pour chq stats de l'action
         foreach ($statsSelectedAction as $stat) {
@@ -162,26 +166,31 @@ class PlayController extends AbstractController
             //random sur la valeur de stat
             $random_value = random_int($val_min_stats_action,$val_max_stats_action);
             //récupération de la valeur de la stats de l'animal
-            $valueStat = $animalCaracRepo->findByValueStatByStatIdAndAnimalId($stat->getCaracteritic()->getId(),$animal->getId())[0];
-            // $valueStat = $animalCaracRepo->findBy(["caracteristic"=>$stat->getId(),"animal"=>$animal->getId()]);
-            //calcul nouvelle Stat
-            $newStat = $valueStat["value"] + $random_value; 
-            //condition 0<stats<100
-            if($newStat>100){
-                $newStat = 100;
-            }elseif($newStat<0){
-                $newStat = 0;
+            // $valueStatAnimal = $animalCaracRepo->findByvalueStatAnimalByStatIdAndAnimalId($stat->getCaracteritic()->getId(),$animal->getId());
+            $valueStatAnimal = $animalCaracRepo->findBy(["animal" => $animal->getId()]);
+
+            foreach ($valueStatAnimal as $var ) {
+                if($var->getId() == $stat->getCaracteritic()->getId()){
+                    // calcul nouvelle Stat
+                    $newStat = $var->getValue() + $random_value; 
+                    // condition 0<stats<100
+                    if($newStat>100){
+                        $newStat = 100;
+                    }elseif($newStat<0){
+                        $newStat = 0;
+                    }
+                    //récupération de l'entity stats animal correspondante a celle de l'action
+                    $statAnimal = $animalCaracRepo->findBy(
+                        array('id'=> $var->getId())
+                    )[0];
+                    // set Animal stats
+                    $statAnimal->setValue($newStat);
+                    $statAnimal->getValue();
+                }
             }
-            //récupération de l'entity stats animal correspondante a celle de l'action
-            $statAnimal = $animalCaracRepo->findBy(
-                array('id'=> $valueStat["id"])
-            )[0];
-            // set Animal stats
-            $statAnimal->setValue($newStat);
-            $statAnimal->getValue();
+            
             $animalCaracRepo->add($statAnimal);
         }
-
         //Calcul de l'énergie
         //on gère ici l'énergie de l'animal après avoir gérer les stats qui ont été affectées par l'action choisie        
         //on cherche la nouvelle valeur d'hydratation de l'animal

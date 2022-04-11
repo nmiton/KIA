@@ -50,8 +50,12 @@
 
 	{% if actionType is defined %}
 		{% if orderBy is defined and orderBy != "none" %}
-			<h2 class="h4 font-weight-normal flip-in-hor-top">Catégorie : {{ actionType }}</h2>
-			<p id="order_shop">Par prix {% if orderBy == "DESC"%}décroissant{% endif %}{% if orderBy == "ASC"%}croissant{% endif %}</p>
+			{% if actionType != "all" %}
+				<h2 class="h4 font-weight-normal flip-in-hor-top">Catégorie : {{ actionType }}</h2>
+			{% else %}
+				<h2 class="h4 font-weight-normal flip-in-hor-top">Tous les objets :</h2>
+			{% endif %}
+				<p id="order_shop">Par prix {% if orderBy == "DESC"%}décroissant{% endif %}{% if orderBy == "ASC"%}croissant{% endif %}</p>
 		{% else %}
 			<h2 class="h4 font-weight-normal flip-in-hor-top">Catégorie : {{ actionType }}</h2>
 		{% endif %}

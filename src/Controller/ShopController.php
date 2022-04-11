@@ -103,9 +103,9 @@ class ShopController extends AbstractController
             if($orderBy == "none"){
                 $items = $ObjRepo->findAll();
             }elseif($orderBy == "DESC"){
-                $items = $ObjRepo->findAll(['price'=>'DESC']);
+                $items = $ObjRepo->findByOrderByPriceDesc();
             }elseif($orderBy == "ASC"){
-                $items = $ObjRepo->findAll(['price'=>'ASC']);
+                $items = $ObjRepo->findByOrderByPriceAsc();
             }
         }
         //choix de tri du shop  (type d'action/orderBy)
