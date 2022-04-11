@@ -2,6 +2,11 @@
 {% block main_id %}game{% endblock %}
 {% block body %}
 <main>
+    <div class="alert alert-danger">
+            {% for dead in animalsMorts %}
+                <p>Votre "{{dead.type}}" qui s'appel "{{dead.name}}" est mort.</p>
+            {% endfor %}
+        </div>
     <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Choisir son animal :</h1>
     <table class="table">
         <thead>

@@ -4,9 +4,11 @@
 
 {% block body %}
 	<main>
-		{% for dead in animalsMorts %}
-			<p>Votre {{dead.type}} qui s'appel "{{dead.name}}" est mort.</p>
-		{% endfor %}
+        <div class="alert alert-danger">
+            {% for dead in animalsMorts %}
+                <p>Votre "{{dead.type}}" qui s'appel "{{dead.name}}" est mort.</p>
+            {% endfor %}
+        </div>
 		<h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Créer un nouvel animal :</h1>
 		{{ form_start(form) }}
 		{{ form_widget(form) }}
