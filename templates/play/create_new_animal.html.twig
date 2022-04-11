@@ -3,14 +3,17 @@
 {% block main_class %}new{% endblock %}
 
 {% block body %}
-<main>
-    <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Créer un nouvel animal :</h1>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-        <div class="text-center">
-            <button class="btn">{{ button_label|default('Créer') }}</button>
-        </div>
-    {{ form_end(form) }}
-</main>   
+	<main>
+		{% for dead in animalsMorts %}
+			<p>Votre {{dead.type}} qui s'appel "{{dead.name}}" est mort.</p>
+		{% endfor %}
+		<h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Créer un nouvel animal :</h1>
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<div class="text-center">
+			<button class="btn">{{ button_label|default('Créer') }}</button>
+		</div>
+		{{ form_end(form) }}
+	</main>
 
 {% endblock %}
