@@ -118,17 +118,45 @@ class ObjectsRepository extends ServiceEntityRepository
     public function findByActionTypeOrderByPriceAsc($typeName): array
     {
         $conn = $this->getEntityManager()->getConnection();
-
         $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
         from objects o 
         INNER JOIN action_objects ao ON o.id = ao.object_id
         INNER JOIN action a ON a.id = action_id
-        WHERE a.type = :typeName ORDER BY o.price DESC";
+        WHERE a.type = :typeName ORDER BY o.price ASC";
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery(['typeName' => $typeName]);
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    public function findByOrderByPriceAsc(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        from objects o 
+        INNER JOIN action_objects ao ON o.id = ao.object_id
+        INNER JOIN action a ON a.id = action_id
+        ORDER BY o.price ASC";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
+    public function findByOrderByPriceDesc(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        from objects o 
+        INNER JOIN action_objects ao ON o.id = ao.object_id
+        INNER JOIN action a ON a.id = action_id
+        ORDER BY o.price DESC";
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+
     // /**
     //  * @return Objects[] Returns an array of Objects objects
     //  */
