@@ -23,29 +23,29 @@ class PreloadController extends AbstractController
     public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo): Response
     {
         //si un user est connecté
-        
-        if($this->getUser()){
+
+        if ($this->getUser()) {
             //si le user est verifié
-            if(!$this->getUser()->isVerified()){
-                
+            if (!$this->getUser()->isVerified()) {
+
                 return $this->render('registration/verify_my_email.html.twig');
-            }else{
+            } else {
                 //MAJ STATS
                 // TODO AFFICHER "TON ANIMAL A CREVÉ"
-                $updateCaracteristic->updateCaract($this->getUser(), $repo,$animalRepo);
+                $updateCaracteristic->updateCaract($this->getUser(), $repo, $animalRepo, $repoUser);
                 //animaux de l'user
-                $animals=$repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
                 //si le user n'a pas d'animaux vivant
-                if(count($animals)==0){
-                    
+                if (count($animals) == 0) {
+
                     return $this->redirectToRoute('app_new_animal');
-                }else{
-                    
+                } else {
+
 
                     return $this->render('play/choose_animal.html.twig', ['animal' => $animals]);
                 }
             }
-        }else{
+        } else {
             return $this->redirectToRoute('app_login');
         }
     }

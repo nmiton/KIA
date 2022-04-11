@@ -6,20 +6,22 @@ use App\Entity\User;
 use App\Entity\AnimalCaracteristic;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
+use App\Repository\UserRepository;
 use DateTime;
 
 class UpdateCaracteristic
-
 {
-    public function updateCaract(User $user, AnimalCaracteristicRepository $repo, AnimalRepository $animalRepo)
+    public function updateCaract(User $user, AnimalCaracteristicRepository $repo, AnimalRepository $animalRepo, UserRepository $ur)
     {
+        $boolDifined = false;
+
         $animalStats = $repo->findByAnimalStatsIsAliveWithUserId($user->getId());
         //dd($animalStats);
         $datetime = new DateTime();
         $interval = $user->getLastActive()->diff($datetime);
         //dd($interval);
         //calcul du nombre d'heure depuis la derniere activité
-        $nbHours = $interval->h + $interval->d * 24 + $interval->m * 24 * 29;
+        $nbHours = $interval->h + $interval->d * 24 + $interval->m * 24 * 29 + $interval->y * 24 * 365;
         //dd($nbHours);
         // si il y a plus d'une heure depuis la derniere activité
         if ($nbHours > 0) {
@@ -34,7 +36,8 @@ class UpdateCaracteristic
                         $animal = $animalRepo->find($animalStats[0]["animal_id"]);
                         $animal->setIsAlive(false);
                         $animalRepo->add($animal);
-                        return true;
+
+                        $boolDifined = true;
                         //setScore et is alive false
                     } else {
                         $animalStats[0]["value"] -= $animalStats[0]["lost_by_hour"];
@@ -65,6 +68,9 @@ class UpdateCaracteristic
                 $repo->add($caract);
             }
         }
-        return false;
+
+        $user->setLastActive(new DateTime());
+        $ur->add($user);
+        return $boolDifined;
     }
 }
