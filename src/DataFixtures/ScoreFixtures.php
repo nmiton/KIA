@@ -18,7 +18,13 @@ class ScoreFixtures extends Fixture implements OrderedFixtureInterface
         $Score->setUser($this->getReference('nath'));
         $Score->setTypeAnimal($this->getReference('typeAnimalChien'));
         $manager->persist($Score);
-        $manager->flush();
+        $Score = new Score();
+        $Score->setScore(50);
+        $Score->setName("animal_dragon");
+        $Score->setUser($this->getReference('geogeo'));
+        $Score->setTypeAnimal($this->getReference('typeAnimalDragon'));
+        $manager->persist($Score);
+        $Score = new Score();
     }
 
     public function getOrder(){         

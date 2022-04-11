@@ -146,9 +146,6 @@ class PlayController extends AbstractController
             }
         }
         
-
-        $test =$animalCaracRepo->findByAnimalStatsIsAliveWithUserId($this->getUser()->getId());
-        // dd($test);
         //Gestion des stats de l'animal en fonction de l'action choisie
         //récupération des stats de l'action 
 
@@ -186,10 +183,9 @@ class PlayController extends AbstractController
                     // set Animal stats
                     $statAnimal->setValue($newStat);
                     $statAnimal->getValue();
+                    $animalCaracRepo->add($statAnimal);
                 }
             }
-            
-            $animalCaracRepo->add($statAnimal);
         }
         //Calcul de l'énergie
         //on gère ici l'énergie de l'animal après avoir gérer les stats qui ont été affectées par l'action choisie        
@@ -219,9 +215,10 @@ class PlayController extends AbstractController
                 'user' => $this->getUser()->getId()
             )      
         );
+        dd($inventory);
         // si le random est inf a la proba de l'objet
         if($random_proba_perte<=$proba){
-            $inventoryRepo->remove($inventory[0]);
+            $inventoryRepo->remove($inventory);
             if($proba < 100){
                 $objetPerdu = "Vous venez de perdre votre ".$objet[0]["name"].".";
             }

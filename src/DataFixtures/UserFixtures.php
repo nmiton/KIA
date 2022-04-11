@@ -26,29 +26,58 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $user->setPassword($this->encoder->encodePassword($user, 'nath'));             
         $user->setRoles(['ROLE_ADMIN']);        
         $user->setMoney(254444444);
-        $user->setScore(10);       
+        $user->setScore(0);       
         $user->setlastConnection($dateTime);  
         $user ->setIsActive(true);     
         $user->setIsVerified(true);
         $user ->setCreatedAt($dateTime);         
         $manager->persist($user);        
         $this->addReference('nath', $user);
+        $user = new User();
+        $user->setPseudo('julien');         
+        $user->setEmail('julienicar@hotmail.com');
+        $user->setPassword($this->encoder->encodePassword($user, 'julien'));             
+        $user->setRoles(['ROLE_USER']);        
+        $user->setMoney(0);
+        $user->setScore(0);       
+        $user->setlastConnection($dateTime);  
+        $user ->setIsActive(true);     
+        $user->setIsVerified(true);
+        $user ->setCreatedAt($dateTime);         
+        $manager->persist($user);        
+        $this->addReference('julien', $user);
+        //User avec LastActive dans le passé
+        $user = new User();
+        $dateTimeLastActive = new DateTime('2000-01-01');
+        $user->setPseudo('georges');         
+        $user->setEmail('g@hotmail.com');
+        $user->setPassword($this->encoder->encodePassword($user, 'geogeo'));             
+        $user->setRoles(['ROLE_USER']);        
+        $user->setMoney(0);
+        $user->setScore(0);       
+        $user->setlastConnection($dateTime);  
+        $user ->setIsActive(true);     
+        $user->setIsVerified(true);
+        $user ->setCreatedAt($dateTime);        
+        $user->setLastActive($dateTimeLastActive); 
+        $manager->persist($user);        
+        $this->addReference('geogeo', $user);
 
-        for ($i=1; $i < 6 ; $i++) { 
-            $user = new User();
-            $user->setPseudo('user'.$i);         
-            $user->setEmail('user'.$i.'@domain.fr');
-            $user->setPassword($this->encoder->encodePassword($user, 'user'.$i));             
-            $user->setRoles(['ROLE_USER']);        
-            $user->setMoney(0);
-            $user->setScore(0);       
-            $user->setlastConnection($dateTime);  
-            $user ->setIsActive(true);     
-            $user->setIsVerified(false);
-            $user ->setCreatedAt($dateTime);         
-            $manager->persist($user);        
-            $this->addReference('user'.$i, $user);
-        }
+        // for ($i=1; $i < 6 ; $i++) { 
+        //     $user = new User();
+        //     $user->setPseudo('user'.$i);         
+        //     $user->setEmail('user'.$i.'@domain.fr');
+        //     $user->setPassword($this->encoder->encodePassword($user, 'user'.$i));             
+        //     $user->setRoles(['ROLE_USER']);        
+        //     $user->setMoney(0);
+        //     $user->setScore(500+$i*2);       
+        //     $user->setlastConnection($dateTime);  
+        //     $user ->setIsActive(true);     
+        //     $user->setIsVerified(false);
+        //     $user ->setCreatedAt($dateTime);         
+        //     $manager->persist($user);        
+        //     $this->addReference('user'.$i, $user);
+        // }
         
         $manager->flush();
     }
