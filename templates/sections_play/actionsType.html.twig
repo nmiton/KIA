@@ -3,7 +3,7 @@
     {# {{dump(typesAction)}} #}
     <h2 class="h5 m-3 font-weight-normal">Types d'action :</h2>
 
-    {% if typesAction != [] %}
+    {% if typesAction is defined and typesAction != [] %}
         <div id="actions_buttons">
         {% for typeAction in typesAction %}
             <form action="{{ path('app_play_type_action', {'id': animal.id , 'typeAction' : typeAction.type}) }}" method="post">
@@ -17,9 +17,11 @@
     {% else %}
         <div class="actionTypeNull">
             <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
-            <div class="text-center">
-                <a href="{{path("app_shop" , {'id': animal.id})}}">Magasin</a>
-            </div>
+            <form action="{{path("app_shop", {'id' : animal.id })}}">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-danger inventoryBtn">Magasin</button>
+                </div>
+            </form>
         </div>
     {% endif %}
 

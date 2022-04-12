@@ -102,11 +102,11 @@ class ActionRepository extends ServiceEntityRepository
         return $resultSet->fetchAllAssociative();
     }
 
-    public function findByActionsAnimalTypeAndActionTypeWhereObjectsInInventory($animalTypeId,$actionType)
+    public function findByActionsAnimalTypeAndActionTypeWhereObjectsInInventory($animalTypeId,$actionType,$userId)
     {
         $conn = $this->getEntityManager()->getConnection();    
         $sql = '
-        SELECT a.id, a.name, a.type, a.console_log FROM action a 
+        SELECT DISTINCT a.id, a.name, a.type, a.console_log FROM action a 
         INNER JOIN action_caracteristic ac ON ac.action_id = a.id 
         INNER JOIN caracteristic c on c.id = ac.caracteritic_id 
         WHERE animal_type_id = :animalTypeId AND type=:actionType
@@ -115,12 +115,12 @@ class ActionRepository extends ServiceEntityRepository
             INNER JOIN objects o on o.id = i.objet_id 
             INNER JOIN action_objects ao on ao.object_id = o.id 
             INNER JOIN action a on a.id = ao.action_id 
-            WHERE a.type=:actionType 
+            WHERE a.type=:actionType AND i.user_id = :userId
             GROUP BY i.objet_id) 
         GROUP BY a.id;
             ';
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['animalTypeId' => $animalTypeId,'actionType'=>$actionType]);
+        $resultSet = $stmt->executeQuery(['animalTypeId' => $animalTypeId,'actionType'=>$actionType,'userId'=>$userId]);
         return $resultSet->fetchAllAssociative();
     }
 

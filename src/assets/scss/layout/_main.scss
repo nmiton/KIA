@@ -24,6 +24,19 @@ main{
             font-size: 1rem;
             resize: none;
         }   
-    @import '../sections/_actions.scss';
+        .consoleLogMAJ{
+            width: 100%;
+            height: 5rem;
+            padding: 0.70rem;
+            box-sizing: border-box;
+            border:  0.25rem solid $color-bg-altblur;
+            border-radius: 0.25rem;
+            background-color: #f8f8f8;
+            font-size: 1rem;
+            resize: none;
+        }
+        
+        @import '../sections/_actions.scss';
+
     }
 }

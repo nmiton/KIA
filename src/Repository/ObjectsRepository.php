@@ -89,7 +89,7 @@ class ObjectsRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        $sql = "SELECT DISTINCT o.id,o.price, o.name, o.loss_percentage, o.description
         from objects o 
         INNER JOIN action_objects ao ON o.id = ao.object_id
         INNER JOIN action a ON a.id = ao.action_id
@@ -104,7 +104,7 @@ class ObjectsRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        $sql = "SELECT DISTINCT o.id,o.price, o.name, o.loss_percentage, o.description
         from objects o 
         INNER JOIN action_objects ao ON o.id = ao.object_id
         INNER JOIN action a ON a.id = ao.action_id
@@ -118,7 +118,7 @@ class ObjectsRepository extends ServiceEntityRepository
     public function findByActionTypeOrderByPriceAsc($typeName): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        $sql = "SELECT DISTINCT o.id,o.price, o.name, o.loss_percentage, o.description
         from objects o 
         INNER JOIN action_objects ao ON o.id = ao.object_id
         INNER JOIN action a ON a.id = action_id
@@ -132,7 +132,7 @@ class ObjectsRepository extends ServiceEntityRepository
     public function findByOrderByPriceAsc(): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        $sql = "SELECT DISTINCT o.id,o.price, o.name, o.loss_percentage, o.description
         from objects o 
         INNER JOIN action_objects ao ON o.id = ao.object_id
         INNER JOIN action a ON a.id = action_id
@@ -146,7 +146,7 @@ class ObjectsRepository extends ServiceEntityRepository
     public function findByOrderByPriceDesc(): array
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = "SELECT o.id,o.price, o.name, o.loss_percentage, o.description
+        $sql = "SELECT DISTINCT o.id,o.price, o.name, o.loss_percentage, o.description
         from objects o 
         INNER JOIN action_objects ao ON o.id = ao.object_id
         INNER JOIN action a ON a.id = action_id

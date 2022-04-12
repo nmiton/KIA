@@ -4,8 +4,7 @@
         {% if value_paye is defined and  value_paye is not null %}
             <p class="argentGagnePaye"> <i id="shop_arrow_up" class="fa-solid fa-arrow-up"></i> {{value_paye}} $$</p>
         {% endif %}
-        <input class="form-control" type="text" id="money" disabled value="{{animal.user.money}}" name="money" required size="10">
-
-        <label>pesos</label>
+        <input class="form-control" type="text" id="money" disabled value="{{animal.user.money}} $$" name="money" required size="10">
+        {# <label>pesos</label> #}
     </div>
 </section>

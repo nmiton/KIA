@@ -9,10 +9,14 @@
     {% endfor %}
     {# {{dump(app.user)}} #}
     <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Mon profil :</h1>
-    <section id="my_money">
-        <div class="form-group">
+    <section id="my_infos">
+        <div id="my_pseudo">
+            <p class="mb-3 font-weight-normal">Joueur :</p>
+            <input class="form-control" type="text" disabled value="{{ app.user.pseudo }}">
+        </div>
+        <div id="my_money">
             <p class="mb-3 font-weight-normal">Porte-monnaie :</p>
-            <input class="form-control"type="text" disabled value="{{ app.user.money }} pesos">
+            <input class="form-control" type="text" disabled value="{{ app.user.money }} $$">
         </div>
     </section>
     <section id="change_password">

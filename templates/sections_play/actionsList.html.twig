@@ -1,5 +1,5 @@
 <div id="actions_list" class="flip-in-hor-top">
-    <h2 class="h5 m-3 font-weight-normal">Liste des actions disponibles :</h2>
+    <h2 class="h5 m-3 font-weight-normal">Liste des actions disponibles {% if typeActionChoisi is defined and typeActionChoisi != null %}pour {{typeActionChoisi}} {% endif %}:</h2>
 
 {% if actions != [] %}
     <table class="table table-striped mt-3">
@@ -45,6 +45,14 @@
         <tbody>
     </table>  
 {% else %}
+    <div class="actionTypeNull">
+        <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
+        <form action="{{path("app_shop", {'id' : animal.id })}}">
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger inventoryBtn">Magasin</button>
+            </div>
+        </form>
+    </div>
     {# <table class="table table-striped mt-3">
         <thead>
             <th scope="col">Nom</th>
@@ -57,12 +65,5 @@
             </tr>
         <tbody>
     </table>   #}
-    <div class="actionTypeNull">
-            <p>Aucune action n'est disponible, veuillez acheter des objets afin de débloquer de nouvelles actions!</p>
-            <div class="text-center">
-                <a href="{{path("app_shop", {'id' : animal.id })}}">Magasin</a>
-            </div>
-    </div>
-
 {% endif %}
 </div>
