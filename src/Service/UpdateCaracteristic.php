@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Animal;
 use App\Entity\User;
 use App\Entity\AnimalCaracteristic;
+use App\Entity\Score;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
 use App\Repository\AnimalTypeRepository;
@@ -12,6 +13,7 @@ use App\Repository\ScoreRepository;
 use App\Repository\UserRepository;
 use Twig\Extension\AbstractExtension;
 use DateTime;
+use Symfony\Component\Validator\Constraints\Length;
 
 class UpdateCaracteristic extends AbstractExtension
 {
@@ -36,6 +38,37 @@ class UpdateCaracteristic extends AbstractExtension
         $this->animalRepo->add($animal);
     }
 
+    public function setScore(Animal $animal, User $user)
+    {
+        $interval = $user->getLastActive()->diff($animal->getCreatedAt());
+        $calcScore = $interval->d + $interval->m * 30 + $interval->y * 365;
+        $typeAnimal = $animal->getAnimalType();
+        
+        $score = $this->sr->findOneBy(["typeAnimal"=> $typeAnimal, "user"=> $user]);
+        if($score == NULL){
+            
+            $score = new Score();
+            $score->setUser($user);
+            $score->setTypeAnimal($typeAnimal);
+            $score->setScore($calcScore);
+            $score->setName($animal->getName());
+            $user->setScore($user->getScore()+ $calcScore);
+            $user->setLastActive(new DateTime());
+            $this->sr->add($score);
+            $this->ur->add($user);
+        }else{
+            if ($score->getScore() < $calcScore) {
+                $score->setScore($calcScore);
+                $score->setName($animal->getName());
+                $user->setScore($user->getScore()+ $calcScore - $score->getScore());
+                $user->setLastActive(new DateTime());
+                $this->sr->add($score);
+                $this->ur->add($user);
+            }
+        }
+
+    }
+
     public function updateCaract(User $user)
     {
         $tabReturn = [];
@@ -46,7 +79,7 @@ class UpdateCaracteristic extends AbstractExtension
         $interval = $user->getLastActive()->diff($datetime);
         //dd($interval);
         //calcul du nombre d'heure depuis la derniere activité
-        $nbHours = $interval->h + $interval->d * 24 + $interval->m * 24 * 29 + $interval->y * 24 * 365;
+        $nbHours = $interval->h + $interval->d * 24 + $interval->m * 24 * 30 + $interval->y * 24 * 365;
         //dd($nbHours);
         // si il y a plus d'une heure depuis la derniere activité
         if ($nbHours > 0) {
@@ -61,12 +94,16 @@ class UpdateCaracteristic extends AbstractExtension
                         $animal = $this->animalRepo->find($animalStats[0]["animal_id"]);
                         $animal->setIsAlive(false);
                         $this->animalRepo->add($animal);
-
+                        // set score
+                        
+                        $this->setScore($animal,$user);
+                        
                         //donne les animaux mort nom et type
                         array_push($tabReturn, [
                             "name" => $animal->getName(),
                             "type" => $this->atr->find($animal->getAnimalType())->getName()
                         ]);
+                        
                         break;
                         //setScore et is alive false
                     } else {
@@ -98,9 +135,8 @@ class UpdateCaracteristic extends AbstractExtension
                 $this->repo->add($caract);
             }
         }
-
-        $user->setLastActive(new DateTime());
-        $this->ur->add($user);
+        $this->setLastActiveAnimal($this->animalRepo->find($animalStats[0]["animal_id"]));
         return $tabReturn;
+        
     }
 }

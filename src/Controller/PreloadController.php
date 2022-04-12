@@ -32,8 +32,13 @@ class PreloadController extends AbstractController
                 return $this->render('registration/verify_my_email.html.twig');
             } else {
                 //MAJ STATS
-                // TODO AFFICHER "TON ANIMAL A CREVÉ"                
-                $animalsMorts = $updateCaracteristic->updateCaract($this->getUser());
+                // TODO AFFICHER "TON ANIMAL A CREVÉ"  
+
+                $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                $animalsMorts = [];
+                if (count($animals) > 0) {
+                    $animalsMorts = $updateCaracteristic->updateCaract($this->getUser());
+                }              
                 
                 //animaux de l'user
                 $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
