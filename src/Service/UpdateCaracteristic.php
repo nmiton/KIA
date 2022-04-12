@@ -2,20 +2,45 @@
 
 namespace App\Service;
 
+use App\Entity\Animal;
 use App\Entity\User;
 use App\Entity\AnimalCaracteristic;
 use App\Repository\AnimalCaracteristicRepository;
 use App\Repository\AnimalRepository;
+use App\Repository\AnimalTypeRepository;
+use App\Repository\ScoreRepository;
 use App\Repository\UserRepository;
+use Twig\Extension\AbstractExtension;
 use DateTime;
 
-class UpdateCaracteristic
+class UpdateCaracteristic extends AbstractExtension
 {
-    public function updateCaract(User $user, AnimalCaracteristicRepository $repo, AnimalRepository $animalRepo, UserRepository $ur)
-    {
-        $boolDifined = false;
+    private AnimalCaracteristicRepository $repo;
+    private AnimalRepository $animalRepo;
+    private AnimalTypeRepository $atr;
+    private UserRepository $ur;
+    private ScoreRepository $sr;
 
-        $animalStats = $repo->findByAnimalStatsIsAliveWithUserId($user->getId());
+    public function __construct(AnimalCaracteristicRepository $acR, AnimalRepository $aR, AnimalTypeRepository $atR, UserRepository $uR, ScoreRepository $sR)
+    {
+        $this->repo = $acR;
+        $this->animalRepo = $aR;
+        $this->atr = $atR;
+        $this->ur = $uR;
+        $this->sr = $sR;
+    }
+
+    public function setLastActiveAnimal(Animal $animal)
+    {
+        $animal->setLastActive(new DateTime());
+        $this->animalRepo->add($animal);
+    }
+
+    public function updateCaract(User $user)
+    {
+        $tabReturn = [];
+
+        $animalStats = $this->repo->findByAnimalStatsIsAliveWithUserId($user->getId());
         //dd($animalStats);
         $datetime = new DateTime();
         $interval = $user->getLastActive()->diff($datetime);
@@ -33,11 +58,16 @@ class UpdateCaracteristic
                     // update stats vie
                     if ($animalStats[0]["lost_by_hour"] > $animalStats[0]["value"]) {
                         $animalStats[0]["value"] = 0;
-                        $animal = $animalRepo->find($animalStats[0]["animal_id"]);
+                        $animal = $this->animalRepo->find($animalStats[0]["animal_id"]);
                         $animal->setIsAlive(false);
-                        $animalRepo->add($animal);
+                        $this->animalRepo->add($animal);
 
-                        $boolDifined = true;
+                        //donne les animaux mort nom et type
+                        array_push($tabReturn, [
+                            "name" => $animal->getName(),
+                            "type" => $this->atr->find($animal->getAnimalType())->getName()
+                        ]);
+                        break;
                         //setScore et is alive false
                     } else {
                         $animalStats[0]["value"] -= $animalStats[0]["lost_by_hour"];
@@ -63,14 +93,14 @@ class UpdateCaracteristic
             // MAJ valeur dans la BDD
             for ($i = 0; $i <= 4; $i++) {
                 $caract = new AnimalCaracteristic;
-                $caract = $repo->find($animalStats[$i]["id"]);
+                $caract = $this->repo->find($animalStats[$i]["id"]);
                 $caract->setValue($animalStats[$i]["value"]);
-                $repo->add($caract);
+                $this->repo->add($caract);
             }
         }
 
         $user->setLastActive(new DateTime());
-        $ur->add($user);
-        return $boolDifined;
+        $this->ur->add($user);
+        return $tabReturn;
     }
 }
