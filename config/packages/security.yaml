@@ -35,14 +35,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/animal, roles: ROLE_ADMIN }
-        - { path: ^/animal-type, roles: ROLE_ADMIN }
-        - { path: ^/mon-inventaire, roles: ROLE_USER }
-        - { path: ^/jouer, roles: ROLE_USER }
-        - { path: ^/preload, roles: ROLE_USER }
-        - { path: ^/mon-profil, roles: ROLE_USER }
-        - { path: ^/reset-password, roles: ROLE_USER }
-        - { path: ^/magasin, roles: ROLE_USER }
+        #- { path: ^/animal, roles: ROLE_ADMIN }
+        #- { path: ^/animal-type, roles: ROLE_ADMIN }
+        #- { path: ^/mon-inventaire, roles: ROLE_USER }
+        #- { path: ^/jouer, roles: ROLE_USER }
+        #- { path: ^/preload, roles: ROLE_USER }
+        #- { path: ^/mon-profil, roles: ROLE_USER }
+        #- { path: ^/reset-password, roles: ROLE_USER }
+        #- { path: ^/magasin, roles: ROLE_USER }
 
 when@test:
     security:
