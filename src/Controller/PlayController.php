@@ -13,6 +13,7 @@ use App\Repository\InventoryRepository;
 use App\Repository\UserRepository;
 use App\Service\PayDay;
 use App\Service\UpdateCaracteristic;
+use App\Service\UpdateCaracteristicAction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -110,6 +111,7 @@ class PlayController extends AbstractController
         CaracteristicRepository $caracRepo,
         ActionRepository $actionRepo,
         UpdateCaracteristic $updateCaracteristic,
+        UpdateCaracteristicAction $updateCaracteristicAction,
         InventoryRepository $inventoryRepo):Response
     {   
         //Maj des stats de l'animal en fonction de lastAction
@@ -162,39 +164,8 @@ class PlayController extends AbstractController
         $statsSelectedAction = $actionCaracRepo->findBy(["action"=>$idAction]);
         //récupération des stats de l'animal 
         $valueStatAnimal = $animalCaracRepo->findBy(["animal" => $animal->getId()]);
-        //pour chq stats de l'action
-        foreach ($statsSelectedAction as $stat) {
-            //si action caracts boost 
-            if($stat->getValMax() < $stat->getValMin()){
-                $val_min_stats_action = $stat->getValMax();
-                $val_max_stats_action = $stat->getValMin();
-            }else{
-                $val_min_stats_action = $stat->getValMin();
-                $val_max_stats_action = $stat->getValMax();
-            }
-            //random sur la valeur de stat
-            $random_value = random_int($val_min_stats_action,$val_max_stats_action);
-            foreach ($valueStatAnimal as $var ) {
-                if($var->getCaracteristic()->getId() == $stat->getCaracteritic()->getId()){
-                    // calcul nouvelle Stat
-                    $newStat = $var->getValue() + $random_value; 
-                    // condition 0<stats<100
-                    if($newStat>100){
-                        $newStat = 100;
-                    }elseif($newStat<0){
-                        $newStat = 0;
-                    }
-                    //récupération de l'entity stats animal correspondante a celle de l'action
-                    $statAnimal = $animalCaracRepo->findOneBy(
-                        array('id'=> $var->getId())
-                    );
-                    //MAJ Animal stats
-                    $statAnimal->setValue($newStat);
-                    $statAnimal->getValue();
-                    $animalCaracRepo->add($statAnimal);
-                }
-            }
-        }
+        //on maj les stats de l'animal en fct de l'action choisie
+        $updateCaracteristicAction->setCaractAnimalWithStatsSelectedAction($statsSelectedAction,$valueStatAnimal);
         //Calcul de l'énergie
         //on gère ici l'énergie de l'animal après avoir gérer les stats qui ont été affectées par l'action choisie        
         //on cherche la nouvelle valeur d'hydratation de l'animal
@@ -205,7 +176,6 @@ class PlayController extends AbstractController
         $stat_energie_animal->setValue(($stat_nouriture_animal->getValue()+$stat_eau_animal->getValue())/2);
         //on persite dans la bdd
         $animalCaracRepo->add($stat_energie_animal);
-
         //Calcul de proba de perte de l'object utilisé pr l'action
         //on initialise la notification d'objet perdu 
         $objetPerdu = null;
@@ -216,23 +186,16 @@ class PlayController extends AbstractController
         //on génère un int random entre 0 et 100 
         $random_proba_perte = random_int(0, 100);
         //on regarde l'inventaire de l'utilisateur en fonction de l'objet de l'action sélectionné
-        $inventory = $inventoryRepo ->findOneBy(
-            array(
-                'objet' => $idObjet,
-                'user' => $this->getUser()->getId()
-            )      
-        );
-        // si le random est inf a la proba de l'objet
+        $inventory = $inventoryRepo ->findOneBy(['objet' => $idObjet,'user' => $this->getUser()->getId()]);
+        //si le random est inf a la proba de l'objet
         if($random_proba_perte<=$proba){
             $inventoryRepo->remove($inventory);
             if($proba < 100){
                 $objetPerdu = "Vous venez de perdre votre ".$objet[0]["name"].".";
             }
         }
-
-        //recuperation des stats de l'animal
+        //récuperation des stats de l'animal
         $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);    
-        
         return $this->render('play/main.html.twig', [
             'animal' => $animal,
             'stats' => $stats,
