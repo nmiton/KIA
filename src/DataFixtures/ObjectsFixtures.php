@@ -37,7 +37,7 @@ class ObjectsFixtures extends Fixture implements OrderedFixtureInterface
 
         $objet = new Objects();
         $objet->setName("Friandise");
-        $objet->setPrice(15);
+        $objet->setPrice(10);
         $objet->setDescription("Petit bonbon caramélisé");
         $objet->setLossPercentage(100);
         $manager->persist($objet);
