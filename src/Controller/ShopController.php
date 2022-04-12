@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Entity\Inventory;
-use App\Form\OrderByShop;
+use App\Form\OrderByShopType;
 use App\Repository\InventoryRepository;
 use App\Repository\ObjectsRepository;
 use App\Repository\UserRepository;
@@ -26,7 +26,7 @@ class ShopController extends AbstractController
         $success = isset($_GET['success']) ? $_GET['success'] : null;
         $transaction = isset($_GET['transaction']) ? $_GET['transaction'] : null ;
         //choix de tri du shop  (type d'action/orderBy)
-        $form = $this->createForm(OrderByShop::class);
+        $form = $this->createForm(OrderByShopType::class);
         $form->handleRequest($request);
         //form de tri
         if ($form->isSubmitted() && $form->isValid()) {
@@ -121,7 +121,7 @@ class ShopController extends AbstractController
             }
         }
         //choix de tri du shop  (type d'action/orderBy)
-        $form = $this->createForm(OrderByShop::class);
+        $form = $this->createForm(OrderByShopType::class);
         $form->handleRequest($request);
         //form de tri
         if ($form->isSubmitted() && $form->isValid()) {
