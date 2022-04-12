@@ -23,7 +23,7 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
         $jouerBalleTennis = new Action();
         $jouerBalleTennis->setName("Jouer à la balle de tennis");
         $jouerBalleTennis->setType("Jouer");
-        $jouerBalleTennis->setConsoleLog(" vous ramène la balle");
+        $jouerBalleTennis->setConsoleLog(" joue à la balle");
         $jouerBalleTennis->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($jouerBalleTennis);
         $this->addReference('jouerBalleTennisChien', $jouerBalleTennis);

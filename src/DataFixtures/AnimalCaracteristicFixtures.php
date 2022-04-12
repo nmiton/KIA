@@ -16,23 +16,23 @@ class AnimalCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         //stats chien nath
         $vie = new AnimalCaracteristic();
         $vie->setCaracteristic($this->getReference('Vie'));
-        $vie->setAnimal($this->getReference('animal_chien'));
+        $vie->setAnimal($this->getReference('animal_chien1'));
         $manager->persist($vie);
         $nourriture = new AnimalCaracteristic();
         $nourriture->setCaracteristic($this->getReference('Nourriture'));
-        $nourriture->setAnimal($this->getReference('animal_chien'));
+        $nourriture->setAnimal($this->getReference('animal_chien1'));
         $manager->persist($nourriture);
         $hydratation = new AnimalCaracteristic();
         $hydratation->setCaracteristic($this->getReference('Hydratation'));
-        $hydratation->setAnimal($this->getReference('animal_chien'));
+        $hydratation->setAnimal($this->getReference('animal_chien1'));
         $manager->persist($hydratation);
         $energie = new AnimalCaracteristic();
         $energie->setCaracteristic($this->getReference('Énergie'));
-        $energie->setAnimal($this->getReference('animal_chien'));
+        $energie->setAnimal($this->getReference('animal_chien1'));
         $manager->persist($energie);
         $bonheur = new AnimalCaracteristic();
         $bonheur->setCaracteristic($this->getReference('Bonheur'));
-        $bonheur->setAnimal($this->getReference('animal_chien'));
+        $bonheur->setAnimal($this->getReference('animal_chien1'));
         $manager->persist($bonheur);
         //stats dragon geogeo
         $vie = new AnimalCaracteristic();
@@ -55,14 +55,75 @@ class AnimalCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         $bonheur->setCaracteristic($this->getReference('Bonheur'));
         $bonheur->setAnimal($this->getReference('animal_dragon'));
         $manager->persist($bonheur);
-    
+        // //stats chien nath
+        // $vie = new AnimalCaracteristic();
+        // $vie->setCaracteristic($this->getReference('Vie'));
+        // $vie->setAnimal($this->getReference('animal_chien2'));
+        // $manager->persist($vie);
+        // $nourriture = new AnimalCaracteristic();
+        // $nourriture->setCaracteristic($this->getReference('Nourriture'));
+        // $nourriture->setAnimal($this->getReference('animal_chien2'));
+        // $manager->persist($nourriture);
+        // $hydratation = new AnimalCaracteristic();
+        // $hydratation->setCaracteristic($this->getReference('Hydratation'));
+        // $hydratation->setAnimal($this->getReference('animal_chien2'));
+        // $manager->persist($hydratation);
+        // $energie = new AnimalCaracteristic();
+        // $energie->setCaracteristic($this->getReference('Énergie'));
+        // $energie->setAnimal($this->getReference('animal_chien2'));
+        // $manager->persist($energie);
+        // $bonheur = new AnimalCaracteristic();
+        // $bonheur->setCaracteristic($this->getReference('Bonheur'));
+        // $bonheur->setAnimal($this->getReference('animal_chien2'));
+        // $manager->persist($bonheur);
+        // //stats chien nath
+        // $vie = new AnimalCaracteristic();
+        // $vie->setCaracteristic($this->getReference('Vie'));
+        // $vie->setAnimal($this->getReference('animal_chien3'));
+        // $manager->persist($vie);
+        // $nourriture = new AnimalCaracteristic();
+        // $nourriture->setCaracteristic($this->getReference('Nourriture'));
+        // $nourriture->setAnimal($this->getReference('animal_chien3'));
+        // $manager->persist($nourriture);
+        // $hydratation = new AnimalCaracteristic();
+        // $hydratation->setCaracteristic($this->getReference('Hydratation'));
+        // $hydratation->setAnimal($this->getReference('animal_chien3'));
+        // $manager->persist($hydratation);
+        // $energie = new AnimalCaracteristic();
+        // $energie->setCaracteristic($this->getReference('Énergie'));
+        // $energie->setAnimal($this->getReference('animal_chien3'));
+        // $manager->persist($energie);
+        // $bonheur = new AnimalCaracteristic();
+        // $bonheur->setCaracteristic($this->getReference('Bonheur'));
+        // $bonheur->setAnimal($this->getReference('animal_chien3'));
+        // $manager->persist($bonheur);
+        // //stats chien nath
+        // $vie = new AnimalCaracteristic();
+        // $vie->setCaracteristic($this->getReference('Vie'));
+        // $vie->setAnimal($this->getReference('animal_chien4'));
+        // $manager->persist($vie);
+        // $nourriture = new AnimalCaracteristic();
+        // $nourriture->setCaracteristic($this->getReference('Nourriture'));
+        // $nourriture->setAnimal($this->getReference('animal_chien4'));
+        // $manager->persist($nourriture);
+        // $hydratation = new AnimalCaracteristic();
+        // $hydratation->setCaracteristic($this->getReference('Hydratation'));
+        // $hydratation->setAnimal($this->getReference('animal_chien4'));
+        // $manager->persist($hydratation);
+        // $energie = new AnimalCaracteristic();
+        // $energie->setCaracteristic($this->getReference('Énergie'));
+        // $energie->setAnimal($this->getReference('animal_chien4'));
+        // $manager->persist($energie);
+        // $bonheur = new AnimalCaracteristic();
+        // $bonheur->setCaracteristic($this->getReference('Bonheur'));
+        // $bonheur->setAnimal($this->getReference('animal_chien4'));
+        // $manager->persist($bonheur);
         // for ($i=1; $i<5 ; $i++) { 
         //     $bonheur = new AnimalCaracteristic();
         //     $bonheur->setCaracteristic($this->getReference('Bonheur'));
         //     $bonheur->setAnimal($this->getReference('animal'.$i));
         //     $manager->persist($bonheur);
         // }
-
         $manager->flush();
     }
 

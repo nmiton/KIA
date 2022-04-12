@@ -32,7 +32,37 @@ class AnimalFixtures extends Fixture implements OrderedFixtureInterface
         $animal->setUser($this->getReference('nath'));
         $animal->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($animal);
-        $this->addReference('animal_chien', $animal);
+        $this->addReference('animal_chien1', $animal);
+        // //Animal de nathan 
+        // $animal = new Animal();
+        // $animal->setName("Roxy");
+        // $animal->setIsAlive(true);
+        // $animal->setLastActive($date);
+        // $animal->setCreatedAt($date);
+        // $animal->setUser($this->getReference('nath'));
+        // $animal->setAnimalType($this->getReference('typeAnimalChien'));
+        // $manager->persist($animal);
+        // $this->addReference('animal_chien2', $animal);
+        // //Animal de nathan 
+        // $animal = new Animal();
+        // $animal->setName("Roxy");
+        // $animal->setIsAlive(true);
+        // $animal->setLastActive($date);
+        // $animal->setCreatedAt($date);
+        // $animal->setUser($this->getReference('nath'));
+        // $animal->setAnimalType($this->getReference('typeAnimalChien'));
+        // $manager->persist($animal);
+        // $this->addReference('animal_chien3', $animal);
+        // //Animal de nathan 
+        // $animal = new Animal();
+        // $animal->setName("Roxy");
+        // $animal->setIsAlive(true);
+        // $animal->setLastActive($date);
+        // $animal->setCreatedAt($date);
+        // $animal->setUser($this->getReference('nath'));
+        // $animal->setAnimalType($this->getReference('typeAnimalChien'));
+        // $manager->persist($animal);
+        // $this->addReference('animal_chien4', $animal);
         //Animal de julien
         // $animal = new Animal();
         // $animal->setName("Bob");

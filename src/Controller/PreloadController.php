@@ -31,21 +31,24 @@ class PreloadController extends AbstractController
             if (!$this->getUser()->isVerified()) {
                 return $this->render('registration/verify_my_email.html.twig');
             } else {
-                //MAJ STATS
-                // TODO AFFICHER "TON ANIMAL A CREVÉ"  
-
-                $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                //initialisation du tab des animaux morts
                 $animalsMorts = [];
+                //on récupère les animaux vivants de user
+                $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
+                //si nb animaux > 0
                 if (count($animals) > 0) {
+                    //on mets a jour les stats des animaux 
+                    //vérifie qu'un animal n'est pas mort de faim/soif
+                    //on récupère un tab d'animaux morts
                     $animalsMorts = $updateCaracteristic->updateCaract($this->getUser());
                 }              
-                
-                //animaux de l'user
+                //on récupère les animaux vivants du users après maj stats
                 $animals = $repoUser->findAnimalIsAliveWithLifeByUserId($this->getUser()->getId());
-
                 //si le user n'a pas d'animaux vivant
                 if (count($animals) == 0) {
-                    return $this->redirectToRoute('app_new_animal');
+                    return $this->redirectToRoute('app_new_animal',[
+                        'animalsMorts' => $animalsMorts
+                    ]);
                 } else {
                     return $this->render('play/choose_animal.html.twig', [
                         'animal' => $animals,
@@ -68,11 +71,12 @@ class PreloadController extends AbstractController
     #[Route('/creer-nouvel-animal', name: 'app_new_animal')]
     public function createNewAnimal(Request $request, AnimalRepository $animalRepository, CaracteristicRepository $statsRepo, AnimalCaracteristicRepository $statsAnimalRepo, AnimalTypeRepository $atr): Response
     {
+        $animalsMorts = [];
+        $animalsMorts = $request->get("animalsMorts");
+
         $animal = new Animal();
         $form = $this->createForm(CreateAnimalType::class);
         $form->handleRequest($request);
-
-        $animalsMorts = $animalRepository->findAllDeadAnimalsByUser($this->getUser()->getId(), $atr);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $today = new DateTime();
@@ -99,7 +103,7 @@ class PreloadController extends AbstractController
 
         return $this->render('play/create_new_animal.html.twig', [
             'form' => $form->createView(),
-            'animalsMorts' => $animalsMorts
+            'animalsMorts' => $animalsMorts,
         ]);
     }
 }

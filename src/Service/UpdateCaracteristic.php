@@ -38,6 +38,7 @@ class UpdateCaracteristic extends AbstractExtension
         $this->animalRepo->add($animal);
     }
 
+
     public function setScore(Animal $animal, User $user)
     {
         $interval = $user->getLastActive()->diff($animal->getCreatedAt());
@@ -53,7 +54,6 @@ class UpdateCaracteristic extends AbstractExtension
             $score->setScore($calcScore);
             $score->setName($animal->getName());
             $user->setScore($user->getScore()+ $calcScore);
-            $user->setLastActive(new DateTime());
             $this->sr->add($score);
             $this->ur->add($user);
         }else{
@@ -61,7 +61,6 @@ class UpdateCaracteristic extends AbstractExtension
                 $score->setScore($calcScore);
                 $score->setName($animal->getName());
                 $user->setScore($user->getScore()+ $calcScore - $score->getScore());
-                $user->setLastActive(new DateTime());
                 $this->sr->add($score);
                 $this->ur->add($user);
             }
@@ -95,9 +94,8 @@ class UpdateCaracteristic extends AbstractExtension
                         $animal->setIsAlive(false);
                         $this->animalRepo->add($animal);
                         // set score
-                        
                         $this->setScore($animal,$user);
-                        
+                        $user = $this->ur->find($user->getId());
                         //donne les animaux mort nom et type
                         array_push($tabReturn, [
                             "name" => $animal->getName(),
@@ -136,6 +134,7 @@ class UpdateCaracteristic extends AbstractExtension
             }
         }
         $this->setLastActiveAnimal($this->animalRepo->find($animalStats[0]["animal_id"]));
+        $user->setLastActive(new DateTime());
         return $tabReturn;
         
     }
