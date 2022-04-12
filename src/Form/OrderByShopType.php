@@ -7,7 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderByShop extends AbstractType
+class OrderByShopType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
