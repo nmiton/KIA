@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Form\SelectTypeAction;
+use App\Form\SelectTypeActionType;
 use App\Repository\ObjectsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class InventoryController extends AbstractController
             return $this->render('home/home.html.twig');   
         }else{
             $items_user = $repoObjet->findByCountAllObjetsByUserId($this->getUser()->getId());
-            $form = $this->createForm(SelectTypeAction::class);
+            $form = $this->createForm(SelectTypeActionType::class);
             //choix de tri du shop  (type d'action/orderBy)
             $form->handleRequest($request);
             //form de tri
@@ -57,7 +57,7 @@ class InventoryController extends AbstractController
         if(!$this->getUser()){
             return $this->render('home/home.html.twig');   
         }else{
-            $form = $this->createForm(SelectTypeAction::class);
+            $form = $this->createForm(SelectTypeActionType::class);
             //choix de tri du shop  (type d'action/orderBy)
             $form->handleRequest($request);
             
