@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Entity\AnimalCaracteristic;
 use App\Repository\AnimalRepository;
-use App\Form\CreateAnimalType;
 use App\Repository\ActionCaracteristicRepository;
 use App\Repository\ActionObjectsRepository;
 use App\Repository\ActionRepository;
@@ -17,7 +15,6 @@ use App\Service\PayDay;
 use App\Service\UpdateCaracteristic;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -108,7 +105,7 @@ class PlayController extends AbstractController
     {   
         $action = $actionRepo->find(['id' => $idAction]);
         //MAJ STATS
-        $updateCaracteristic->updateCaract($this->getUser(), $animalCaracRepo,$animalRepo);
+        $updateCaracteristic->updateCaract($this->getUser(), $animalCaracRepo,$animalRepo,$userRepo);
         //stats de l'animal avant l'action 
         $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);     
         
