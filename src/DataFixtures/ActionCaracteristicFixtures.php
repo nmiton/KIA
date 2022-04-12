@@ -16,19 +16,19 @@ class ActionCaracteristicFixtures extends Fixture implements OrderedFixtureInter
         $var = new ActionCaracteristic();
         $var->setValMax(+25);
         $var->setValMin(+10);
-        $var->setAction($this->getReference('actionSortirParcChien'));
+        $var->setAction($this->getReference('sortirParcChien'));
         $var->setCaracteritic($this->getReference('Bonheur'));
         $manager->persist($var);      
         $var = new ActionCaracteristic();
         $var->setValMax(-5);
         $var->setValMin(-25);
-        $var->setAction($this->getReference('actionSortirParcChien'));
+        $var->setAction($this->getReference('sortirParcChien'));
         $var->setCaracteritic($this->getReference('Hydratation'));
         $manager->persist($var);      
         $var = new ActionCaracteristic();
         $var->setValMax(-5);
         $var->setValMin(-20);
-        $var->setAction($this->getReference('actionSortirParcChien'));
+        $var->setAction($this->getReference('sortirParcChien'));
         $var->setCaracteritic($this->getReference('Nourriture'));
         $manager->persist($var);      
         //action jouer balle de tennis

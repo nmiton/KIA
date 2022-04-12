@@ -49,6 +49,14 @@ class ActionObjectsFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($var);      
         $this->addReference('actionObjectSoin1Chien', $var);
         $manager->flush();
+        //sortir
+        $var = new ActionObjects();
+        $var->setQuantity(1);
+        $var->setAction($this->getReference('sortirParcChien'));
+        $var->setObject($this->getReference('laisse'));
+        $manager->persist($var);      
+        $this->addReference('actionSortirChien', $var);
+        $manager->flush();
         // //object action nourrir
         // for ($i=0; $i < 6; $i++) { 
         //     $var = new ActionObjects();

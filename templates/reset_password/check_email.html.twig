@@ -4,6 +4,8 @@
 {% block main_id %}resetPassword{% endblock %}
 
 {% block body %}
+    <div class="alert alert-success">Demande de réinitialisation de mot de passe envoyée</div>
+    <h1 class="h3 mb-3 font-weight-normal flip-in-hor-top">Réinitialisation de mot de passe :</h1>
     <p>
         Si un compte est associé à l'adresse email précédemment connecté, un mail vous sera addressé avec la procédure de réinitialisation de votre mot de passe.
         Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.

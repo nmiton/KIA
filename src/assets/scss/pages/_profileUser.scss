@@ -43,6 +43,7 @@
         margin: 2rem auto;
         padding: 1rem;
     }
+
 }
 
 #changePseudo{
@@ -70,28 +71,28 @@
     }
 }
 
-#my_money{
+
+
+#my_infos{
     display: flex;
     flex-direction: column;
-
-    .form-group{
-
-        margin :1rem;
-
-        label {
-            margin : 0 0 1rem 0;
-        }
-
+    #my_pseudo,#my_money{
+        margin: 1rem;
+        display: flex;
+        justify-content: space-between;
+    
         input{
             width: auto;
-            margin: 1rem auto;
-            text-align: center;
-            padding: 0.5rem 1rem;
-            font-size: 1.25rem;
-            border-color: $color-bg-altmenu;
-            color: white;
-            background-color: $color-bg-altmenu;
-        }
+            margin: -0.75rem 0rem 0rem 1rem;
+            text-align: right;
+        }    
+    }
+    @include respond(lg){
+        flex-direction: row;
+        justify-content: space-around;
+        
     }
 }
+
+
 

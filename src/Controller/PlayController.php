@@ -75,12 +75,14 @@ class PlayController extends AbstractController
         //récupération de tous les types d'action par type d'animaux
         $typesActionTypeAnimal = $repoAction->findTypeActionByAnimalType($animal->getAnimalType()->getId());
         //récupération des toutes les actions par type d'action et par type d'animaux
-        $actions_type_action_type_animal = $repoAction->findByActionsAnimalTypeAndActionTypeWhereObjectsInInventory($animal->getAnimalType()->getId(),$typeAction);
+        $actions_type_action_type_animal = $repoAction->findByActionsAnimalTypeAndActionTypeWhereObjectsInInventory($animal->getAnimalType()->getId(),$typeAction,$this->getUser()->getId());
         //récupération des stats de chaq action par type d'action et type d'animaux
         $stats_actions_type_action_type_animal = $repoAction->findByStatsActionsByAnimalTypeAndActionType($animal->getAnimalType()->getId(),$typeAction);
+        // dd($actions_type_action_type_animal);
         return $this->render('play/main.html.twig', [
             'animal' => $animal,
             'stats' => $stats,
+            'typeActionChoisi'=>$typeAction,
             'typesAction' => $typesActionTypeAnimal,
             'actions' => $actions_type_action_type_animal,
             'stats_actions' => $stats_actions_type_action_type_animal,
