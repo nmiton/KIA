@@ -148,10 +148,12 @@ class PlayController extends AbstractController
         
         //Gestion des stats de l'animal en fonction de l'action choisie
         //récupération des stats de l'action 
-
         $statsSelectedAction = $actionCaracRepo->findBy(["action"=>$idAction]);
+        //récupération des stats de l'animal 
+        $valueStatAnimal = $animalCaracRepo->findBy(["animal" => $animal->getId()]);
         //pour chq stats de l'action
         foreach ($statsSelectedAction as $stat) {
+            // dump($stat);
             //si action boost 
             if($stat->getValMax() < $stat->getValMin()){
                 $val_min_stats_action = $stat->getValMax();
@@ -162,12 +164,9 @@ class PlayController extends AbstractController
             }
             //random sur la valeur de stat
             $random_value = random_int($val_min_stats_action,$val_max_stats_action);
-            //récupération de la valeur de la stats de l'animal
-            // $valueStatAnimal = $animalCaracRepo->findByvalueStatAnimalByStatIdAndAnimalId($stat->getCaracteritic()->getId(),$animal->getId());
-            $valueStatAnimal = $animalCaracRepo->findBy(["animal" => $animal->getId()]);
-
+            // dump($random_value);
             foreach ($valueStatAnimal as $var ) {
-                if($var->getId() == $stat->getCaracteritic()->getId()){
+                if($var->getCaracteristic()->getId() == $stat->getCaracteritic()->getId()){
                     // calcul nouvelle Stat
                     $newStat = $var->getValue() + $random_value; 
                     // condition 0<stats<100
@@ -177,9 +176,9 @@ class PlayController extends AbstractController
                         $newStat = 0;
                     }
                     //récupération de l'entity stats animal correspondante a celle de l'action
-                    $statAnimal = $animalCaracRepo->findBy(
+                    $statAnimal = $animalCaracRepo->findOneBy(
                         array('id'=> $var->getId())
-                    )[0];
+                    );
                     // set Animal stats
                     $statAnimal->setValue($newStat);
                     $statAnimal->getValue();
@@ -209,13 +208,12 @@ class PlayController extends AbstractController
         $random_proba_perte = random_int(0, 100);
         // dump($random_proba_perte);
         //on regarde l'inventaire de l'utilisateur en fonction de l'objet de l'action sélectionné
-        $inventory = $inventoryRepo ->findBy(
+        $inventory = $inventoryRepo ->findOneBy(
             array(
                 'objet' => $idObjet,
                 'user' => $this->getUser()->getId()
             )      
         );
-        dd($inventory);
         // si le random est inf a la proba de l'objet
         if($random_proba_perte<=$proba){
             $inventoryRepo->remove($inventory);

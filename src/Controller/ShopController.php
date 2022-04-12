@@ -94,18 +94,30 @@ class ShopController extends AbstractController
         if($actionType != "all"){
             if($orderBy == "none"){
                 $items = $ObjRepo->findByActionType($actionType);
+                // dump("order:asc action=".$actionType);
+                // dd($items);
             }elseif($orderBy == "DESC"){
                 $items = $ObjRepo->findByActionTypeOrderByPriceDesc($actionType);
+                // dump("order:asc action=".$actionType);
+                // dd($items);
             }elseif($orderBy == "ASC"){
                 $items = $ObjRepo->findByActionTypeOrderByPriceAsc($actionType);
+                // dump("order:asc action=".$actionType);
+                // dd($items);
             }
         }else{
             if($orderBy == "none"){
                 $items = $ObjRepo->findAll();
+                // dump("order:none action=all");
+                // dd($items);
             }elseif($orderBy == "DESC"){
                 $items = $ObjRepo->findByOrderByPriceDesc();
+                // dump("order:desc action=all");
+                // dd($items);
             }elseif($orderBy == "ASC"){
                 $items = $ObjRepo->findByOrderByPriceAsc();
+                // dump("order:asc action=all");
+                // dd($items);
             }
         }
         //choix de tri du shop  (type d'action/orderBy)
