@@ -2,10 +2,9 @@
 
 namespace App\Service;
 
-use App\Entity\Animal;
 use App\Repository\AnimalCaracteristicRepository;
 use Twig\Extension\AbstractExtension;
-use DateTime;
+
 
 class UpdateCaracteristicAction extends AbstractExtension
 {

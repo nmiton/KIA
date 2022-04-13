@@ -11,7 +11,7 @@
 		{% if animalsMorts is defined and animalsMorts != [] %}
 			<div class="alert alert-danger">
 				{% for dead in animalsMorts %}
-					<p>Votre {{dead.type}} {{dead.name}} est mort...</p>
+					<p>Votre {{dead.type|lower}} {{dead.name}} est mort...</p>
 				{% endfor %}
 			</div>
 		{% endif %}

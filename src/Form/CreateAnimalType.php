@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\Animal;
 use App\Entity\AnimalType as EntityAnimalType;
-use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Animal;
-use DateInterval;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

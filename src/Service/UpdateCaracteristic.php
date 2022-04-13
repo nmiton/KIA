@@ -13,7 +13,6 @@ use App\Repository\ScoreRepository;
 use App\Repository\UserRepository;
 use Twig\Extension\AbstractExtension;
 use DateTime;
-use Symfony\Component\Validator\Constraints\Length;
 
 class UpdateCaracteristic extends AbstractExtension
 {
@@ -36,6 +35,12 @@ class UpdateCaracteristic extends AbstractExtension
     {
         $animal->setLastActive(new DateTime());
         $this->animalRepo->add($animal);
+    }
+
+    public function setLastActiveUser(User $u)
+    {
+        $u->setLastActive(new DateTime());
+        $this->ur->add($u);
     }
 
 
@@ -134,7 +139,7 @@ class UpdateCaracteristic extends AbstractExtension
             }
         }
         $this->setLastActiveAnimal($this->animalRepo->find($animalStats[0]["animal_id"]));
-        $user->setLastActive(new DateTime());
+        $this->setLastActiveUser($this->ur->find($user));
         return $tabReturn;
         
     }

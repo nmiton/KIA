@@ -125,7 +125,6 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
         $jouerBalleTennis->setAnimalType($this->getReference('typeAnimalDragon'));
         $manager->persist($jouerBalleTennis);
         $this->addReference('jouerBalleTennisDragon', $jouerBalleTennis);
-
         $nourrirCroquette = new Action();
         $nourrirCroquette->setName("Nourrir avec des croquettes");
         $nourrirCroquette->setType("Nourrir");
@@ -133,7 +132,6 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
         $nourrirCroquette->setAnimalType($this->getReference('typeAnimalDragon'));
         $manager->persist($nourrirCroquette);
         $this->addReference('nourrirCroquetteDragon', $nourrirCroquette);
-
         $remplirGamelle = new Action();
         $remplirGamelle->setName("Remplir la gamelle d'eau");
         $remplirGamelle->setType("Boire");
@@ -141,7 +139,6 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
         $remplirGamelle->setAnimalType($this->getReference('typeAnimalDragon'));
         $manager->persist($remplirGamelle);
         $this->addReference('remplirGamelleDragon', $remplirGamelle);
-
         $soinNiv1 = new Action();
         $soinNiv1->setName("Soigner des petits bobos");
         $soinNiv1->setType("Soin");
@@ -149,7 +146,6 @@ class ActionFixtures extends Fixture implements OrderedFixtureInterface
         $soinNiv1->setAnimalType($this->getReference('typeAnimalChien'));
         $manager->persist($soinNiv1);
         $this->addReference('soinNiv1Dragon', $soinNiv1);
-
         $donnerFriandise = new Action();
         $donnerFriandise->setName("Donner friandise");
         $donnerFriandise->setType("Nourrir");

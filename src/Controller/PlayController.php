@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Repository\AnimalRepository;
 use App\Repository\ActionCaracteristicRepository;
 use App\Repository\ActionObjectsRepository;
 use App\Repository\ActionRepository;
@@ -72,13 +71,6 @@ class PlayController extends AbstractController
     #[Route('/jouer/{id}/{typeAction}/' , name: 'app_play_type_action', methods : ['POST'])]
     public function selectTypeAction(Animal $animal, $typeAction,UpdateCaracteristic $updateCaracteristic,AnimalCaracteristicRepository $animalStatsRepo, ActionRepository $repoAction):Response
     {   
-        //Maj des stats de l'animal en fonction de lastAction
-        $animalsMorts = $updateCaracteristic->updateCaract($this->getUser());
-        if($animalsMorts != []){
-            return $this->redirectToRoute('app_new_animal',[
-                'animalsMorts' => $animalsMorts
-            ]);
-        }
         //récupération des stats de l'animal
         $stats = $animalStatsRepo->findBy(['animal'=>$animal->getId()]);
         //récupération de tous les types d'action par type d'animaux
@@ -166,6 +158,7 @@ class PlayController extends AbstractController
         $valueStatAnimal = $animalCaracRepo->findBy(["animal" => $animal->getId()]);
         //on maj les stats de l'animal en fct de l'action choisie
         $updateCaracteristicAction->setCaractAnimalWithStatsSelectedAction($statsSelectedAction,$valueStatAnimal);
+        
         //Calcul de l'énergie
         //on gère ici l'énergie de l'animal après avoir gérer les stats qui ont été affectées par l'action choisie        
         //on cherche la nouvelle valeur d'hydratation de l'animal
@@ -176,6 +169,7 @@ class PlayController extends AbstractController
         $stat_energie_animal->setValue(($stat_nouriture_animal->getValue()+$stat_eau_animal->getValue())/2);
         //on persite dans la bdd
         $animalCaracRepo->add($stat_energie_animal);
+        
         //Calcul de proba de perte de l'object utilisé pr l'action
         //on initialise la notification d'objet perdu 
         $objetPerdu = null;

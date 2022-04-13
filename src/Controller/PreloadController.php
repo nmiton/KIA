@@ -2,16 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Animal;
-use App\Entity\AnimalCaracteristic;
-use App\Entity\User;
 use App\Form\CreateAnimalType;
-use App\Repository\AnimalCaracteristicRepository;
-use App\Repository\AnimalRepository;
-use App\Repository\AnimalTypeRepository;
-use App\Repository\CaracteristicRepository;
 use App\Repository\UserRepository;
-use DateTime;
+use App\Service\CreateNewAnimal;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +14,8 @@ use App\Service\UpdateCaracteristic;
 
 class PreloadController extends AbstractController
 {
-
     #[Route('/preload', name: 'app_play_preload')]
-    public function preload(UserRepository $repoUser, AnimalCaracteristicRepository $repo, UpdateCaracteristic $updateCaracteristic, AnimalRepository $animalRepo, AnimalTypeRepository $repoAnimalType): Response
+    public function preload(UserRepository $repoUser, UpdateCaracteristic $updateCaracteristic): Response
     {
         //si un user est connecté
         if ($this->getUser()) {
@@ -69,35 +61,18 @@ class PreloadController extends AbstractController
 
 
     #[Route('/creer-nouvel-animal', name: 'app_new_animal')]
-    public function createNewAnimal(Request $request, AnimalRepository $animalRepository, CaracteristicRepository $statsRepo, AnimalCaracteristicRepository $statsAnimalRepo, AnimalTypeRepository $atr): Response
+    public function createNewAnimal(Request $request,CreateNewAnimal $createNewAnimal, UpdateCaracteristic $updateCaracteristic): Response
     {
+        //initialisation du tab des animaux morts
         $animalsMorts = [];
         $animalsMorts = $request->get("animalsMorts");
 
-        $animal = new Animal();
+        //création du form de new animal
         $form = $this->createForm(CreateAnimalType::class);
         $form->handleRequest($request);
-
+        //si form valide alors création d'un nouvel animal
         if ($form->isSubmitted() && $form->isValid()) {
-            $today = new DateTime();
-            $animal->setName($form->get('name')->getData());
-            $animal->setAnimalType($form->get('animalType')->getData());
-            $animal->setIsAlive(1);
-            $animal->setCreatedAt($today);
-            $animal->setLastActive($today);
-            $animal->setUser($this->getUser());
-            $animalRepository->add($animal);
-            //on récupère nos entity stats
-            $all_stats = $statsRepo->findAll();
-            //on créer chq stats pr l'animal
-            foreach ($all_stats as $stat) {
-                dump($stat);
-                $stats_animal = new AnimalCaracteristic();
-                $stats_animal->setAnimal($animal);
-                $stats_animal->setCaracteristic($stat);
-                $stats_animal->setValue(100);
-                $statsAnimalRepo->add($stats_animal);
-            }
+            $animal = $createNewAnimal->createAnimal($form,$this->getUser());
             return $this->redirectToRoute('app_play', ['id' => $animal->getId()]);
         }
 

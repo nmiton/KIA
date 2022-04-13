@@ -2,9 +2,7 @@
 
 namespace App\DataFixtures;
 use App\Entity\Caracteristic;
-use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use App\Entity\Animal;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
