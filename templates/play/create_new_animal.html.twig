@@ -8,10 +8,10 @@
 
 {% block body %}
 	<main>
-		{% if animalsMorts|length > 0 %}
+		{% if animalsMorts is defined and animalsMorts != [] %}
 			<div class="alert alert-danger">
 				{% for dead in animalsMorts %}
-					<p>Votre "{{dead.type}}" qui s'appel "{{dead.name}}" est mort.</p>
+					<p>Votre {{dead.type|lower}} {{dead.name}} est mort...</p>
 				{% endfor %}
 			</div>
 		{% endif %}

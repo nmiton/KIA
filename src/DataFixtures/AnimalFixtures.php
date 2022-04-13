@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 use App\Entity\Animal;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use App\Entity\AnimalType;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
@@ -19,20 +18,20 @@ class AnimalFixtures extends Fixture implements OrderedFixtureInterface
         $animal->setIsAlive(true);
         $animal->setLastActive($date);
         $animal->setCreatedAt($date);
-        $animal->setUser($this->getReference('geogeo'));
+        $animal->setUser($this->getReference('julien'));
         $animal->setAnimalType($this->getReference('typeAnimalDragon'));
         $manager->persist($animal);
         $this->addReference('animal_dragon', $animal);
-        //Animal de nathan 
-        $animal = new Animal();
-        $animal->setName("Roxy");
-        $animal->setIsAlive(true);
-        $animal->setLastActive($date);
-        $animal->setCreatedAt($date);
-        $animal->setUser($this->getReference('nath'));
-        $animal->setAnimalType($this->getReference('typeAnimalChien'));
-        $manager->persist($animal);
-        $this->addReference('animal_chien', $animal);
+        // //Animal de nathan 
+        // $animal = new Animal();
+        // $animal->setName("Roxy");
+        // $animal->setIsAlive(true);
+        // $animal->setLastActive($date);
+        // $animal->setCreatedAt($date);
+        // $animal->setUser($this->getReference('nath'));
+        // $animal->setAnimalType($this->getReference('typeAnimalChien'));
+        // $manager->persist($animal);
+        // $this->addReference('animal_chien1', $animal);
         //Animal de julien
         // $animal = new Animal();
         // $animal->setName("Bob");

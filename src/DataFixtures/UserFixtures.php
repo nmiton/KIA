@@ -25,7 +25,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $user->setEmail('nathan.miton@orange.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'nath'));             
         $user->setRoles(['ROLE_ADMIN']);        
-        $user->setMoney(254444444);
+        $user->setMoney(0);
         $user->setScore(0);       
         $user->setlastConnection($dateTime);  
         $user ->setIsActive(true);     
@@ -46,11 +46,9 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $user ->setCreatedAt($dateTime);         
         $manager->persist($user);        
         $this->addReference('julien', $user);
-        //User avec LastActive dans le passé
         $user = new User();
-        $dateTimeLastActive = new DateTime('2000-01-01');
-        $user->setPseudo('georges');         
-        $user->setEmail('g@hotmail.com');
+        $user->setPseudo('geogeo');         
+        $user->setEmail('g@g.com');
         $user->setPassword($this->encoder->encodePassword($user, 'geogeo'));             
         $user->setRoles(['ROLE_USER']);        
         $user->setMoney(0);
@@ -58,11 +56,9 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $user->setlastConnection($dateTime);  
         $user ->setIsActive(true);     
         $user->setIsVerified(true);
-        $user ->setCreatedAt($dateTime);        
-        $user->setLastActive($dateTimeLastActive); 
+        $user ->setCreatedAt($dateTime);         
         $manager->persist($user);        
         $this->addReference('geogeo', $user);
-
         // for ($i=1; $i < 6 ; $i++) { 
         //     $user = new User();
         //     $user->setPseudo('user'.$i);         
@@ -78,7 +74,6 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         //     $manager->persist($user);        
         //     $this->addReference('user'.$i, $user);
         // }
-        
         $manager->flush();
     }
 

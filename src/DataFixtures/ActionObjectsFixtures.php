@@ -108,6 +108,14 @@ class ActionObjectsFixtures extends Fixture implements OrderedFixtureInterface
         // }
 
         //action type dragon
+        //sortir
+        $var = new ActionObjects();
+        $var->setQuantity(1);
+        $var->setAction($this->getReference('actionSortirParcDragon'));
+        $var->setObject($this->getReference('laisse'));
+        $manager->persist($var);      
+        $this->addReference('actionObjectSortirParcDragon', $var);
+        $manager->flush();
         //jouer balle de tennis
         $var = new ActionObjects();
         $var->setQuantity(1);

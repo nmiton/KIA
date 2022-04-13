@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\AnimalType;
+
 use App\Form\SelectTypeAnimalType;
 use App\Repository\UserRepository;
 use App\Repository\ScoreRepository;

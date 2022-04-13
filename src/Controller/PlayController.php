@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
-use App\Repository\AnimalRepository;
 use App\Repository\ActionCaracteristicRepository;
 use App\Repository\ActionObjectsRepository;
 use App\Repository\ActionRepository;
@@ -13,18 +12,16 @@ use App\Repository\InventoryRepository;
 use App\Repository\UserRepository;
 use App\Service\PayDay;
 use App\Service\UpdateCaracteristic;
-use DateTime;
+use App\Service\UpdateCaracteristicAction;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-
 
 class PlayController extends AbstractController
 {
     //root de la page principale du jeu
     #[Route('/jouer/{id}', name: 'app_play', methods: ['GET'])]
-    public function play(Animal $animal,AnimalCaracteristicRepository $animalStatsRepo, ActionRepository $repoAction,UserRepository $repoUser): Response
+    public function play(Animal $animal,AnimalCaracteristicRepository $animalStatsRepo,UpdateCaracteristic $updateCaracteristic, ActionRepository $repoAction,UserRepository $repoUser): Response
     {   
         //si user est non connecté
         if(!$this->getUser()){
@@ -34,6 +31,13 @@ class PlayController extends AbstractController
             if($animal->getUser()->getId() != $this->getUser()->getId() || !$animal->getIsAlive() ){
                 return $this->redirectToRoute('app_play_preload');
             }else{
+                //Maj des stats de l'animal en fonction de lastAction
+                $animalsMorts = $updateCaracteristic->updateCaract($this->getUser());
+                if($animalsMorts != []){
+                    return $this->redirectToRoute('app_new_animal',[
+                        'animalsMorts' => $animalsMorts
+                    ]);
+                }
                 //on gère la paye de l'utilisateur
                 $payDay = new PayDay();
                 //on récupère la somme de la paye
@@ -65,7 +69,7 @@ class PlayController extends AbstractController
     }
 
     #[Route('/jouer/{id}/{typeAction}/' , name: 'app_play_type_action', methods : ['POST'])]
-    public function selectTypeAction(Animal $animal, $typeAction ,AnimalCaracteristicRepository $animalStatsRepo, ActionRepository $repoAction):Response
+    public function selectTypeAction(Animal $animal, $typeAction,UpdateCaracteristic $updateCaracteristic,AnimalCaracteristicRepository $animalStatsRepo, ActionRepository $repoAction):Response
     {   
         //récupération des stats de l'animal
         $stats = $animalStatsRepo->findBy(['animal'=>$animal->getId()]);
@@ -91,30 +95,34 @@ class PlayController extends AbstractController
 
     #[Route('/jouer/{id}/action/{idAction}/' , name: 'app_play_make_action', methods : ['POST'])]
     public function makeAction(
-        Animal $animal,
         $idAction,
+        Animal $animal,
         ActionCaracteristicRepository $actionCaracRepo,
         AnimalCaracteristicRepository $animalCaracRepo,
         ActionObjectsRepository $actionObjetRepo,
         CaracteristicRepository $caracRepo,
         ActionRepository $actionRepo,
-        AnimalRepository $animalRepo,
         UpdateCaracteristic $updateCaracteristic,
-        InventoryRepository $inventoryRepo,
-        UserRepository $userRepo):Response
+        UpdateCaracteristicAction $updateCaracteristicAction,
+        InventoryRepository $inventoryRepo):Response
     {   
+        //Maj des stats de l'animal en fonction de lastAction
+        $animalsMorts = $updateCaracteristic->updateCaract($this->getUser());
+        if($animalsMorts != []){
+            return $this->redirectToRoute('app_new_animal',[
+                'animalsMorts' => $animalsMorts
+            ]);
+        }
+        //on récupère l'action grâce à son id
         $action = $actionRepo->find(['id' => $idAction]);
-        //MAJ STATS
-        $updateCaracteristic->updateCaract($this->getUser(), $animalCaracRepo,$animalRepo,$userRepo);
-        //stats de l'animal avant l'action 
-        $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);     
-        
-        //Maj console 
+        //MAJ Console 
         //on récupère le console log de l'action 
         $console = $action->getConsoleLog();
+        //MAJ STATS
+        //stats de l'animal avant l'action 
+        $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);           
         //récupération de tous les types d'action par type d'animaux
         $typesActionTypeAnimal = $actionRepo->findTypeActionByAnimalType($animal->getAnimalType()->getId());
-
         //on récupère l'entity nourriture
         $entity_stat_nourriture = $caracRepo->findOneBy(['name'=> "Nourriture"]);
         //on récupère l'entity énergie
@@ -127,9 +135,8 @@ class PlayController extends AbstractController
         $stat_nouriture_animal = $animalCaracRepo->findOneBy(["animal" => $animal, "caracteristic" => $entity_stat_nourriture ]);
         //on cherche l'energie de l'animal
         $stat_energie_animal = $animalCaracRepo->findOneBy(["caracteristic"=> $entity_stat_energie, "animal"=> $animal ]);
-
+        //condition pour les actions sortir et jouer
         if($action->getType() == "Jouer" || $action->getType() == "Sortir"){
-            // dd($stat_energie_animal);
             //erreur si énergie est <= 10 (pas de promenade, ni de jeu) 
             if($stat_energie_animal->getValue()<=10){
                 return $this->render('play/main.html.twig', [
@@ -144,47 +151,14 @@ class PlayController extends AbstractController
                 ]); 
             }
         }
-        
         //Gestion des stats de l'animal en fonction de l'action choisie
         //récupération des stats de l'action 
         $statsSelectedAction = $actionCaracRepo->findBy(["action"=>$idAction]);
         //récupération des stats de l'animal 
         $valueStatAnimal = $animalCaracRepo->findBy(["animal" => $animal->getId()]);
-        //pour chq stats de l'action
-        foreach ($statsSelectedAction as $stat) {
-            // dump($stat);
-            //si action boost 
-            if($stat->getValMax() < $stat->getValMin()){
-                $val_min_stats_action = $stat->getValMax();
-                $val_max_stats_action = $stat->getValMin();
-            }else{
-                $val_min_stats_action = $stat->getValMin();
-                $val_max_stats_action = $stat->getValMax();
-            }
-            //random sur la valeur de stat
-            $random_value = random_int($val_min_stats_action,$val_max_stats_action);
-            // dump($random_value);
-            foreach ($valueStatAnimal as $var ) {
-                if($var->getCaracteristic()->getId() == $stat->getCaracteritic()->getId()){
-                    // calcul nouvelle Stat
-                    $newStat = $var->getValue() + $random_value; 
-                    // condition 0<stats<100
-                    if($newStat>100){
-                        $newStat = 100;
-                    }elseif($newStat<0){
-                        $newStat = 0;
-                    }
-                    //récupération de l'entity stats animal correspondante a celle de l'action
-                    $statAnimal = $animalCaracRepo->findOneBy(
-                        array('id'=> $var->getId())
-                    );
-                    // set Animal stats
-                    $statAnimal->setValue($newStat);
-                    $statAnimal->getValue();
-                    $animalCaracRepo->add($statAnimal);
-                }
-            }
-        }
+        //on maj les stats de l'animal en fct de l'action choisie
+        $updateCaracteristicAction->setCaractAnimalWithStatsSelectedAction($statsSelectedAction,$valueStatAnimal);
+        
         //Calcul de l'énergie
         //on gère ici l'énergie de l'animal après avoir gérer les stats qui ont été affectées par l'action choisie        
         //on cherche la nouvelle valeur d'hydratation de l'animal
@@ -195,7 +169,7 @@ class PlayController extends AbstractController
         $stat_energie_animal->setValue(($stat_nouriture_animal->getValue()+$stat_eau_animal->getValue())/2);
         //on persite dans la bdd
         $animalCaracRepo->add($stat_energie_animal);
-
+        
         //Calcul de proba de perte de l'object utilisé pr l'action
         //on initialise la notification d'objet perdu 
         $objetPerdu = null;
@@ -205,31 +179,17 @@ class PlayController extends AbstractController
         $idObjet = $objet[0]["id"];
         //on génère un int random entre 0 et 100 
         $random_proba_perte = random_int(0, 100);
-        // dump($random_proba_perte);
         //on regarde l'inventaire de l'utilisateur en fonction de l'objet de l'action sélectionné
-        $inventory = $inventoryRepo ->findOneBy(
-            array(
-                'objet' => $idObjet,
-                'user' => $this->getUser()->getId()
-            )      
-        );
-        // si le random est inf a la proba de l'objet
+        $inventory = $inventoryRepo ->findOneBy(['objet' => $idObjet,'user' => $this->getUser()->getId()]);
+        //si le random est inf a la proba de l'objet
         if($random_proba_perte<=$proba){
             $inventoryRepo->remove($inventory);
             if($proba < 100){
                 $objetPerdu = "Vous venez de perdre votre ".$objet[0]["name"].".";
             }
         }
-
-        //recuperation des stats de l'animal
+        //récuperation des stats de l'animal
         $stats = $animalCaracRepo->findBy(['animal'=>$animal->getId()]);    
-    
-        //Maj lastActive User
-        $dateTime = new DateTime();
-        $user= $this->getUser();
-        $user->setLastActive($dateTime);
-        $userRepo->add($user);
-        
         return $this->render('play/main.html.twig', [
             'animal' => $animal,
             'stats' => $stats,
