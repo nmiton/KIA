@@ -41,7 +41,6 @@ security:
         - { path: ^/jouer, roles: ROLE_USER }
         - { path: ^/preload, roles: ROLE_USER }
         - { path: ^/mon-profil, roles: ROLE_USER }
-        - { path: ^/reset-password, roles: ROLE_USER }
         - { path: ^/magasin, roles: ROLE_USER }
 
 when@test:

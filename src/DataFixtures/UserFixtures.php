@@ -22,7 +22,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         $dateTime = new DateTime();
         $user = new User();
         $user->setPseudo('nathan');         
-        $user->setEmail('nathan.miton@orange.fr');
+        $user->setEmail('nath.miton@orange.fr');
         $user->setPassword($this->encoder->encodePassword($user, 'nath'));             
         $user->setRoles(['ROLE_ADMIN']);        
         $user->setMoney(0);

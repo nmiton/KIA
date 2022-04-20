@@ -63,23 +63,25 @@ class ObjectsRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
-    public function findByCountAllObjetsByUserIdAndActionType($userId,$actionType)
+    public function findByCountAllObjetsByUserIdAndActionType($userId,$actionType,$animalType)
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
             SELECT COUNT(o.id) as quantity,
             o.id, o.description, o.name, o.price, o.loss_percentage 
-            FROM objects o 
+            FROM inventory i 
+            INNER JOIN objects o ON o.id = i.objet_id
+            
             INNER JOIN action_objects ao ON ao.object_id = o.id
             INNER JOIN action a on a.id = ao.action_id
-            INNER JOIN inventory i ON o.id = i.objet_id
             WHERE i.user_id = :userId 
             AND a.type = :actionType
+            AND a.animal_type_id = :animalType
             GROUP BY o.id;
             ';
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['userId' => $userId,"actionType"=>$actionType]);
+        $resultSet = $stmt->executeQuery(['userId' => $userId,"actionType"=>$actionType,"animalType"=>$animalType]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();

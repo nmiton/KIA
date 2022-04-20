@@ -65,8 +65,7 @@ class InventoryController extends AbstractController
             if($actionType == null){
                 $items_user = $ObjRepo->findByCountAllObjetsByUserId($this->getUser()->getId());
             }else{
-                $items_user = $ObjRepo->findByCountAllObjetsByUserIdAndActionType($this->getUser()->getId(),$actionType);
-                dump(count($items_user));
+                $items_user = $ObjRepo->findByCountAllObjetsByUserIdAndActionType($this->getUser()->getId(),$actionType,$animal->getAnimalType()->getId());
             }
 
             //form de tri
